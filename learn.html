@@ -1,0 +1,257 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>JavaScript Learn Demo</title>
+    <script src="jquery-3.3.1.min.js"></script>
+    <script src="md5.js"></script>
+    <script src="learn-basic.js"></script>
+    <script src="learn-window.js"></script>
+    <script src="learn-jquery.js"></script>
+    <link rel="stylesheet" type="text/css" href="default.css" />
+</head>
+
+<body onload="FileTest()">
+    <div class="left">
+        <ul id="learn-basic">
+            <li style="cursor:pointer" onclick="AlartTest()">AlartTest</li>
+            <li style="cursor:pointer" onclick="ChineseTest()">ChineseTest</li>
+            <li style="cursor:pointer" onclick="ArrayTest()">ArrayTest</li>
+            <li style="cursor:pointer" onclick="ClassTest()">ClassTest</li>
+            <li style="cursor:pointer" onclick="ForEachTest()">ForEachTest</li>
+            <li style="cursor:pointer" onclick="ArgumentsTest()">ArgumentsTest</li>
+            <li style="cursor:pointer" onclick="RestTest()">RestTest</li>
+            <li style="cursor:pointer" onclick="LetTest()">LetTest</li>
+            <li style="cursor:pointer" onclick="ConstTest()">ConstTest</li>
+            <li style="cursor:pointer" onclick="DeconstructionTest()" title="解构">DeconstructionTest</li>
+            <li style="cursor:pointer" onclick="ApplyTest()">ApplyTest</li>
+            <li style="cursor:pointer" onclick="DynamicTest()">DynamicTest</li>
+            <li style="cursor:pointer" onclick="MapTest()">MapTest</li>
+            <li style="cursor:pointer" onclick="ReduceTest()">ReduceTest</li>
+            <li style="cursor:pointer" onclick="MapReduceTest()">MapReduceTest</li>
+            <li style="cursor:pointer" onclick="FilterTest()">FilterTest</li>
+            <li style="cursor:pointer" onclick="SortTest()">SortTest</li>
+            <li style="cursor:pointer" onclick="ClosureTest()" title="闭包">ClosureTest</li>
+            <li style="cursor:pointer" onclick="ArrowTest()">ArrowTest</li>
+            <li style="cursor:pointer" onclick="GeneratorTest()">GeneratorTest</li>
+            <li style="cursor:pointer" onclick="StandardObjectTest()">StandardObjectTest</li>
+            <li style="cursor:pointer" onclick="DateTest()">DateTest</li>
+            <li style="cursor:pointer" onclick="RegExpTest()">RegExpTest</li>
+            <li style="cursor:pointer" onclick="JSONTest()">JSONTest</li>
+            <li style="cursor:pointer" onclick="ObjectCreateTest()">ObjectCreateTest</li>
+        </ul>
+    </div>
+    <div class="middle">
+        <ul id="learn-window">
+            <li style="cursor:pointer" onclick="WindowSizeTest()">WindowSizeTest</li>
+            <li style="cursor:pointer" onclick="NavigatorTest()">NavigatorTest</li>
+            <li style="cursor:pointer" onclick="LocationTest()">LocationTest</li>
+            <li style="cursor:pointer" onclick="DocumentTest()">DocumentTest</li>
+            <li style="cursor:pointer" onclick="CookieTest()">CookieTest</li>
+            <div id="test-div" style="width: 80px">
+                <div class="c-red" style="background-color: #FFAAAA">
+                    <p style="margin: 0" id="test-p">JavaScript</p>
+                    <p style="margin: 0">Java</p>
+                </div>
+                <div class="c-red c-green" style="background-color: #FFFFAA">
+                    <p style="margin: 0">Python</p>
+                    <p style="margin: 0">Ruby</p>
+                    <p style="margin: 0">Swift</p>
+                </div>
+                <div class="c-green" style="background-color: #AAFFAA">
+                    <p style="margin: 0">Scheme</p>
+                    <p style="margin: 0">Haskell</p>
+                </div>
+            </div>
+            <li style="cursor:pointer" onclick="QuerySelectorTest()">QuerySelectorTest</li>
+            <p style="margin: 0px" id="p-id-1">DOM TEST 1</p>
+            <li style="cursor:pointer" onclick="DOMUpdateTest()">DOMUpdateTest</li>
+            <div style="width: 80px" id="p-id-2">
+                <p id="p-index-1" style="margin: 0px">123</p>
+                <p id="p-index-2" style="margin: 0px">456</p>
+            </div>
+            <li style="cursor:pointer" onclick="DOMInsertTest()">DOMInsertTest</li>
+            <li style="cursor:pointer" onclick="DOMDeleteTest()">DOMDeleteTest</li>
+            <li style="cursor:pointer" onclick="FormTest()">FormTest</li>
+            <form id="test-form" method="post" onsubmit="return checkForm()">
+                <input type="text" id="username" name="username">
+                <input type="password" id="input-password">
+                <input type="hidden" id="md5-password" name="password">
+                <button type="submit">Submit</button>
+            </form>
+            <li style="cursor:pointer">FileTest</li>
+            <form method="post" action="" enctype="multipart/form-data">
+                <div id="test-image-preview" style="border: 1px solid rgb(204, 204, 204); width: 160px; height: 120px; background-size: contain; background-repeat: no-repeat; background-position: center center;"></div>
+                <input id="test-image-file" type="file">
+                <p id="test-image-info"></p>
+            </form>
+            <li style="cursor:pointer" onclick="getPrice()">AJAXTest</li>
+            <p id="test-ajax-info"></p>
+            <li style="cursor:pointer" onclick="getPrice2()">AJAXTest2</li>
+            <li style="cursor:pointer" onclick="CallbackTest()">CallbackTest</li>
+            <img style="width: 100%; max-width: 512px;" src="img/promise.png" />
+            <li style="cursor:pointer" onclick="PromiseTest()">PromiseTest</li>
+            <li style="cursor:pointer" onclick="PromiseTest2()">PromiseTest2</li>
+            <li style="cursor:pointer" onclick="PromiseTest3()">PromiseTest3</li>
+            <li style="cursor:pointer" onclick="PromiseTest4()">PromiseTest4</li>
+            <li style="cursor:pointer" onclick="PromiseTest5()">PromiseTest5</li>
+            <li style="cursor:pointer" onclick="PromiseTest6()">PromiseTest6</li>
+            <canvas id="test-canvas" width="200" heigth="100">
+                <p>你的浏览器不支持Canvas</p>
+            </canvas>
+            <li style="cursor:pointer" onclick="CanvasTest()">CanvasTest</li>
+            <li style="cursor:pointer" onclick="CanvasTest2()">CanvasTest2</li>
+        </ul>
+    </div>
+    <div class="right">
+        <ul id="learn-jquery" name="jquery">
+            <li style="cursor:pointer" onclick="SelectorTest()">SelectorTest</li>
+            <li style="cursor:pointer" onclick="MultiSelectorTest()">MultiSelectorTest</li>
+            <li name="DescendantSelectorTest" style="cursor:pointer" onclick="DescendantSelectorTest()">DescendantSelectorTest</li>
+            <li style="cursor:pointer" onclick="FilterSelectorTest()">FilterSelectorTest</li>
+            <div style="border-color: #FFAAAA;border-width: 5px;border-style: solid;padding: 5px">
+                <form id="testform">
+                    <p style="margin: 0px">测试表单选择器</p>
+                    <input type="text" value="Tom" />
+                    <input type="password" value="123" />
+                    <input type="checkbox" checked="checked">12312s</input>
+                    <br>
+                    <input type="radio" name="r1" value="1" />1
+                    <input type="radio" name="r1" value="2" />2
+                    <br>
+                    <input type="text" value="123" hidden="hidden" />
+                    <textarea>TEXTAREA</textarea>
+                    <br>
+                    <input type="button" value="按钮内容" />
+                    <button>按钮内容2</button>
+                </form>
+            </div>
+            <li class="c1 c2" style="cursor:pointer" onclick="FormSelectorTest()">FormSelectorTest</li>
+            <li class="c1" style="cursor:pointer" onclick="FindSelectorTest()">FindSelectorTest</li>
+            <li class="c2" style="cursor:pointer" onclick="FilterSelecterTest()">FilterSelecterTest</li>
+            <div style="border: #AAFFAA 5px solid; padding: 5px">
+                <p style="margin: 0px">测试DOM</p>
+                <ul id="test-dom">
+                    <li class="lang sw">Swift</li>
+                    <li class="lang dynamic py">Python</li>
+                    <li class="lang dynamic js" style="color: #00FF00">JavaScript</li>
+                    <li class="lang jee">JavaEnterpriseEdition</li>
+                    <li class="lang cs" popular="First">CSharp</li>
+                </ul>
+            </div>
+            <li style="cursor:pointer" onclick="DOMTest()">DOMTest</li>
+            <li style="cursor:pointer" onclick="HideDOM()">HideDOM</li>
+            <li style="cursor:pointer" onclick="ShowDOM()">ShowDOM</li>
+            <li style="cursor:pointer" onclick="GetDOM()">GetDOM</li>
+            <li style="cursor:pointer" onclick="SetDOM()">SetDOM</li>
+            <li style="cursor:pointer" onclick="GetDOMAttr()">GetDOMAttr</li>
+            <li style="cursor:pointer" onclick="RemoveDOMAttr()">RemoveDOMAttr</li>
+            <div style="border: #AAFFFF 5px solid; padding: 5px">
+                <p style="margin: 0px">测试ATTR/PROP</p>
+                <input id="test-radio1" type="radio" name="test" checked value="1" />
+                <input id="test-radio2" type="radio" name="test" value="2" />
+            </div>
+            <li style="cursor:pointer" onclick="AttrPropTest()">AttrPropTest</li>
+            <div style="border: #FFFFAA 5px solid; padding: 5px">
+                <form id="val-test">
+                    <p style="margin: 0px">JQuery的val()测试</p>
+                    <input id="test-input" name="email" value="">
+                    <br>
+                    <select id="test-select" name="city">
+                        <option value="BJ" selected>Beijing</option>
+                        <option value="SH">Shanghai</option>
+                        <option value="SZ">Shenzhen</option>
+                    </select>
+                    <br>
+                    <textarea id="test-textarea">Hello</textarea>
+                </form>
+            </div>
+            <li style="cursor:pointer" onclick="GetValTest()">GetValTest</li>
+            <li style="cursor:pointer" onclick="SetValTest()">SetValTest</li>
+            <div id="test-dom2" style="border: #AF00AF 5px solid; padding: 5px">
+                <ul>
+                    <li id="li-js">
+                        <span>JavaScript</span>
+                    </li>
+                    <li id="li-py">
+                        <span>Python</span>
+                    </li>
+                    <li id="li-sf">
+                        <span>Swift</span>
+                    </li>
+                </ul>
+            </div>
+            <li style="cursor:pointer" onclick="AddDOMTest()">AddDOMTest</li>
+            <input id="event-button" type="button" value="ClickEventButton" onclick="ClickEventButton()" />
+            <input id="event-button" type="button" value="MouseEnterEventButton" onclick="MouseEnterEventButton()" />
+            <input id="event-button" type="button" value="OtherEventInfoButton" onclick="OtherEventInfoButton()" />
+            <li id="li-event" style="cursor:pointer" title="配合上面三个按钮进行测试">EventTest</li>
+            <input type="button" value="OtherEventInfoButton" onclick="OtherEventInfoButton()" />
+            <br>
+            <span id="testMouseMoveSpan" style="background: #AAFFFF">pageX = 0, pageY = 0</span>
+            <br>
+            <span id="testMouseMoveSpan2" style="background: #AAACCC">pageX = 0, pageY = 0</span>
+            <div id="testMouseMoveDiv" style="display: block; width: 300px; height: 120px; border: 1px solid #ccc;">
+                在此区域移动鼠标前先添加事件
+            </div>
+            <button onclick="AddMouseMove()">AddMouseMove</button>
+            <button onclick="DelMouseMove()">DelMouseMove</button>
+            <button onclick="DelMouseMoveALL()">DelMouseMoveALL</button>
+            <br>文本改变事件,失去焦点触发:
+            <input id="sample-text" type="text" onchange="SampleTextChange()" />
+            <li style="cursor:pointer;color: red" onclick="EventConditionTest()">EventConditionTest</li>
+            <li style="cursor:pointer" onclick="PopupTest()">PopupTest</li>
+            <li style="cursor:pointer" onclick="AnimationTest()">AnimationTest</li>
+            <div style="width: 120px; height: 120px;">
+                <img id="img-world" src="img/world.png" width="100%" />
+            </div>
+            <input type="button" value="hild(slow)" onclick="$('#img-world').hide('slow')" />
+            <input type="button" value="show(fast)" onclick="$('#img-world').show('fast')" />
+            <input type="button" value="toggle(3000)" onclick="$('#img-world').toggle(3000)" />
+            <input type="button" value="fadeOut(slow)" onclick="$('#img-world').fadeOut('slow')" />
+            <input type="button" value="fadeIn(slow)" onclick="$('#img-world').fadeIn('slow')" />
+            <input type="button" value="fadeToggle(slow)" onclick="$('#img-world').fadeToggle('slow')" />
+            <input type="button" value="Animate" onclick="imgAnimate()" />
+            <input type="button" value="FunctionAnimate" onclick="imgAnimateWithFunction()" />
+            <input type="button" value="SerialAnimate" onclick="SerialAnimate()" />
+            <table id="test-table" class="uk-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Address</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Peter Parker</td>
+                        <td>spider@movie.org</td>
+                        <td>New York</td>
+                        <td>Active</td>
+                    </tr>
+                    <tr>
+                        <td>Thor Odinson</td>
+                        <td>thor@asgard.org</td>
+                        <td>Asgard</td>
+                        <td>Active</td>
+                    </tr>
+                    <tr>
+                        <td>Optimus Prime</td>
+                        <td>prime@cybertron.org</td>
+                        <td>Cybertron</td>
+                        <td>Locked</td>
+                    </tr>
+                </tbody>
+            </table>
+            <li style="cursor:pointer" onclick="AnimationTest2()">AnimationTest2</li>
+            <input type="button" value="刷新(ajax)" onclick="refreshPrice()" />
+            <p>当前价格:</p>
+            <p id="current_price"></p>
+            <li style="cursor:pointer" onclick="AJAXTest()">AJAXTest</li>
+        </ul>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>JavaScript Learn Demo</title>
+    <script src="jquery-3.3.1.min.js"></script>
+    <script>
+        /**
+         * 以下是完整的JQuery的jqXHR对象
+         */
+        var jqXHR = {
+            abort: function (statusText) {
+                // 取消请求，关闭连接                
+            },
+            always: function () {
+                // 设置请求完成(无论成功或失败)时需要执行的一个或多个回调函数
+            },
+            complete: function () {
+                // always()函数的别名，设置请求完成(无论成功或失败)时需要执行的一个或多个回调函数
+            },
+            done: function () {
+                // 设置请求成功时需要执行的一个或多个回调函数
+            },
+            error: function () {
+                // fail()函数的别名，设置请求失败时需要执行的一个或多个回调函数
+            },
+            fail: function () {
+                // 设置请求失败时需要执行的一个或多个回调函数                
+            },
+            getAllResponseHeaders: function () {
+                // 获取响应头信息的原始字符串        
+            },
+            getResponseHeader: function (key) {
+                // 获取响应头中指定名称的值     
+            },
+            overrideMimeType: function (type) {
+                // 重写 Content-Type 响应头       
+            },
+            pipe: function () {
+                // then() 函数的别名，分别设置请求成功、失败、正在进行时需要执行的回调函数           
+            },
+            progress: function () {
+                // 设置 Deferred 对象生成进度通知时需要执行的回调函数
+            },
+            promise: function (obj) {
+                // 为指定对象追加 Promise 对象的成员，以充当 Promise 对象 
+            },
+            readyState: 4, // 请求的状态
+            responseText: "<!DOCTYPE html><html>......</html>", // 响应的文本内容
+            setRequestHeader: function (name, value) {
+                // 设置请求头
+            },
+            state: function () {
+                // 确定一个 Deferred 对象的当前状态，例如："pending"、"resolved"、"rejected"               
+            },
+            status: 200,
+            statusCode: function (map) {
+                // 设置响应指定状态码需要执行的回调函数
+                // map形如：{ 301:function(){}, 404:function(){} }     
+            },
+            statusText: "OK", // 状态响应头中的描述文本
+            success: function () {
+                // done()函数的别名，设置请求成功时需要执行的一个或多个回调函数
+            }
+        };
+
+        function refreshPrice() {
+            let jqxhr = $.ajax(
+                'http://api.money.126.net/data/feed/0000001,1399001',
+                {
+                    method: 'GET',
+                    dataType: 'jsonp',
+                    jsonp: 'callback',
+                    jsonpCallback: 'callbackFunction',
+                    crossDomain: true,
+                })
+                .done((data) => {
+                    let str = data['0000001'].name + ': ' +
+                        data['0000001'].price + '；' +
+                        data['1399001'].name + ': ' +
+                        data['1399001'].price;
+                    $('#current_price').slideUp('slow').text(str).slideDown('slow');
+                }).fail((xhr, status) => {
+                    alert('失败: ' + xhr.status + ', 原因: ' + status);
+                });
+        }
+
+        function refreshPrice2() {
+            var aj = $.ajax({
+                url: 'http://api.money.126.net/data/feed/0000001,1399001',
+                method: 'GET',
+                dataType: 'jsonp',
+                jsonp: 'callback',
+                jsonpCallback: 'callbackFunction',
+                crossDomain: true,
+                success: function (data) {
+                    let str = data['0000001'].name + ': ' +
+                        data['0000001'].price + '；' +
+                        data['1399001'].name + ': ' +
+                        data['1399001'].price;
+                    $('#current_price2').slideUp('slow').text(str).slideDown('slow');
+                },
+                error: function () {
+                    console.log('erro');
+                },
+                fail: function () {
+                    console.log('fail');
+                },
+                always: function () {
+                    console.log('always');
+                },
+            });
+        }
+    </script>
+</head>
+
+<body>
+    <input type="button" value="刷新(ajax)" onclick="refreshPrice()" />
+    <p>当前价格:</p>
+    <p id="current_price"></p>
+    <input type="button" value="刷新2(ajax)" onclick="refreshPrice2()" />
+    <p>当前价格:</p>
+    <p id="current_price2"></p>
+</body>
+
+</html>

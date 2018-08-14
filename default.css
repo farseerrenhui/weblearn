@@ -1,0 +1,48 @@
+body {
+    padding: 0;
+    margin: 0;
+}
+
+.left {
+    width: 33%;
+    height: 100%;
+    position: absolute;
+}
+
+.middle {
+    width: 33%;
+    left: 33%;
+    position: absolute;
+}
+
+.right {
+    width: 33%;
+    height: 100%;
+    position: absolute;
+    left: 66%;
+}
+
+table {
+    font-family: verdana, arial, sans-serif;
+    font-size: 11px;
+    color: #333333;
+    border-width: 1px;
+    border-color: #666666;
+    border-collapse: collapse;
+}
+
+table th {
+    border-width: 1px;
+    padding: 8px;
+    border-style: solid;
+    border-color: #666666;
+    background-color: #dedede;
+}
+
+table td {
+    border-width: 1px;
+    padding: 8px;
+    border-style: solid;
+    border-color: #666666;
+    background-color: #ffffff;
+}
