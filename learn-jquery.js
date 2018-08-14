@@ -376,7 +376,7 @@ function AnimationTest2() {
 
 function refreshPrice() {
     let jqxhr = $.ajax(
-        'http://api1.money.126.net/data/feed/0000001,1399001',
+        'http://api.money.126.net/data/feed/0000001,1399001',
         {
             method: 'GET',
             dataType: 'jsonp',
@@ -416,7 +416,38 @@ function AJAXTest() {
             console.log('done');
         }
     ).always(//相当于finally,总会执行. ()=>是一种简化写法
-        ()=>{console.log('always')}
+        () => { console.log('always') }
+    );
+}
+
+function MulitiAJAXTest() {
+    $.when(
+        $.ajax(
+            {
+                url: 'http://api.money.126.net/data/feed/0000001,1399001',
+                method: 'GET',
+                dataType: 'jsonp',
+                jsonp: 'callback',
+                crossDomain: true,
+            }
+        ),
+        $.ajax(
+            {
+                url: 'http://api.money.126.net/data/feed/1399001',
+                method: 'GET',
+                dataType: 'jsonp',
+                jsonp: 'callback',
+                crossDomain: true,
+            }
+        ),
+    ).then(
+        function (result1, result2) {
+            console.log("results:");
+            var str1 = result1[2].responseJSON;
+            var str2 = result2[2].responseJSON;
+            console.log(str1);
+            console.log(str2);
+        }
     );
 }
 
@@ -479,3 +510,54 @@ var jqXHR = {
         // done()函数的别名，设置请求成功时需要执行的一个或多个回调函数
     }
 };
+
+/**
+ * 编写jQuery插件
+ * 给jQuery对象绑定一个新方法是通过扩展$.fn对象实现的
+ */
+$.fn.HighLight = function () {
+    // this已绑定为当前jQuery对象:
+    this.css('backgroundColor', '#fffceb').css('color', '#d85030');
+    /**
+     * jQuery对象支持链式操作，我们自己写的扩展方法也要能继续链式下去：
+     * 函数内部的this在调用时被绑定为jQuery对象，所以函数内部代码可以正常调用所有jQuery对象的方法。
+     */
+    return this;
+}
+
+function PluginTest() {
+    $('#plugin-test').HighLight();
+}
+
+/**
+ * jQuery插件的最终版
+ * 1.支持链式操作 return this
+ * 2.包含默认值设置 $.fn.HighLightFinal.defaults
+ * 3.包含自定义设置 options
+ * @param {个性化参数} options 
+ */
+$.fn.HighLightFinal = function (options) {
+    // 合并默认值和用户设定值:
+    var opts = $.extend({}, $.fn.HighLightFinal.defaults, options);
+    this
+        .css('backgroundColor', opts.backgroundColor)
+        .css('color', opts.color)
+        .css('font-size', opts.fontsize);
+    return this;
+}
+
+// 设定默认值:
+$.fn.HighLightFinal.defaults = {
+    color: '#FF0000',
+    backgroundColor: '#00FF00'
+}
+
+function PluginFinaTest() {
+    $('#plugin-test').HighLightFinal();
+    $('#plugin-final-test').HighLightFinal(
+        {
+            backgroundColor: '#0000FF',
+            fontsize: '25px',
+        }
+    );
+}
