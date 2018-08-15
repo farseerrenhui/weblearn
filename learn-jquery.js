@@ -439,7 +439,7 @@ function MulitiAJAXTest() {
                 jsonp: 'callback',
                 crossDomain: true,
             }
-        ),
+        )
     ).then(
         function (result1, result2) {
             console.log("results:");
