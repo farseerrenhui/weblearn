@@ -112,6 +112,10 @@
                 },
             });
         }
+
+        function Return(){
+            history.back(-1);
+        }
     </script>
 </head>
 
@@ -122,6 +126,8 @@
     <input type="button" value="刷新2(ajax)" onclick="refreshPrice2()" />
     <p>当前价格:</p>
     <p id="current_price2"></p>
+
+    <li style="cursor:pointer" onclick="Return()">Return</li>
 </body>
 
 </html>

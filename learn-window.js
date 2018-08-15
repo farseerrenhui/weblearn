@@ -1,3 +1,8 @@
+function setTime() {
+    $('#window-interval-test').html('<li id="window-interval-test">WindowIntervalTest -> ' + new Date().toLocaleString() + '</li>');
+}
+window.setInterval(setTime, 1000);
+
 function WindowSizeTest() {
     //inner很精确
     console.log('window inner size: ' + window.innerWidth + ' x ' + window.innerHeight);
@@ -457,4 +462,19 @@ function CanvasTest2() {
     ctx.font = '24px Arial';
     ctx.fillStyle = '#333333';
     ctx.fillText('带阴影的文字', 20, 40);
+}
+
+function StatusTest(){
+    /**
+     * 大多数浏览器砍掉了状态栏
+     */
+    status = '将内容设置到浏览器的状态栏上.';
+}
+
+function URLTest(){
+    window.open('testajax.html','_self');
+}
+
+function URLTest2(){
+    window.location.href = "http://www.baidu.com";
 }
