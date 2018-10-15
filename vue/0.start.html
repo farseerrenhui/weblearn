@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Vue Learn</title>
+    <script src="vue.js"></script>
+</head>
+
+<body>
+    
+<div id="app">{{key}}{{valuexx}}{{valueyy}}</div>
+<div id="app2"><p v-bind:title="message">鼠标悬停</p></div>
+<div id="app3" v-if="seen">当seen为false或0时,隐藏此段文字</div>
+<div id="app4"><ul><li v-for="word in words">{{word.text + word.type}}</li></ul></div>
+    
+</body>
+
+<script>
+    var app = new Vue({
+        el:"#app",
+        data:{
+            key:"sample1",
+            valuexx:"sample2",
+            valueyy:"valueyy"
+        }
+    })
+    var app2 = new Vue({
+        el:"#app2",
+        data:{
+            message:"悬停弹出信息",
+        }
+    })
+    var app3 = new Vue({
+        el:"#app3",
+        data:{
+            seen:true
+        }
+    })
+    var app4 = new Vue({
+        el:"#app4",
+        data:{
+            words:[
+                {
+                    text:"Nothing Serious",
+                    type:"[A]"
+                },
+                {
+                    text:"Challenge Everything",
+                    type:"[A]"
+                }
+            ]
+        }
+    })
+</script>
+
+</html>

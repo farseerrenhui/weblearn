@@ -464,17 +464,30 @@ function CanvasTest2() {
     ctx.fillText('带阴影的文字', 20, 40);
 }
 
-function StatusTest(){
+function StatusTest() {
     /**
      * 大多数浏览器砍掉了状态栏
      */
     status = '将内容设置到浏览器的状态栏上.';
 }
 
-function URLTest(){
-    window.open('testajax.html','_self');
+function URLTest() {
+    window.open('testajax.html', '_self');
 }
 
-function URLTest2(){
+function URLTest2() {
     window.location.href = "http://www.baidu.com";
+}
+
+/**
+ * JS方式的提交表单,提交之前做一些处理
+ */
+function JSSubmitForm() {
+    var form = $('#test-form-2');
+
+    var name = $('#f2-name').val();
+    var password = $('#f2-password').val();
+
+    if (name.length > 3 && password.length > 3)
+        form.submit();
 }

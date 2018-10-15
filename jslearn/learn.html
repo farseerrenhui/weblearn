@@ -4,7 +4,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>JavaScript Learn Demo</title>
-    <script src="jquery-3.3.1.min.js"></script>
+    <script src="../jquery/jquery-3.3.1.js"></script>
     <script src="md5.js"></script>
     <script src="learn-basic.js"></script>
     <script src="learn-window.js"></script>
@@ -49,7 +49,7 @@
             <li style="cursor:pointer" onclick="NavigatorTest()">NavigatorTest</li>
             <li style="cursor:pointer" onclick="LocationTest()">LocationTest</li>
             <li style="cursor:pointer" onclick="DocumentTest()">DocumentTest</li>
-            <li style="cursor:pointer" onclick="CookieTest()">CookieTest</li>        
+            <li style="cursor:pointer" onclick="CookieTest()">CookieTest</li>
             <div id="test-div" style="width: 80px">
                 <div class="c-red" style="background-color: #FFAAAA">
                     <p style="margin: 0" id="test-p">JavaScript</p>
@@ -106,6 +106,23 @@
             <li style="cursor:pointer" onclick="StatusTest()">StatusTest</li>
             <li style="cursor:pointer" onclick="URLTest()">URLTest</li>
             <li style="cursor:pointer" onclick="URLTest2()">URLTest2</li>
+            <li>SubmitTest</li>
+            <div style="border: 1px solid #000000;margin: 1px">
+                <form id="test-form-1" action="testajax.html" method="POST">
+                    <label>test-form-1</label>
+                    <input style="width:60px" name="name" type="text" />
+                    <input style="width:60px" name="password" type="password" />
+                    <input type="submit" value="submit提交" />
+                </form>
+            </div>
+            <div style="border: 1px solid #000000;margin: 1px">
+                <form id="test-form-2" name="f2" action="submit.html" method="GET">
+                    <label>test-form-2</label>
+                    <input style="width:60px" id="f2-name" name="name" type="text" value="123"/>
+                    <input style="width:60px" id="f2-password" name="password" type="password" value="qwe"/>
+                    <input type="button" value="JS提交" onclick="JSSubmitForm()" />
+                </form>
+            </div>
         </ul>
     </div>
     <div class="right">
@@ -119,10 +136,14 @@
                     <p style="margin: 0px">测试表单选择器</p>
                     <input type="text" value="Tom" />
                     <input type="password" value="123" />
-                    <input type="checkbox" checked="checked">12312s</input>
                     <br/>
-                    <input type="radio" name="r1" value="1" />1
-                    <input type="radio" name="r1" value="2" />2
+                    <label><input type="checkbox" checked="checked" />checkbox1</label>
+                    <br/>
+                    <input type="checkbox" id="check1" value="123" name="name" class="check">
+                    <label for="check1">checkbox2</label>
+                    <br/>
+                    <label><input type="radio" name="r1" value="1" />1</label>
+                    <label><input type="radio" name="r1" value="2" />2</label>
                     <br/>
                     <input type="text" value="123" hidden="hidden" />
                     <textarea>TEXTAREA</textarea>
