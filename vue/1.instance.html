@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Vue实例</title>
+    <script src="vue.js"></script>
+</head>
+
+<body>
+
+    <div id="app">
+        <p>{{ foo }}</p>
+        <!-- 这里的 `foo` 不会更新！ -->
+        <button v-on:click="foo = 'baz'">Change it</button>
+    </div>
+
+    <img src="img/lifecycle.png" width="60%"/>
+
+</body>
+
+<script>
+
+    var obj = {
+        foo: 'bar'
+    }
+    Object.freeze(obj)
+    new Vue({
+        el: '#app',
+        data: obj
+    })
+
+    /**
+     * 生命周期钩子
+     * 比如 created 钩子可以用来在一个实例被创建之后执行代码：
+     * */
+    new Vue({
+        data: {
+            a: 1
+        },
+        created: function () {
+            // `this` 指向 vm 实例
+            console.log('a is: ' + this.a)
+        }
+    })
+
+</script>
+
+</html>

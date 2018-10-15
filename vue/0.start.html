@@ -1,57 +1,113 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Vue Learn</title>
+    <title>起步</title>
     <script src="vue.js"></script>
 </head>
 
 <body>
-    
-<div id="app">{{key}}{{valuexx}}{{valueyy}}</div>
-<div id="app2"><p v-bind:title="message">鼠标悬停</p></div>
-<div id="app3" v-if="seen">当seen为false或0时,隐藏此段文字</div>
-<div id="app4"><ul><li v-for="word in words">{{word.text + word.type}}</li></ul></div>
-    
+
+    <div id="app-1">{{key}}-{{valuexx}}-{{valueyy}}</div>
+    <div id="app-2">
+        <p v-bind:title="message">鼠标悬停</p>
+    </div>
+    <div id="app-3" v-if="seen">当seen为false或0时,隐藏此段文字</div>
+    <div id="app-4">
+        <ul>
+            <li v-for="word in words">{{word.text + word.type}}</li>
+        </ul>
+    </div>
+    <div id="app-5">
+        <p>{{ message }}</p>
+        <button v-on:click="reverseMessage">逆转消息</button>
+    </div>
+    <div id="app-6">
+        <p>{{ message }}</p>
+        <input v-model="message">
+    </div>
+    <div id="app-7">
+        <ol>
+            <!--
+                现在我们为每个 todo-item 提供 todo 对象todo 对象是变量，即其内容可以是动态的。
+                我们也需要为每个组件提供一个“key”，稍后再作详细解释。
+            -->
+            <todo-item v-for="item in groceryList" v-bind:todo="item" v-bind:key="item.id">
+            </todo-item>
+        </ol>
+    </div>
 </body>
 
 <script>
     var app = new Vue({
-        el:"#app",
-        data:{
-            key:"sample1",
-            valuexx:"sample2",
-            valueyy:"valueyy"
+        el: "#app-1",
+        data: {
+            key: "关键字",
+            valuexx: "[X值]",
+            valueyy: "[y值]"
         }
     })
     var app2 = new Vue({
-        el:"#app2",
-        data:{
-            message:"悬停弹出信息",
+        el: "#app-2",
+        data: {
+            message: "悬停弹出信息",
         }
     })
     var app3 = new Vue({
-        el:"#app3",
-        data:{
-            seen:true
+        el: "#app-3",
+        data: {
+            seen: true
         }
     })
     var app4 = new Vue({
-        el:"#app4",
-        data:{
-            words:[
+        el: "#app-4",
+        data: {
+            words: [
                 {
-                    text:"Nothing Serious",
-                    type:"[A]"
+                    text: "Nothing Serious",
+                    type: "[A]"
                 },
                 {
-                    text:"Challenge Everything",
-                    type:"[A]"
+                    text: "Challenge Everything",
+                    type: "[A]"
                 }
             ]
         }
     })
+    var app5 = new Vue({
+        el: '#app-5',
+        data: {
+            message: 'Hello Vue.js!'
+        },
+        methods: {
+            reverseMessage: function () {
+                this.message = this.message.split('').reverse().join('')
+            }
+        }
+    })
+    var app6 = new Vue({
+        el: '#app-6',
+        data: {
+            message: 'Hello Vue!'
+        }
+    })
+    // 定义名为 todo-item 的新组件
+    Vue.component('todo-item', {
+        props: ['todo'],
+        template: '<li>{{ todo.text }}</li>'
+    })
+    var app7 = new Vue({
+        el: '#app-7',
+        data: {
+            groceryList: [
+                { id: 0, text: '蔬菜' },
+                { id: 1, text: '奶酪' },
+                { id: 2, text: '蛋糕🎂' }
+            ]
+        }
+    })
+
 </script>
 
 </html>
