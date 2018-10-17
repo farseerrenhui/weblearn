@@ -5,33 +5,170 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>模板语法</title>
     <script src="vue.js"></script>
+    <script src="../jquery/jquery-3.3.1.js"></script>
 </head>
 
 <body>
 
-    <div id="app-1">
-        <span>Message: {{ msg }}</span>
-
-    </div>
-    <button onclick="changeMsg()">changeMsg()</button>
-
+    <ul style="list-style-image:url(img/vue.png);">
+        <li id="app-1">
+            <p><b>插值.文本插值</b></p>
+            <span>Message: {{ msg }}</span>
+            <span v-once>Once Message: {{ msg }}</span>
+            <button @click="changeMsg">Vue语法</button>
+            <button onclick="changeMsg()">普通Js语法</button>
+        </li>
+        <li id="app-2">
+            <p><b>插值.原始HTML,容易导致XSS攻击</b></p>
+            <P>Using mustaches:{{rawHTML}}</P>
+            <P>Using v-html directive:<span v-html="rawHTML"></span></P>
+        </li>
+        <li>
+            <p><b>插值.使用 v-bind 指令将Mustache语法作用在HTML特性上</b></p>
+            <button id="app-3" v-bind:disabled="isButtonDisabled" onclick="alert('I am Enabled.')">按钮使用了v-bind指令</button>
+            改变按钮的v-bind值;
+            <button onclick="changeButtonDisabled()">true</button>
+            <button onclick="changeButtonDisabled2()">null</button>
+            <button onclick="changeButtonDisabled3()">undifine</button>
+            <button onclick="changeButtonDisabled4()">false</button>
+            <p>如果 isButtonDisabled 的值是 null、undefined 或 false，则 disabled 特性甚至不会被包含在渲染出来的&lt;button&gt;元素中。</p>
+        </li>
+        <li id="app-4">
+            <p><b>插值.Vue支持单个JavaScript的表达式</b></p>
+            <div>{{number+1}}</div>
+            <div>{{ ok ? 'YES' : 'NO' }}</div>
+            <div>{{ message.split('').reverse().join('') }}</div>
+            <div v-bind:id="'div-' + id">一个DIV</div>
+            <button onclick="alert($('#div-1').text())">获取div-1的内容</button>
+        </li>
+        <li id="app-5">
+            <p><b>指令</b></p>
+            <p v-if="seen">现在你看到我了</p>
+            <button onclick="app5._data.seen = true">更改v-if指令值:true</button>
+            <button onclick="app5._data.seen = false">更改v-if指令值:false</button>
+        </li>
+        <li id="app-6">
+            <p><b>指令.参数</b></p>
+            <a v-bind:href="url">{{url}}</a>
+            <button onclick="app6._data.url='http://www.baidu.com'">v-bind:href</button>
+            <br />
+            <a v-on:click="vonclick" href="">v-on:onclick</a>
+            <button onclick="app6._data.vonclick=f2">vonclick</button>
+        </li>
+        <li id=app-7>
+            <p><b>指令.修饰符,OnSubmit没弄明白(下面俩例子)</b></p>
+            <form onsubmit="return false;">
+                <button type="submit">点击按钮提交后,可看到地址栏后面多一个问号</button>
+            </form>
+            <form action="/aa" v-on:submit.prevent="bb">
+                <button type="submit">点击按钮提交后,可看到地址栏后面多一个问号</button>
+            </form>
+            <p><b>指令.修饰符,v-on:submit.prevent怎么用?</b></p>
+            <form v-on:submit.prevent="onSubmit">...</form>
+        </li>
+        <li>
+            <p><b>缩写</b></p>
+            <p>v-bind:href="url"可缩写成:href="url"</p>
+            <p>v-on:click="doSomething"缩写成@click="doSomething"</p>
+        </li>
+    </ul>
 </body>
 
 <script>
-
-    var app = new Vue({
+    var app1 = new Vue({
         el: "#app-1",
         data: {
             msg: "主体内容",
+        },
+        methods: {
+            changeMsg: function () {
+                console.log("按钮点击事件的标准Vue写法是写到methods里面");
+                this._data.msg = "[Changed by Vue]";
+            }
         }
     });
 
     function changeMsg() {
-        console.log("changeMsg()");
-        console.log(app);
-        app.data.msg = "Changed!";
+        console.log("这个是普通的Js语法");
+        app1._data.msg = "[Changed by Js]";
     }
 
+    var app2 = new Vue({
+        el: "#app-2",
+        data: {
+            rawHTML: '<span style="color:green">This should be Green</span>',
+        }
+    });
+
+    var app3 = new Vue({
+        el: "#app-3",
+        data: {
+            isButtonDisabled: true,
+        }
+    });
+
+    function changeButtonDisabled() {
+        app3._data.isButtonDisabled = true;
+    }
+
+    function changeButtonDisabled2() {
+        app3._data.isButtonDisabled = null;
+    }
+
+    function changeButtonDisabled3() {
+        app3._data.isButtonDisabled = undefined;
+    }
+
+    function changeButtonDisabled4() {
+        app3._data.isButtonDisabled = false;
+    }
+
+    new Vue({
+        el: "#app-4",
+        data: {
+            number: 100,
+            ok: false,
+            message: 'ABCDEFG',
+            id: 1,
+        }
+    });
+
+    var app5 = new Vue({
+        el: "#app-5",
+        data: {
+            seen: true,
+        }
+    });
+
+    var app6 = new Vue({
+        el: "#app-6",
+        data: {
+            url: 'http://www.sina.com',
+            vonclick: f1,
+        }
+    });
+
+    function f1() {
+        alert('f1')
+    }
+
+    function f2() {
+        alert('f2')
+    }
+
+    var app7 = new Vue({
+        el: "#app-7",
+        data: {
+            url: 'http://www.sina.com',
+            vonclick: f1,
+        },
+        methods: {
+            bb: function () {
+                alert("ss");
+                return false;
+            }
+        }
+    });
 </script>
 
 </html>

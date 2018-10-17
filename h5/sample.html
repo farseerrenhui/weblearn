@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>h5例子</title>
+    <script src="../jquery/jquery-3.3.1.js"></script>
+</head>
+
+<body>
+    <ul style="list-style-image:url(img/h5.png);">
+        <p><b></b></p>
+        <li>
+            <label><input name="bind-radio" type="radio" value="true" checked="checked" />true</label>
+            <label><input name="bind-radio" type="radio" value="null" />null</label>
+            <label><input name="bind-radio" type="radio" value="undifine" />undifine</label>
+            <label><input name="bind-radio" type="radio" value="false" />false</label>
+            <button onclick="getBindRadioValue()">获取选中的值</button>
+        </li>
+    </ul>
+</body>
+<script>
+    function getBindRadioValue() {
+        alert($("input[name='bind-radio']:checked").val());
+    }
+</script>
+
+</html>
