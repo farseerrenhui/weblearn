@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Class与Style绑定</title>
+    <script src="vue.js"></script>
+    <script src="../jquery/jquery-3.3.1.js"></script>
+</head>
+
+<style>
+    .selected {
+        color: tomato;
+        font-weight: bold;
+    }
+</style>
+
+<body>
+    <ul style="list-style-image:url(img/vue.png);">
+        <li id="classTest">
+            <p v-bind:class="{selected:selected,'text-danger': hasError}">123</p>
+        </li>
+    </ul>
+</body>
+
+<script>
+    var classTest = new Vue({
+        el: "#classTest",
+        data: {
+            selected: true,
+            hasError: true,
+        }
+    })
+</script>
+
+</html>

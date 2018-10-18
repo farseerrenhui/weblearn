@@ -38,10 +38,14 @@
             </ol>
         </li>
         <li id="test-li">
-            <p><b>双向更改文本值</b></p>
-            <input id="test" type="text" v-model="test" /><br>
-            {{test}}<br>
-            <button v-on:click="testChangeValue">test</button>
+            <p><b>双向更改文本值,类似Binding</b></p>
+            <input id="test" type="text" v-model="testvalue" /><br>
+            {{testvalue}}<br>
+            <button v-on:click="testChangeValue">更改testvalue值</button><br>
+            <input id="test2" type="text" v-model="testvalue2" /><br>
+            {{testvalue2}}<br>
+            <input id="test3" type="text" v-model="testvalue3" /><br>
+            {{testvalue3}}<br>
         </li>
     </ul>
 </body>
@@ -124,11 +128,14 @@
     var test_li = new Vue({
         el: "#test-li",
         data: {
-            test: "初始值",
+            testvalue: "初始值",
+            testvalue2: "初始值2",
+            //如果不在data里声明变量,双向绑定失效
+            //testvalue3: "初始值3",
         },
         methods: {
             testChangeValue: function () {
-                this.test = "new value";
+                this.testvalue = "new value";
             }
         }
     })
