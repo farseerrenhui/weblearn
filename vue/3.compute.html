@@ -9,26 +9,153 @@
 </head>
 
 <body>
-    <div id="example">
-        <p>Original message: "{{ message }}"</p>
-        <p>Computed reversed message: "{{ reversedMessage }}"</p>
-    </div>
+    <ul style="list-style-image:url(img/vue.png);">
+        <li id="example">
+            <p><b>计算属性的基本语法</b></p>
+            <p>Original message: "{{ message }}"</p>
+            <p>Computed reversed message: "{{ reversedMessage }}"</p>
+        </li>
+        <li id="timeExample">
+            <p><b>计算属性有缓存,方法没有</b></p>
+            <p>计算属性的时间: "{{ timeComputed }}"</p>
+            <p>方法的时间: "{{ timeMethod() }}"</p>
+            <button type="button" onclick="twoWay()">获取时间值</button>
+        </li>
+        <li id="watchExample">
+            <p><b>使用Watch监视值的变化</b></p>
+            <input id="firstName" type="text" value="Hello" />
+            <input id="lastName" type="text" value="Kitty" />
+            <button v-on:click="confirm">更改值,只有值发生更改,watch对应的方法才执行</button>
+            <br>
+            <input id="fullName" type="text" />
+            <button v-on:click="show">console.log显示结果</button>
+        </li>
+        <li id="setterExample">
+            <p><b>计算属性的setter</b></p>
+            <input id="name1" type="text" value="Hello" />
+            <input id="name2" type="text" value="World" />
+            {{name12}}
+            <br>
+            <input id="name12" type="text" value="Hello World" />
+            <button v-on:click="changeName">调用计算属性的setter方法</button>
+        </li>
+    </ul>
 </body>
 
 <script>
-    var vm = new Vue({
+    Date.prototype.Format = function (fmt) { // JS中没有这个方法
+        var o = {
+            "M+": this.getMonth() + 1, // 月份
+            "d+": this.getDate(), // 日
+            "h+": this.getHours(), // 小时
+            "m+": this.getMinutes(), // 分
+            "s+": this.getSeconds(), // 秒
+            "q+": Math.floor((this.getMonth() + 3) / 3), // 季度
+            "S": this.getMilliseconds() // 毫秒
+        };
+        if (/(y+)/.test(fmt))
+            fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var k in o)
+            if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) :
+                (("00" + o[k]).substr(("" + o[k]).length)));
+        return fmt;
+    }
+
+    var example = new Vue({
         el: '#example',
         data: {
-            message: 'Hello'
+            message: 'Hello',
+            timeWatch: Date.now(),
         },
         computed: {
             // 计算属性的 getter
             reversedMessage: function () {
-                // `this` 指向 vm 实例
+                // `this` 指向 example 实例
                 return this.message.split('').reverse().join('')
+            },
+        },
+    })
+
+    var timeExample = new Vue({
+        el: '#timeExample',
+        computed: {
+            timeComputed: function () {
+                return new Date().Format("yyyy-MM-dd hh:mm:ss.S");
+            }
+        },
+        methods: {
+            timeMethod: function () {
+                return new Date().Format("yyyy-MM-dd hh:mm:ss.S");
+            }
+        },
+    })
+
+    function twoWay() {
+        alert("timeComputed[不刷新]:" + timeExample.timeComputed + "\ntimeMethod[刷新]:" + timeExample.timeMethod());
+    }
+
+    var watchExample = new Vue({
+        el: '#watchExample',
+        data: {
+            firstName: $("#firstName").val(),
+            lastName: $("#lastName").val(),
+            fullName: $("#firstName").val() + " " + $("#lastName").val(),
+        },
+        watch: {
+            firstName: function (val) {
+                console.log("firstName changed -> " + val);
+                this.fullName = this.firstName + " " + this.lastName;
+            },
+            lastName: function (val) {
+                console.log("lastName changed -> " + val);
+                this.fullName = this.firstName + " " + this.lastName;
+            }
+        },
+        methods: {
+            confirm: function () {
+                this.firstName = $("#firstName").val();
+                this.lastName = $("#lastName").val();
+            },
+            show: function () {
+                console.log(this.firstName);
+                console.log(this.lastName);
+                console.log(this.fullName);
+                $("#fullName").val(this.fullName);
+                // 与上面赋值代码效果相同
+                // $("#fullName").attr("value",this.fullName);
             }
         }
     })
+
+    var setterExample = new Vue({
+        el: "#setterExample",
+        data: {
+            name1: $("#name1").val(),
+            name2: $("#name2").val(),
+        },
+        computed: {
+            name12: {
+                get: function () {
+                    return this.name1 + " " + this.name2;
+                },
+                set: function (newValue) {
+                    var names = newValue.split(' ');
+                    this.firstName = names[0];
+                    console.log(this.firstName);
+                    this.lastName = names[names.length - 1];
+                    console.log(this.lastName);
+                }
+            }
+        },
+        methods: {
+            changeName: function () {
+                console.log($("#name12").val());
+                this.name12 = ($("#name12").val());
+                console.log(this.name12);
+            }
+        }
+    })
+
 </script>
 
 </html>

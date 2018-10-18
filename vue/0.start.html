@@ -8,35 +8,42 @@
 </head>
 
 <body>
-
-    <div id="app-1">{{key}}-{{valuexx}}-{{valueyy}}</div>
-    <div id="app-2">
-        <p v-bind:title="message">鼠标悬停</p>
-    </div>
-    <div id="app-3" v-if="seen">当seen为false或0时,隐藏此段文字</div>
-    <div id="app-4">
-        <ul>
-            <li v-for="word in words">{{word.text + word.type}}</li>
-        </ul>
-    </div>
-    <div id="app-5">
-        <p>{{ message }}</p>
-        <button v-on:click="reverseMessage">逆转消息</button>
-    </div>
-    <div id="app-6">
-        <p>{{ message }}</p>
-        <input v-model="message">
-    </div>
-    <div id="app-7">
-        <ol>
-            <!--
-                现在我们为每个 todo-item 提供 todo 对象todo 对象是变量，即其内容可以是动态的。
-                我们也需要为每个组件提供一个“key”，稍后再作详细解释。
-            -->
-            <todo-item v-for="item in groceryList" v-bind:todo="item" v-bind:key="item.id">
-            </todo-item>
-        </ol>
-    </div>
+    <ul style="list-style-image:url(img/vue.png);">
+        <li id="app-1">{{key}}-{{valuexx}}-{{valueyy}}</li>
+        <li id="app-2">
+            <p v-bind:title="message">鼠标悬停</p>
+        </li>
+        <li id="app-3" v-if="seen">当seen为false或0时,隐藏此段文字</li>
+        <li id="app-4">
+            <ul style="list-style-image:none">
+                <li v-for="word in words">{{word.text + word.type}}</li>
+            </ul>
+        </li>
+        <li id="app-5">
+            <p>{{ message }}</p>
+            <button v-on:click="reverseMessage">逆转消息</button>
+        </li>
+        <li id="app-6">
+            <p>{{ message }}</p>
+            <input v-model="message">
+        </li>
+        <li id="app-7">
+            <ol style="list-style-image:none">
+                <!--
+                    现在我们为每个 todo-item 提供 todo 对象todo 对象是变量，即其内容可以是动态的。
+                    我们也需要为每个组件提供一个“key”，稍后再作详细解释。
+                -->
+                <todo-item v-for="item in groceryList" v-bind:todo="item" v-bind:key="item.id">
+                </todo-item>
+            </ol>
+        </li>
+        <li id="test-li">
+            <p><b>双向更改文本值</b></p>
+            <input id="test" type="text" v-model="test" /><br>
+            {{test}}<br>
+            <button v-on:click="testChangeValue">test</button>
+        </li>
+    </ul>
 </body>
 
 <script>
@@ -63,8 +70,7 @@
     var app4 = new Vue({
         el: "#app-4",
         data: {
-            words: [
-                {
+            words: [{
                     text: "Nothing Serious",
                     type: "[A]"
                 },
@@ -100,14 +106,32 @@
     var app7 = new Vue({
         el: '#app-7',
         data: {
-            groceryList: [
-                { id: 0, text: '蔬菜' },
-                { id: 1, text: '奶酪' },
-                { id: 2, text: '蛋糕🎂' }
+            groceryList: [{
+                    id: 0,
+                    text: '蔬菜'
+                },
+                {
+                    id: 1,
+                    text: '奶酪'
+                },
+                {
+                    id: 2,
+                    text: '蛋糕🎂'
+                }
             ]
         }
     })
-
+    var test_li = new Vue({
+        el: "#test-li",
+        data: {
+            test: "初始值",
+        },
+        methods: {
+            testChangeValue: function () {
+                this.test = "new value";
+            }
+        }
+    })
 </script>
 
 </html>

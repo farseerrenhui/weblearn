@@ -20,8 +20,8 @@
         </li>
         <li id="app-2">
             <p><b>插值.原始HTML,容易导致XSS攻击</b></p>
-            <P>Using mustaches:{{rawHTML}}</P>
-            <P>Using v-html directive:<span v-html="rawHTML"></span></P>
+            <p>Using mustaches:{{rawHTML}}</p>
+            <p>Using v-html directive:<span v-html="rawHTML"></span></p>
         </li>
         <li>
             <p><b>插值.使用 v-bind 指令将Mustache语法作用在HTML特性上</b></p>
@@ -55,7 +55,7 @@
             <a v-on:click="vonclick" href="">v-on:onclick</a>
             <button onclick="app6._data.vonclick=f2">vonclick</button>
         </li>
-        <li id=app-7>
+        <li id="app-7">
             <p><b>指令.修饰符,OnSubmit没弄明白(下面俩例子)</b></p>
             <form onsubmit="return false;">
                 <button type="submit">点击按钮提交后,可看到地址栏后面多一个问号</button>
