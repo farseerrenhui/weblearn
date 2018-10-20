@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>列表渲染</title>
+    <script src="vue.js"></script>
+    <script src="../jquery/jquery-3.3.1.js"></script>
+</head>
+
+<style>
+
+</style>
+
+<body style="background-color:darkseagreen;color: whitesmoke">
+    <ul style="list-style-image:url(img/vue.png);">
+        <li id="listTest">
+            <p><b>把一个数组对应为一组元素</b></p>
+            <ul style="list-style-image:none;">
+                <li v-for="item in items">
+                    {{ item.message }}
+                </li>
+            </ul>
+            <p><b>v-for还支持一个可选的第二个参数为当前项的索引</b></p>
+            <ul style="list-style-image:none;">
+                <li v-for="(item, index) in items">
+                    {{ parentMessage }} - {{ index }} - {{ item.message }}
+                </li>
+            </ul>
+        </li>
+        <script>
+            var listTest = new Vue({
+                el: '#listTest',
+                data: {
+                    parentMessage: 'Parent',
+                    items: [{
+                            message: 'Foo'
+                        },
+                        {
+                            message: 'Bar'
+                        }
+                    ]
+                }
+            })
+        </script>
+        <li id="v-for-attrs">
+            <p><b>用v-for通过一个对象的属性来迭代</b></p>
+            <ul class="demo">
+                <li v-for="value in attrs">
+                    {{ value }}
+                </li>
+            </ul>
+            <p><b>index,key,value</b></p>
+            <p><b>v-for 的参数顺序必须是value,key,index,参数依据顺序来决定含义,与参数名无关<b></p>
+            <div v-for="(value,key,index) in attrs">
+                {{ index }}. {{ key }}: {{ value }}
+            </div>
+        </li>
+        <!--Vue脚本中的el不能放在其指向的html节点中-->
+        <script>
+            new Vue({
+                el: '#v-for-attrs',
+                data: {
+                    attrs: {
+                        firstName: 'John',
+                        lastName: 'Doe',
+                        age: 30
+                    }
+                }
+            })
+        </script>
+        <li id="listUseKey">
+            <p><b>建议尽可能在使用 v-for 时提供 key，除非遍历输出的 DOM 内容非常简单，或者是刻意依赖默认行为以获取性能上的提升。</b></p>
+            <div v-for="item in items">
+                {{ item.message}} - {{item.attrs }}
+            </div>
+        </li>
+        <script>
+            new Vue({
+                el: '#listUseKey',
+                data: {
+                    items: [{
+                            message: 1,
+                            attrs: {
+                                firstName: 'John',
+                                lastName: 'Doe',
+                                age: 30
+                            }
+                        },
+                        {
+                            message: 2,
+                            attrs: {
+                                firstName: 'Jim',
+                                lastName: 'White',
+                                age: 30
+                            }
+                        },
+                        {
+                            message: 3,
+                            attrs: {
+                                firstName: 'Don',
+                                lastName: 'Hash',
+                                age: 30
+                            }
+                        }
+                    ]
+                }
+            })
+        </script>
+        <li id="listChanged">
+            <p><b>变异方法导致数组更新</b></p>
+            <div v-for="item in items">
+                {{ item }}
+            </div>
+            <button onclick="listChanged.items.push('Dog','Egg','Fish')">push()</button>
+            <button onclick="listChanged.items.pop()">pop()</button>
+            <button onclick="listChanged.items.shift()" title="在数组前面删除元素">shift()</button>
+            <button onclick="listChanged.items.unshift('Girl','Hand','Ice-cream')" title="在数组前面添加元素">unshift()</button>
+            <button onclick="listChanged.items.splice(1,2)" title="删除序号从1开始的2个元素">splice()</button>
+            <button onclick="listChanged.items.sort()">sort()</button>
+            <button onclick="listChanged.items.reverse()">reverse()</button>
+        </li>
+        <script>
+            var listChanged = new Vue({
+                el: "#listChanged",
+                data: {
+                    items: [
+                        "Apple",
+                        "Boy",
+                        "Cat"
+                    ]
+                }
+            })
+        </script>
+        <li id="listNoChanged">
+            <p><b>非变异方法不改变原始数组,会返回新的数组</b></p>
+            <div v-for="item in items">
+                {{ item }}
+            </div>
+            <button @click="filter">filter()</button>
+            <button @click="slice" title="选取数组的一部分并返回一个新的数组">slice()</button>
+        </li>
+        <script>
+            var listNoUpdate = new Vue({
+                el: "#listNoChanged",
+                data: {
+                    items: [
+                        "Apple",
+                        "Boy",
+                        "Cat",
+                        "Dog",
+                        "Egg",
+                        "Fish",
+                        "Girl",
+                    ]
+                },
+                methods: {
+                    filter: function () {
+                        this.items = this.items.filter(function (item) {
+                            return item.match('g');
+                        });
+                    },
+                    slice: function () {
+                        this.items = this.items.slice(0, 2);
+                    }
+                }
+            })
+        </script>
+        <li id="listUpdate">
+            <p>
+                <b>由于JS限制,Vue不能检测以下变动的数组:</b>
+                <ol style="list-style-image:none;">
+                    <li>当你利用索引直接设置一个项时，例如：vm.items[indexOfItem] = newValue</li>
+                    <li>当你修改数组的长度时，例如：vm.items.length = newLength</li>
+                </ol>
+            </p>
+            <div v-for="item in items">
+                {{ item }}
+            </div>
+            <p>错误操作</p>
+            <button onclick="listUpdate.items[1] = 'x'">listUpdate.items[1] = 'x'</button>
+            <button onclick="listUpdate.items.length = 2">listUpdate.items.length = 2</button>
+            <p>正确操作</p>
+            <button onclick="Vue.set(listUpdate.items, 0, 'AAA')">将第0个元素替换成'AAA'</button>
+            <button onclick="listUpdate.$set(listUpdate.items, 0, 'AAA')">将第0个元素替换成'AAA'</button>
+            <button onclick="listUpdate.items.splice(1, 5, 'ABC')">删除1-5元素,替换成'ABC'</button>
+            <button onclick="listUpdate.items.splice(3)">保留前三个元素</button>
+        </li>
+        <script>
+            var listUpdate = new Vue({
+                el: "#listUpdate",
+                data: {
+                    items: [
+                        "Apple",
+                        "Boy",
+                        "Cat",
+                        "Dog",
+                        "Egg",
+                        "Fish",
+                        "Girl",
+                    ]
+                },
+                methods: {
+
+                }
+            })
+        </script>
+        <li id="listObjectEdit">
+            <p><b>对象更改检测注意事项</b></p>
+            <div v-for="(value,key,index) in items">
+                {{ index }}. {{ key }}: {{ value }}
+            </div>
+            <button onclick="Vue.set(listObjectEdit.items, 'Type', 'A')">为响应对象添加一个属性</button>
+            <button onclick="listObjectEdit.$set(listObjectEdit.items, 'Length', '5')">为响应对象添加一个属性</button>
+        </li>
+        <script>
+            var listObjectEdit = new Vue({
+                el: "#listObjectEdit",
+                data: {
+                    items: {
+                        Name: "Apple"
+                    }
+                },
+            })
+        </script>
+        <li id="listObjectAssign">
+            <p><b>为已有对象赋予多个新属性</b></p>
+            <div>
+                <div v-for="(value,key,index) in item">
+                    {{ index }}. {{ key }}: {{ value }}
+                </div>
+            </div>
+            <button @click="objectAssign">直接用新的属性创建一个对象赋给该对象</button>
+        </li>
+        <script>
+            var listObjectAssign = new Vue({
+                el: "#listObjectAssign",
+                data: {
+                    item: {
+                        Name: "Apple"
+                    }
+                },
+                methods: {
+                    objectAssign: function () {
+                        this.item = Object.assign({}, this.item, {
+                            Name: "Boy",
+                            Type: "B",
+                            Length: "3"
+                        })
+                    }
+                }
+            })
+        </script>
+        <li id="listFilter">
+            <p><b>显示过滤排序结果</b></p>
+            偶数:
+            <div v-for="n in evenNumbers">{{ n }}</div>
+            奇数:
+            <div v-for="n in oddNumbers(numbers)">{{n}}</div>
+        </li>
+        <script>
+            var listFilter = new Vue({
+                el: "#listFilter",
+                data: {
+                    numbers: [1, 2, 3, 4, 5]
+                },
+                computed: {
+                    evenNumbers: function () {
+                        return this.numbers.filter(function (number) {
+                            return number % 2 == 0
+                        })
+                    }
+                },
+                methods: {
+                    oddNumbers: function () {
+                        return this.numbers.filter(function (number) {
+                            return number % 2 != 0
+                        })
+                    }
+                }
+            })
+        </script>
+        <li>
+            <p><b>一段取值范围的 v-for</b></p>
+            <div>
+                <span v-for="n in 10">{{n}}</span>
+            </div>
+        </li>
+        <li id="vfortemplat">
+            <p><b>v-for on a &lt;template&gt;</b></p>
+            <ul style="list-style-image: none">
+                <template v-for="item in items">
+                    <li>{{ item.msg }}</li>
+                    <li class="divider" role="presentation">-------------i am a divider---------------</li>
+                </template>
+            </ul>
+        </li>
+        <script>
+            var vfortemplat = new Vue({
+                el: "#vfortemplat",
+                data: {
+                    items: [{
+                            msg: "Apple",
+                        },
+                        {
+                            msg: "Boy",
+                        },
+                        {
+                            msg: "Cat",
+                        },
+                    ]
+                },
+            })
+        </script>
+        <li id="vforvif">
+            <p><b>v-for with v-if</b></p>
+            <p><b>v-if与v-for在一起时,每次循环都受到v-if的作用</b></p>
+            <ol style="list-style-image: none">
+                <li v-for="todo in todos" v-if="!todo.isComplete">
+                    {{ todo }}
+                </li>
+            </ol>
+            <p><b>如果想把条件作为循环整体的条件,需要把v-if放在f-for的外层</b></p>
+            <ol v-if="todos.length >= 3" style="list-style-image: none">
+                <li v-for="todo in todos">
+                    {{ todo }}
+                </li>
+            </ol>
+            <p v-else>No todos left!</p>
+        </li>
+        <script>
+            var vforvif = new Vue({
+                el: "#vforvif",
+                data: {
+                    todos: [{
+                            msg: "Apple",
+                            isComplete: true,
+                        },
+                        {
+                            msg: "Boy",
+                            isComplete: false,
+                        },
+                        {
+                            msg: "Cat",
+                            isComplete: false,
+                        },
+                    ]
+                },
+            })
+        </script>
+        <li id="componentvfor">
+            <p><b>一个组件的 v-for (组件使用v-for时,key是必须的)(需要配合component章节理解)</b></p>
+            <div id="todo-list-example">
+                <form v-on:submit.prevent="addNewTodo">
+                    <label for="new-todo">Add a todo</label>
+                    <input v-model="newTodoText" id="new-todo" placeholder="E.g. Feed the cat">
+                    <button>Add</button>
+                </form>
+                <ul>
+                    <li is="todo-item" v-for="(todo, index) in todos" v-bind:key="todo.id" v-bind:title="todo.title"
+                        v-on:remove="todos.splice(index, 1)"></li>
+                </ul>
+            </div>
+            <script>
+                Vue.component('todo-item', {
+                    template: '\<li>\{{ title }}\ <button v-on:click="$emit(\'remove\')">Remove</button>\</li>',
+                    props: ['title']
+                })
+
+                new Vue({
+                    el: '#todo-list-example',
+                    data: {
+                        newTodoText: '',
+                        todos: [{
+                                id: 1,
+                                title: 'Do the dishes',
+                            },
+                            {
+                                id: 2,
+                                title: 'Take out the trash',
+                            },
+                            {
+                                id: 3,
+                                title: 'Mow the lawn'
+                            }
+                        ],
+                        nextTodoId: 4
+                    },
+                    methods: {
+                        addNewTodo: function () {
+                            this.todos.push({
+                                id: this.nextTodoId++,
+                                title: this.newTodoText
+                            })
+                            this.newTodoText = ''
+                        }
+                    }
+                })
+            </script>
+        </li>
+    </ul>
+</body>
+
+</html>

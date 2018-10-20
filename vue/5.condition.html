@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>条件渲染</title>
+    <script src="vue.js"></script>
+    <script src="../jquery/jquery-3.3.1.js"></script>
+</head>
+
+<style>
+
+</style>
+
+<body style="background-color:darkseagreen;color: whitesmoke">
+    <ul style="list-style-image:url(img/vue.png);">
+        <li id="conditionTest">
+            <p><b>条件值改变,结果自动更新</b></p>
+            <p v-if="ok">1</p>
+            <p v-else>2</p>
+            <button type="button" @click="change">ChangeOKValue</button>
+        </li>
+        <li id="conditionTemplate">
+            <p><b>整段内容的更改可以使用template</b></p>
+            <template v-if="c1">
+                <h1>Title A</h1>
+                <p>Paragraph 1</p>
+                <p>Paragraph 2</p>
+            </template>
+            <template v-else-if="c2">
+                <h1>Title B</h1>
+                <p>Part 1</p>
+                <p>Part 2</p>
+            </template>
+            <template v-else>
+                <h1>Title C</h1>
+                <p>P 1</p>
+                <p>P 2</p>
+            </template>
+            <button type="button" @click="change">ChangeOKValue</button>
+        </li>
+        <li id="conditionKey">
+            <p><b>用Key管理可重复的元素</b></p>
+            <template v-if="loginType === 'username'">
+                <label>Username</label>
+                <input placeholder="Enter your username">
+            </template>
+            <template v-else>
+                <label>Email</label>
+                <input placeholder="Enter your email address">
+            </template>
+            <button type="button" @click="changeLoginType">切换登录方式,已输入的内容不会被清除</button>
+        </li>
+        <li id="conditionShow">
+            <p><b>根据条件展示元素 带有 v-show 的元素始终会被渲染并保留在DOM中,v-show只是简单地切换元素的CSS属性display</b></p>
+            <p><b>频繁切换时使用v-show,其初始成本高,切换成本低. 反之使用v-if</b></p>
+            <button @click="changeShow">切换显示</button>
+            <h1 v-show="ok">Hello!</h1>
+        </li>
+    </ul>
+</body>
+
+<script>
+    var conditionTest = new Vue({
+        el: "#conditionTest",
+        data: {
+            ok: true,
+        },
+        methods: {
+            change: function () {
+                this.ok = !this.ok;
+            }
+        }
+    })
+    var num = 0;
+    var conditionTemplate = new Vue({
+        el: "#conditionTemplate",
+        data: {
+            c1: false,
+            c2: false,
+        },
+        methods: {
+            change: function () {
+                if (num % 3 == 0) {
+                    this.c1 = true;
+                    this.c2 = false;
+                } else if (num % 3 == 1) {
+                    this.c1 = false;
+                    this.c2 = true;
+                } else {
+                    this.c1 = false;
+                    this.c2 = false;
+                }
+                num++;
+            }
+        }
+    })
+    var conditionKey = new Vue({
+        el: "#conditionKey",
+        data: {
+            loginType: "username",
+        },
+        methods: {
+            changeLoginType: function () {
+                this.loginType = this.loginType == "username" ? "mail" : "username";
+            }
+        }
+    })
+    var conditionShow = new Vue({
+        el:"#conditionShow",
+        data:{
+            ok:true,
+        },
+        methods:{
+            changeShow:function(){
+                this.ok = !this.ok;
+            }
+        }
+    })
+</script>
+
+</html>

@@ -9,16 +9,52 @@
 </head>
 
 <style>
-    .selected {
-        color: tomato;
+    .active {
+        color: darkred;
+    }
+
+    .text-danger {
+        font-weight: bold;
+    }
+
+    .aa {
+        color: red;
+    }
+
+    .bb {
+        font-style: italic;
+    }
+
+    .cc {
         font-weight: bold;
     }
 </style>
 
-<body>
+<body style="background-color:darkseagreen;color: whitesmoke">
     <ul style="list-style-image:url(img/vue.png);">
         <li id="classTest">
-            <p v-bind:class="{selected:selected,'text-danger': hasError}">123</p>
+            <p><b>绑定HTML Class</b></p>
+            <p v-bind:class="{active:selected,'text-danger': hasError}">指定的CSS由后面的值决定是否启用</p>
+            <p v-bind:class="[activeClass,textDangerClass]">可以传入数组决定指定的CSS是否启用(第1种数组方式)</p>
+            <p v-bind:class="[isActive ? activeClass : '', textDangerClass]">在数组中加入了三元表达式控制CSS(第1种数组方式扩展)</p>
+            <p v-bind:class="[{active:!selected}, textDangerClass]">在数组中加入了对象语法控制CSS(第1种数组方式扩展)</p>
+            <p v-bind:class="classObject1">可以传入数组决定指定的CSS是否启用(第2种数组方式)</p>
+            <p v-bind:class="classObject2">可以使用计算属性来控制CSS</p>
+            <p v-bind:class="classObject3">使用方法控制CSS则无效</p>
+        </li>
+        <li id="classComponent">
+            <p><b>在组件上使用class,同样生效</b></p>
+            <my-component class="cc" v-for="item in items" v-bind:todo="item"></my-component>
+        </li>
+        <li id="classStyle">
+            <p><b>绑定内联样式 v-bind:style css中的xxx-yyy属性名变成了xxxYyy形式</b></p>
+            <p v-bind:style="{color:'orange',fontWeight:'Bolder',fontStyle:'italic'}">直接使用样式</p>
+            <p v-bind:style="styleObject">直接使用样式并传入一个对象</p>
+            <p v-bind:style="[styleObject,anotherStyleObject]">传入多个样式对象</p>
+        </li>
+        <li>
+            <p><b>如果浏览器支持不带浏览器前缀的 flexbox，那么就只会渲染 display: flex</b></p>
+            <div :style="{ display: ['-webkit-box', '-ms-flexbox', 'flex'] }">123</div>
         </li>
     </ul>
 </body>
@@ -28,7 +64,65 @@
         el: "#classTest",
         data: {
             selected: true,
-            hasError: true,
+            hasError: false,
+            isActive: true,
+            classObject1: {
+                active: true,
+                'text-danger': true,
+            },
+            activeClass: 'active',
+            textDangerClass: 'text-danger',
+        },
+        computed: {
+            classObject2: function () {
+                return {
+                    active: true,
+                    'text-danger': this.selected && this.error,
+                }
+            }
+        },
+        methods: {
+            classObject3: function () {
+                return {
+                    active: true,
+                    'text-danger': this.selected && this.error,
+                }
+            }
+        }
+    })
+
+    Vue.component('my-component', {
+        props: ['todo'],
+        template: '<p class="aa bb">{{todo.text}}</p>'
+    })
+
+    var classComponent = new Vue({
+        el: "#classComponent",
+        data: {
+            items: [{
+                    text: '蔬菜'
+                },
+                {
+                    text: '奶酪'
+                },
+                {
+                    text: '蛋糕🎂'
+                }
+            ]
+        }
+    })
+
+    var classStyle = new Vue({
+        el: "#classStyle",
+        data: {
+            styleObject: {
+                color: 'seagreen',
+                fontWeight: 'Bold',
+                fontStyle: 'italic',
+            },
+            anotherStyleObject: {
+                fontSize: 'red',
+            }
         }
     })
 </script>
