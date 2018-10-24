@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>表单输入绑定</title>
+    <script src="vue.js"></script>
+    <script src="../jquery/jquery-3.3.1.js"></script>
+</head>
+
+<style>
+
+</style>
+
+<body style="background-color:darkseagreen;color: whitesmoke">
+    <ul style="list-style-image:url(img/vue.png);">
+        <li id="example1">
+            <input v-model="message" placeholder="edit me">
+            <p>Message is: {{ message }}</p>
+            <span>Multiline message is:</span>
+            <p style="white-space: pre-line;">{{ message }}</p>
+            <br>
+            <textarea v-model="message" placeholder="add multiple lines"></textarea>
+            <br>
+            <label>
+                <input type="checkbox" id="checkbox" v-model="checked">单个复选框，绑定到布尔值
+            </label>
+            <br>
+            checkbox的值:<label for="checkbox">{{ checked }}</label>
+            <div>
+                <input type="checkbox" id="jack" value="Jack" v-model="checkedNames">
+                <label for="jack">Jack</label>
+                <input type="checkbox" id="john" value="John" v-model="checkedNames">
+                <label for="john">John</label>
+                <input type="checkbox" id="mike" value="Mike" v-model="checkedNames">
+                <label for="mike">Mike</label>
+                <br>
+                <span>Checked names: {{ checkedNames }}</span>
+            </div>
+            <div>
+                <input type="radio" id="one" value="One" v-model="picked">
+                <label for="one">One</label>
+                <br>
+                <input type="radio" id="two" value="Two" v-model="picked">
+                <label for="two">Two</label>
+                <br>
+                <span>Picked: {{ picked }}</span>
+            </div>
+            <div>
+                <select multiple="multiple" width="150px" v-model="selected">
+                    <!--onmousedown="if(this.options.length>4){this.size=5}" onblur="this.size=0" onchange="this.size=0"-->
+                    <option disabled value="">请选择</option>
+                    <option>Apple</option>
+                    <option>Boy</option>
+                    <option>Cat</option>
+                    <option>Dog</option>
+                    <option>Egg</option>
+                    <option>Fish</option>
+                    <option>Girl</option>
+                    <option>Hand</option>
+                    <option>Ice-cream</option>
+                    <option>Jet</option>
+                    <option>Kite</option>
+                    <option>Lamp</option>
+                    <option>Montain</option>
+                    <option>Nose</option>
+                    <option>Orange</option>
+                    <option>Pen</option>
+                    <option>Queen</option>
+                    <option>Rain</option>
+                    <option>Sugar</option>
+                    <option>Tree</option>
+                    <option>Umbrella</option>
+                    <option>Van</option>
+                    <option>Woman</option>
+                    <option>X'mas</option>
+                    <option>Yellow</option>
+                    <option>Zoo</option>
+                </select><br>
+                <span>Selected: {{ selected }}</span>
+                <select v-model="selected2">
+                    <option v-for="option in options" v-bind:value="option.value">
+                        {{ option.text }}
+                    </option>
+                </select>
+                <span>Selected: {{ selected2 }}</span>
+            </div>
+        </li>
+        <script>
+            var example1 = new Vue({
+                el: '#example1',
+                data: {
+                    message: "",
+                    checked: true,
+                    checkedNames: [],
+                    picked: '',
+                    selected: [],
+                    selected2: '',
+                    options: [{
+                            text: 'One',
+                            value: 'A'
+                        },
+                        {
+                            text: 'Two',
+                            value: 'B'
+                        },
+                        {
+                            text: 'Three',
+                            value: 'C'
+                        }
+                    ]
+                }
+            })
+        </script>
+        <li id="liSelect">
+            <!-- 当选中时，`picked` 为value中的字符串 -->
+            <input type="radio" v-model="picked" value="Apple">
+            <input type="radio" v-model="picked" value="Boy">
+            <input type="radio" v-model="picked" value="Cat">
+            <br>
+            <!-- `toggle` 为 true 或 false -->
+            <input type="checkbox" v-model="toggle">
+            <br>
+            <!-- 当选中第一个选项时，`selected` 为字符串 "abc" -->
+            <select v-model="selected">
+                <option value="Apple">Apple</option>
+                <option value="Boy">Boy</option>
+                <option value="Cat">Cat</option>
+            </select>
+            <br>
+            <input type="checkbox" v-model="toggle" true-value="yes" false-value="no">
+            <br>
+            选中后,wordModel的值为word的值
+            <input id="inputRadio" type="radio" v-model="wordModel" v-bind:value="word">
+            <br>
+            选中后<br>
+            typeof liSelect.selectedModel = "boolean"<br>
+            liSelect.selectedModel.word = "Apple"<br>
+            <select v-model="selectedModel">
+                <!-- 内联对象字面量 -->
+                <option v-bind:value="{ word: 'Apple' }">Apple</option>
+            </select>
+        </li>
+        <script>
+            var liSelect = new Vue({
+                el: "#liSelect",
+                data: {
+                    picked: "Boy",
+                    toggle: true,
+                    selected: "Boy",
+                    toggle: "yes",
+                    wordModel: "",
+                    word: "Apple",
+                    selectedModel: false,
+                },
+            })
+        </script>
+    </ul>
+</body>
+
+</html>

@@ -5,10 +5,18 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "type": "firefox",
+            "request": "launch",
+            "reAttach": true,
+            "name": "Firefox Debug",
+            "file": "${workspaceFolder}/vue/8.form.html",
+            "firefoxExecutable": "E:/App/Mozilla Firefox/firefox.exe"
+        },
+        {
             "name": "Chrome Debug",
             "type": "chrome",
             "request": "launch",
-            "file": "${workspaceRoot}\\vue\\7.event.html",
+            "file": "${workspaceRoot}\\vue\\8.form.html",
             "runtimeExecutable": "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe", // 改成您的 Chrome 安装路径
             "sourceMaps": true,
             "webRoot": "${workspaceRoot}",
