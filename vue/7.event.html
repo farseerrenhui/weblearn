@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>事件</title>
+    <script src="vue.js"></script>
+    <script src="../jquery/jquery-3.3.1.js"></script>
+</head>
+
+<style>
+
+</style>
+
+<body style="background-color:darkseagreen;color: whitesmoke" oncontextmenu="return false">
+    <ul style="list-style-image:url(img/vue.png);">
+        <li id="example-1">
+            <p><b>监听事件</b></p>
+            <button v-on:click="counter += 1">Add 1</button>
+            <p>The button above has been clicked {{ counter }} times.</p>
+        </li>
+        <script>
+            var listTest = new Vue({
+                el: '#example-1',
+                data: {
+                    counter: 0,
+                }
+            })
+        </script>
+        <li id="example-2">
+            <p><b>事件处理方法</b></p>
+            <!-- `greet` 是在下面定义的方法名 -->
+            <button v-on:click="greet">Greet</button>
+            <button onclick="ex2()">Greet</button>
+        </li>
+        <script>
+            var example2 = new Vue({
+                el: '#example-2',
+                data: {
+                    name: 'Vue.js'
+                },
+                // 在 `methods` 对象中定义方法
+                methods: {
+                    greet: function (event) {
+                        // `this` 在方法里指向当前 Vue 实例
+                        alert('Hello ' + this.name + '!')
+                        // `event` 是原生 DOM 事件
+                        if (event) {
+                            alert(event.target.tagName)
+                            alert(event)
+                        }
+                    }
+                }
+            })
+
+            function ex2() {
+                // 也可以用 JavaScript 直接调用方法
+                example2.greet() // => 'Hello Vue.js!'
+            }
+        </script>
+        <li>
+            <p><b>内联处理器中的方法</b></p>
+            <div id="example-3">
+                <button v-on:click="say('hi')">Say hi</button>
+                <button v-on:click="say('what')">Say what</button>
+                <button v-on:click="warn('Form cannot be submitted yet.', $event)">
+                    Submit
+                </button>
+            </div>
+            <script>
+                new Vue({
+                    el: '#example-3',
+                    methods: {
+                        say: function (message) {
+                            alert(message)
+                        },
+                        warn: function (message, event) {
+                            // 现在我们可以访问原生事件对象
+                            if (event) event.preventDefault()
+                            alert(message)
+                        }
+                    }
+                })
+            </script>
+        </li>
+        <li>
+            <p><b>事件修饰符</b></p>
+            <div id="eventFlag">
+                <!-- 阻止单击事件继续传播 -->
+                <a v-on:click.stop="doThis">doThis</a>
+
+                <!-- 提交事件不再重载页面 -->
+                <form v-on:submit.prevent="onSubmit" action="...">
+                    <button type="submit">submit</button>
+                </form>
+
+                <!-- 修饰符可以串联 -->
+                <a v-on:click.stop.prevent="doThat">doThat</a>
+
+                <!-- 只有修饰符 -->
+                <form v-on:submit.prevent>prevent</form>
+
+                <!-- 添加事件监听器时使用事件捕获模式 -->
+                <!-- 即元素自身触发的事件先在此处理，然后才交由内部元素进行处理 -->
+                <div v-on:click.capture="doThis2">doThis2</div>
+
+                <!-- 只当在 event.target 是当前元素自身时触发处理函数 -->
+                <!-- 即事件不是从内部元素触发的 -->
+                <div v-on:click.self="doThat">doThat</div>
+
+                <div v-on:click.prevent.self="prevent">click.prevent.self</div>
+                <div v-on:click.self.prevent="prevent">click.self.prevent</div>
+
+                <div v-on:click.once="once">click.once,只点击第一次有效</div>
+
+                <div style="height:400px;width:120px;overflow: auto;border: 1px red solid" v-on:scroll.passive="onScroll">
+                    滚动时立即触发事件
+                    <div style="height:100px;width:120px;background-color:aquamarine"></div>
+                    <div style="height:100px;width:120px;background-color:blanchedalmond"></div>
+                    <div style="height:100px;width:120px;background-color:aquamarine"></div>
+                    <div style="height:100px;width:120px;background-color:blanchedalmond"></div>
+                    <div style="height:100px;width:120px;background-color:aquamarine"></div>
+                    <div style="height:100px;width:120px;background-color:blanchedalmond"></div>
+                    <div style="height:100px;width:120px;background-color:aquamarine"></div>
+                    <div style="height:100px;width:120px;background-color:blanchedalmond"></div>
+                    <div style="height:100px;width:120px;background-color:aquamarine"></div>
+                    <div style="height:100px;width:120px;background-color:blanchedalmond"></div>
+                </div>
+            </div>
+            <script>
+                new Vue({
+                    el: '#eventFlag',
+                    methods: {
+                        say: function (message) {
+                            alert("say -> " + message)
+                        },
+                        doThis: function (event) {
+                            alert("doThis -> " + event)
+                        },
+                        onSubmit: function (event) {
+                            alert("onSubmit -> " + event)
+                        },
+                        doThat: function (event) {
+                            alert("doThat -> " + event)
+                        },
+                        doThis2: function (event) {
+                            alert("doThis2 -> " + event)
+                        },
+                        doThat: function (event) {
+                            alert("doThat -> " + event)
+                        },
+                        once: function (event) {
+                            alert("once -> " + event)
+                        },
+                        onScroll: function (event) {
+                            console.log("onScroll -> " + event)
+                        },
+                    }
+                })
+            </script>
+        </li>
+        <li>
+            <div id="keyDecorate">
+                <p><b>按键修饰符</b></p>
+                <input v-on:keyup.13="keyDwom" @keyup.enter="keyDwom" @keyup.tab="keyDwom" @keyup.delete="keyDwom"
+                    @keyup.esc="keyDwom" @keyup.space="keyDwom" @keyup.up="keyDwom" @keyup.down="keyDwom" @keyup.left="keyDwom"
+                    @keyup.right="keyDwom" />
+                <p><b>可以通过全局 config.keyCodes 对象自定义按键修饰符别名：</b></p>
+                <input v-on:keyup.f2="keyDwom" />
+            </div>
+            <script>
+                // 可以使用 `v-on:keyup.f2`
+                Vue.config.keyCodes.f2 = 113
+
+                new Vue({
+                    el: "#keyDecorate",
+                    methods: {
+                        keyDwom: function (param) {
+                            alert(param.key);
+                        },
+                    }
+                })
+            </script>
+        </li>
+
+        <li>
+            <form action="xxx.yyy" target="_blank">
+                表单1:
+                <button onclick="mysubmit()">event.preventDefault()取消事件的默认动作,阻止了提交</button>
+                <button>普通提交</button>
+            </form>
+            <script>
+                function mysubmit() {
+                    event.preventDefault();
+                }
+            </script>
+            <form id="eventForm" v-on:submit.prevent="mysubmit" action="xxx.yyy" target="_blank">
+                表单2:
+                <button>普通提交</button>
+            </form>
+            <script>
+                var eventForm = new Vue({
+                    el: "#eventForm",
+                    methods: {
+                        mysubmit: function () {
+                            console.log("mysubmit");
+                        },
+                    }
+                })
+            </script>
+            <div id="eventPreventDiv">
+                <form v-on:submit.prevent action="xxx.yyy" target="_blank">
+                    表单3:
+                    <button>只有v-on:submit.prevent,阻止了表单提交(必须有一个Vue对象指向该form)</button>
+                </form>
+            </div>
+            <script>
+                var eventPreventDiv = new Vue({
+                    el: "#eventPreventDiv",
+                })
+            </script>
+        </li>
+        <li>
+            <p><b>v-on:click.prevent.self 会阻止所有的点击，而 v-on:click.self.prevent 只会阻止对元素自身的点击。</b></p>
+            <div id="clickPreventDiv" @click="log('外层div')" style="width:800px;height:260px;position:relative;background-color:lightsteelblue">
+                外层div
+                <a href="/#" @click.prevent.self="log('中间div')" style="width:760px;height:160px;position:absolute;margin:auto;left:0;top:0;right:0;bottom:0;background-color:goldenrod">
+                    中间div<br>@click.prevent.self:在"prevent"阻止一切(包括自身的默认跳转)的基础上,执行"self"的方法
+                    <div @click="log('内层div')" style="width:720px;height:40px;position:absolute;margin:auto;left:0;top:0;right:0;bottom:0;background-color:lightsteelblue">
+                        内层div
+                    </div>
+                </a>
+            </div>
+            <script>
+                var clickPreventDiv = new Vue({
+                    el: "#clickPreventDiv",
+                    methods: {
+                        log: function (value) {
+                            console.log(value);
+                        }
+                    }
+                })
+            </script>
+            <div id="clickPreventDiv2" @click="log('外层div')" style="width:800px;height:260px;position:relative;background-color:forestgreen">
+                外层div
+                <a href="/#" @click.self.prevent="log('中间div')" style="width:760px;height:160px;position:absolute;margin:auto;left:0;top:0;right:0;bottom:0;background-color:goldenrod">
+                    中间div<br>@click.self.prevent:在执行"self"的方法的基础上,进行"prevent"阻止(仅阻止来自自身点击的默认跳转)
+                    <div @click="log('内层div')" style="width:720px;height:40px;position:absolute;margin:auto;left:0;top:0;right:0;bottom:0;background-color:lightsteelblue">
+                        内层div
+                    </div>
+                </a>
+            </div>
+            <script>
+                var clickPreventDiv = new Vue({
+                    el: "#clickPreventDiv2",
+                    methods: {
+                        log: function (value) {
+                            console.log(value);
+                        }
+                    }
+                })
+            </script>
+        </li>
+        <li>
+            <div id="eventDiv" style="width:900px;height:200px;background-color:lightsteelblue" onclick="div3()">
+                <div style="width:800px;height:180px;background-color:bisque" onclick="div2()">
+                    <div style="width:700px;height:160px;background-color: aquamarine" onclick="div1()">
+                        <p style="color: indigo">event.stopPropagation()将停止事件的传播,阻止它被分派到其他Document节点</p>
+                        <button @click="button1">普通传播</button>
+                        <button @click.stop="button2">阻止单击传播</button>
+                    </div>
+                </div>
+            </div>
+            <script>
+                function div1() {
+                    console.log("div1");
+                }
+
+                function div2() {
+                    console.log("div2");
+                    event.stopPropagation();
+                }
+
+                function div3() {
+                    console.log("div3");
+                }
+
+                var eventDiv = new Vue({
+                    el: "#eventDiv",
+                    methods: {
+                        button1: function () {
+                            console.log("button1");
+                        },
+                        button2: function () {
+                            console.log("button2");
+                        },
+                    }
+                })
+            </script>
+        </li>
+        <li>
+            <div id="divFrame" style="width:100px;height:100px;background-color:goldenrod" v-on:click.self="divFrameSelf"
+                onclick="divFrame()">
+                <button>内部Button</button>
+            </div>
+            <script>
+                function divFrame() {
+                    console.log("divFrame被点击");
+                }
+                new Vue({
+                    el: "#divFrame",
+                    methods: {
+                        divFrameSelf: function () {
+                            console.log("divFrame被点击,来自div本身");
+                        }
+                    }
+                })
+            </script>
+        </li>
+
+        <li>
+            <div id="divFrame2" style="width:100px;height:100px;background-color:lightsteelblue" v-on:click.capture="doThis">
+                <button onclick="console.log('内部Button被点击')">内部Button</button>
+            </div>
+        </li>
+        <script>
+            new Vue({
+                el: "#divFrame2",
+                methods: {
+                    doThis: function () {
+                        console.log("divFrame2");
+                    }
+                }
+            })
+        </script>
+        <li>
+            <div id="autoKeyDecorate">
+                <p><b>自动匹配按键修饰符</b></p>
+                弹出key值<input onkeydown="keydown(event)"><br>
+                可直接将 KeyboardEvent.key 暴露的任意有效按键名转换为 kebab-case 来作为修饰符:<br>
+                PageDown<input @keyup.page-down="onPageDown"><br>
+                Backspace<input @keyup.backspace="onBackspace">
+            </div>
+            <script>
+                function keydown(event) {
+                    console.log(event.key);
+                }
+
+                new Vue({
+                    el: "#autoKeyDecorate",
+                    methods: {
+                        onPageDown: function (param) {
+                            alert(param.key);
+                        },
+                        onBackspace: function (param) {
+                            alert(param.key);
+                        },
+                    }
+                })
+            </script>
+        </li>
+        <li>
+            <p><b>系统修饰键</b></p>
+            <div id="systemKeyDiv">
+                <input @keyup.alt.c="clear" @keyup.alt.q="quit" @click.ctrl="control" @click.meta="metaClick"
+                    @keyup.meta.a="winA">
+            </div>
+            <script>
+                new Vue({
+                    el: "#systemKeyDiv",
+                    methods: {
+                        quit: function () {
+                            console.log("quit");
+                        },
+                        clear: function () {
+                            console.log("clear");
+                        },
+                        control: function () {
+                            console.log("control");
+                        },
+                        metaClick: function () {
+                            console.log("metaClick");
+                        },
+                        winA: function () {
+                            console.log("winA");
+                        },
+                    }
+                })
+            </script>
+            <div id="systemKeyDiv2">
+                只有在按住 ctrl 的情况下释放其它按键，才能触发 keyup.ctrl<br>
+                而单单释放 ctrl 也不会触发事件。如果你想要这样的行为，请为 ctrl 换用 keyCode：keyup.17。<br>
+                Ctrl+A<input @keyup.ctrl.a="ctrlKey">
+                <br>
+                单击Ctrl/单击a/单击- <input @keydown.17="kCtrl" @keydown.a="a" @keydown.-="kxxx">
+            </div>
+            <script>
+                new Vue({
+                    el: "#systemKeyDiv2",
+                    methods: {
+                        ctrlKey: function (event) {
+                            console.log(event);
+                            console.log("ctrlKey");
+                        },
+                        kCtrl: function () {
+                            console.log("kCtrl");
+                        },
+                        a: function () {
+                            console.log("a");
+                        },
+                        kxxx: function () {
+                            console.log("keydown.xxx");
+                        },
+                    }
+                })
+            </script>
+        </li>
+        <li id="exactLi">
+            <p><b>.exact 修饰符允许你控制由精确的系统修饰符组合触发的事件。</b></p>
+            <button @click.ctrl="buttonClick">即使 Alt 或 Shift 被一同按下时也会触发</button>
+            <button @click.ctrl.exact="buttonClick">有且只有 Ctrl 被按下的时候才触发</button>
+            <button @click.exact="buttonClick">没有任何系统修饰符被按下的时候才触发</button>
+        </li>
+        <script>
+            new Vue({
+                el: "#exactLi",
+                methods: {
+                    buttonClick: function () {
+                        console.log("buttonClick");
+                    },
+                }
+            })
+        </script>
+        <li id="mouseLi">
+            <p><b>鼠标按钮修饰符</b></p>
+            <button @click.left="buttonClick">@click.left</button>
+            <button @click.right="buttonClick" oncontextmenu="return false">@click.left & 屏蔽右键菜单</button>
+            <button @click.middle="buttonClick">@click.middle</button>
+        </li>
+        <script>
+            new Vue({
+                el: "#mouseLi",
+                methods: {
+                    buttonClick: function () {
+                        console.log("buttonClick");
+                    },
+                }
+            })
+        </script>
+    </ul>
+</body>
+
+</html>
