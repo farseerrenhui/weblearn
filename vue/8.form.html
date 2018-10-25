@@ -117,9 +117,11 @@
             <input type="radio" v-model="picked" value="Apple">
             <input type="radio" v-model="picked" value="Boy">
             <input type="radio" v-model="picked" value="Cat">
+            {{picked}}
             <br>
             <!-- `toggle` 为 true 或 false -->
             <input type="checkbox" v-model="toggle">
+            {{toggle}}
             <br>
             <!-- 当选中第一个选项时，`selected` 为字符串 "abc" -->
             <select v-model="selected">
@@ -127,19 +129,23 @@
                 <option value="Boy">Boy</option>
                 <option value="Cat">Cat</option>
             </select>
+            {{selected}}
             <br>
-            <input type="checkbox" v-model="toggle" true-value="yes" false-value="no">
+            <input type="checkbox" v-model="toggle2" true-value="yes" false-value="no">
+            {{toggle2}}
             <br>
             选中后,wordModel的值为word的值
-            <input id="inputRadio" type="radio" v-model="wordModel" v-bind:value="word">
-            <br>
-            选中后<br>
+            <input id="inputRadio" type="radio" v-model="wordModel" v-bind:value="word"><br>
+            word={{word}}<br>
+            wordModel={{wordModel}}<br>
             typeof liSelect.selectedModel = "boolean"<br>
             liSelect.selectedModel.word = "Apple"<br>
+            <p><b>内联对象字面量</b></p>
             <select v-model="selectedModel">
-                <!-- 内联对象字面量 -->
-                <option v-bind:value="{ word: 'Apple' }">Apple</option>
+                <option v-bind:value="{ word: 'Boy' }">Boy</option>
             </select>
+            {{selectedModel}}
+            {{selectedModel.word}}
         </li>
         <script>
             var liSelect = new Vue({
@@ -148,10 +154,31 @@
                     picked: "Boy",
                     toggle: true,
                     selected: "Boy",
-                    toggle: "yes",
+                    toggle2: "yes",
                     wordModel: "",
                     word: "Apple",
-                    selectedModel: false,
+                    selectedModel: {
+                        word: "Apple",
+                    }
+                },
+            })
+        </script>
+        <li id="liDecorate">
+            <p><b>修饰符</b></p>
+            <p>使用v-model.lazy后,当值变化时msg更新,而不是输入时立即更新</p>
+            <input v-model.lazy="msg">{{msg}}
+            <p>使用v-model.number将值标记为number类型</p>
+            <input v-model.number="age" type="number">{{age}}
+            <p>使用v-model.trim过滤首尾空格</p>
+            <input v-model.trim="info"><br>info:{{info}}<br>info.length:{{info.length}}
+        </li>
+        <script>
+            var liDecorate = new Vue({
+                el: "#liDecorate",
+                data: {
+                    msg: "Boy",
+                    age: "1",
+                    info: "",
                 },
             })
         </script>
