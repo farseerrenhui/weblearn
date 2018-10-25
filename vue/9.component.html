@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>表单输入绑定</title>
+    <script src="vue.js"></script>
+    <script src="../jquery/jquery-3.3.1.js"></script>
+</head>
+
+<body style="background-color:darkseagreen;color: whitesmoke">
+    <ul style="list-style-image:url(img/vue.png);">
+        <li id="componentSample">
+            <p><b>组件可复用,data必须是一个函数,每个实例单独维护一份数据拷贝</b></p>
+            <button-counter></button-counter>
+            <button-counter></button-counter>
+            <button-counter></button-counter>
+        </li>
+        <script>
+            Vue.component('button-counter', {
+                data: function () {
+                    return {
+                        count: 0
+                    }
+                },
+                template: '<button v-on:click="count++">You clicked me {{ count }} times.</button>'
+            })
+            //必须用一个Vue对象接管组件所在的区域,否则组件无法加载
+            new Vue({
+                el: "#componentSample",
+            })
+        </script>
+        <li id="componentProp">
+            <p><b>通过 Prop 向子组件传递数据</b></p>
+            <blog-post title="My journey with Vue"></blog-post>
+            <blog-post title="Blogging with Vue"></blog-post>
+            <blog-post title="Why Vue is so fun"></blog-post>
+        </li>
+        <script>
+            Vue.component('blog-post', {
+                props: ['title'],
+                template: '<h3>{{ title }}</h3>'
+            })
+            new Vue({
+                el: "#componentProp",
+            })
+        </script>
+        <li id="componentDataDemo">
+            <p><b>获取到列表后传递数据</b></p>
+            <blog-post-2 v-for="post in posts" v-bind:key="post.id" v-bind:id="post.id" v-bind:title="post.title"></blog-post-2>
+        </li>
+        <script>
+            Vue.component('blog-post-2', {
+                props: ['id', 'title'],
+                template: '<h3>{{ id }}.{{ title }}</h3>'
+            })
+            new Vue({
+                el: '#componentDataDemo',
+                data: {
+                    posts: [{
+                            id: 1,
+                            title: 'Apple'
+                        },
+                        {
+                            id: 2,
+                            title: 'Boy'
+                        },
+                        {
+                            id: 3,
+                            title: 'Cat'
+                        }
+                    ]
+                }
+            })
+        </script>
+        <li id="componentSingle">
+            <p><b>单个根元素</b></p>
+            <blog-post-3 v-for="post in posts" v-bind:key="post.id" v-bind:post="post"></blog-post-3>
+            <button @click="change">Cat改为Dog</button>
+        </li>
+        <script>
+            Vue.component('blog-post-3', {
+                props: ['post'],
+                template: `
+                    <div class="blog-post">
+                        <h3>{{ post.title }}</h3>
+                        <h5>{{ post.content }}{{ post.info }}</h5>
+                    </div>`
+            })
+            var componentSingle = new Vue({
+                el: "#componentSingle",
+                data: {
+                    posts: [{
+                            id: 1,
+                            title: "Letter:A",
+                            content: "Word:Apple",
+                            info: "->First",
+                        },
+                        {
+                            id: 2,
+                            title: "Letter:B",
+                            content: "Word:Boy",
+                        },
+                        {
+                            id: 3,
+                            title: "Letter:C",
+                            content: "Word:Cat",
+                        },
+                    ]
+                },
+                methods: {
+                    change: function () {
+                        Vue.set(componentSingle.posts, 2, {
+                            id: 4,
+                            title: "Letter:D",
+                            content: "Word:Dog",
+                            info: "->Fourth",
+                        })
+                    }
+                }
+            })
+        </script>
+        <li>
+            <p><b>通过事件向父级组件发送消息</b></p>
+            调用内建的$emit方法并传入事件的名字，来向父级组件触发一个事件.
+            <div id="blog-posts-events-demo">
+                <div :style="{ fontSize: postFontSize + 'em' }">
+                    <blog-post-4 v-on:enlarge-text="postFontSize += 0.1" v-for="post in posts" v-bind:key="post.id"
+                        v-bind:post="post"></blog-post-4>
+                </div>
+            </div>
+            <script>
+                Vue.component('blog-post-4', {
+                    props: ['post'],
+                    template: `<div>
+                            <h3 style="color:green">{{ post.title }}</h3>
+                            <button v-on:click="$emit('enlarge-text')">字号+</button>
+                        </div>`
+                })
+                new Vue({
+                    el: '#blog-posts-events-demo',
+                    data: {
+                        posts: [{
+                                id: 1,
+                                title: "Apple",
+                            },
+                            {
+                                id: 2,
+                                title: "Boy",
+                            },
+                        ],
+                        postFontSize: 1
+                    }
+                })
+            </script>
+        </li>
+        <li>
+            <p><b>使用事件抛出一个值</b></p>
+            使用$emit的第二个参数来抛出一个值
+            <div id="blog-posts-events-demo2">
+                <div :style="{ fontSize: postFontSize + 'em' }">
+                    <!--两种写法:1.v-on:enlarge-text直接操作postFontSize.2.v-on:ensmall-text使用方法操作-->
+                    <blog-post-5 v-on:enlarge-text="postFontSize += $event" v-on:ensmall-text="onEnsmallText" v-for="post in posts"
+                        v-bind:key="post.id" v-bind:post="post"></blog-post-5>
+                </div>
+            </div>
+            <script>
+                Vue.component('blog-post-5', {
+                    props: ['post'],
+                    template: `
+                            <div>
+                                <h3 style="color:blue">{{ post.title }}</h3>
+                                <button v-on:click="$emit('enlarge-text',0.1)">字号+</button>
+                                <button v-on:click="$emit('ensmall-text',0.1)">字号-</button>
+                            </div>`
+                })
+                new Vue({
+                    el: '#blog-posts-events-demo2',
+                    data: {
+                        posts: [{
+                                id: 1,
+                                title: "Apple",
+                            },
+                            {
+                                id: 2,
+                                title: "Boy",
+                            },
+                        ],
+                        postFontSize: 1
+                    },
+                    methods: {
+                        onEnlargeText: function (size) {
+                            this.postFontSize += size;
+                        },
+                        onEnsmallText: function (size) {
+                            this.postFontSize -= size;
+                        }
+                    }
+                })
+            </script>
+        </li>
+        <li id="componentVModel">
+            <p><b>在组件上使用v-model</b></p>
+            &lt;input v-model="searchText"&gt;等价于
+            &lt;input v-bind:value="searchText" v-on:input="searchText = $event.target.value"&gt;<br>
+            <custom-input v-model="searchText"></custom-input>
+        </li>
+        <script>
+            Vue.component('custom-input', {
+                props: ['value'],
+                //这个组件内的 <input> 必须：
+                //1.将其 value 特性绑定到一个名叫 value 的 prop 上
+                //2.在其 input 事件被触发时，将新的值通过自定义的 input 事件抛出
+                template: `<input v-bind:value="value" v-on:input="$emit('input', $event.target.value)">`
+            })
+            var componentVModel = new Vue({
+                el: "#componentVModel",
+                data: {
+                    searchText: "",
+                }
+            })
+        </script>
+        <li id="componentSlot">
+            <p><b>通过插槽分发内容</b></p>
+            <alert-box>
+                Send Something to Slot.
+            </alert-box>
+            <alert-box>
+                whosyourdaddy
+            </alert-box>
+        </li>
+        <script>
+            Vue.component('alert-box', {
+                template: `
+                        <div class="demo-alert-box" style="color:red">
+                            <strong>Error!</strong>
+                            <slot></slot>
+                        </div>`
+            })
+            new Vue({
+                el: "#componentSlot",
+            })
+        </script>
+        <li>
+            <p><b>动态组件</b></p>
+            <div id="dynamic-component-demo" class="demo">
+                <button v-for="tab in tabs" v-bind:key="tab" v-bind:class="['tab-button', { active: currentTab === tab }]"
+                    v-on:click="currentTab = tab">{{ tab }}</button>
+                <component v-bind:is="currentTabComponent" class="tab"></component>
+            </div>
+            <script>
+                Vue.component('tab-home', {
+                    template: '<div>Home component</div>'
+                })
+                Vue.component('tab-posts', {
+                    template: '<div>Posts component</div>'
+                })
+                Vue.component('tab-archive', {
+                    template: '<div>Archive component</div>'
+                })
+
+                new Vue({
+                    el: '#dynamic-component-demo',
+                    data: {
+                        currentTab: 'Home',
+                        tabs: ['Home', 'Posts', 'Archive']
+                    },
+                    computed: {
+                        currentTabComponent: function () {
+                            return 'tab-' + this.currentTab.toLowerCase()
+                        }
+                    }
+                })
+            </script>
+            <style>
+                .tab-button {
+                    padding: 6px 10px;
+                    border-top-left-radius: 3px;
+                    border-top-right-radius: 3px;
+                    border: 1px solid #ccc;
+                    cursor: pointer;
+                    background: #f0f0f0;
+                    margin-bottom: -1px;
+                    margin-right: -1px;
+                }
+
+                .tab-button:hover {
+                    background: #e0e0e0;
+                }
+
+                .tab-button.active {
+                    background: #e0e0e0;
+                }
+
+                .tab {
+                    border: 1px solid #ccc;
+                    padding: 10px;
+                }
+            </style>
+        </li>
+        <li>
+            <p><b></b></p>
+            <div id="componentSpecial">
+                直接写blog-post-row标签将被渲染到table之外:<br>
+                <table>
+                    <blog-post-row></blog-post-row>
+                    <blog-post-row></blog-post-row>
+                </table>
+                使用is特性来变通:<br>
+                <table>
+                    <tr is="blog-post-row"></tr>
+                    <tr is="blog-post-row"></tr>
+                </table>
+                列表的例子(直接使用组件有效):<br>
+                <ul style="list-style-image:none;">
+                    <ol-item></ol-item>
+                    <ol-item></ol-item>
+                </ul>
+                列表的例子(使用is指定组件有效):<br>
+                <ol style="list-style-image:none;">
+                    <li is="ol-item"></li>
+                    <li is="ol-item"></li>
+                </ol>
+                选项的例子(直接使用组件错误,渲染不出来):<br>
+                <select>
+                    <select-item></select-item>
+                    <select-item></select-item>
+                </select><br>
+                选项的例子(使用is指定组件有效):<br>
+                <select>
+                    <option is="select-item"></option>
+                    <option is="select-item"></option>
+                </select>
+            </div>
+            <script>
+                Vue.component("blog-post-row", {
+                    template: '<tr><td>AppleRow</td><td>BoyRow</td></tr>',
+                })
+                Vue.component("ol-item", {
+                    template: '<li>One Item</li>',
+                })
+                Vue.component("select-item", {
+                    template: '<option>One Item</option>',
+                })
+
+                //使用Vue对象指向#componentSpecial之前需要先注册好组件,否则无法识别组件名称
+                new Vue({
+                    el: "#componentSpecial",
+                })
+            </script>
+            <style>
+                /*只有表格中的行颜色为红色*/
+                table tr {
+                    color: red;
+                }
+            </style>
+        </li>
+    </ul>
+</body>
+
+</html>
