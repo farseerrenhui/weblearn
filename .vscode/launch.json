@@ -9,7 +9,7 @@
             "request": "launch",
             "reAttach": true,
             "name": "Firefox Debug",
-            "file": "${workspaceFolder}/vue/9.component.html",
+            "file": "${file}",
             "firefoxExecutable": "E:/App/Mozilla Firefox/firefox.exe"
         },
         {
