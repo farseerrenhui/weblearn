@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>col</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="3.3.7/css/bootstrap.css" rel="stylesheet">
+    <style>
+        .row {
+            margin-bottom: 10px;
+        }
+
+        .rwo .row {
+            margin-bottom: 5px;
+            margin-bottom: 0;
+        }
+
+        [class*="col-"] {
+            padding-top: 8px;
+            padding-bottom: 8px;
+            background-color: lightgray;
+            background-color: rgba(86, 61, 124, .15);
+            border: 1px solid #ddd;
+            border: 1px solid rgba(86, 61, 124, .2);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-1">col-md-1</div>
+            <div class="col-md-1">col-md-1</div>
+            <div class="col-md-1">col-md-1</div>
+            <div class="col-md-1">col-md-1</div>
+            <div class="col-md-1">col-md-1</div>
+            <div class="col-md-1">col-md-1</div>
+            <div class="col-md-1">col-md-1</div>
+            <div class="col-md-1">col-md-1</div>
+            <div class="col-md-1">col-md-1</div>
+            <div class="col-md-1">col-md-1</div>
+            <div class="col-md-1">col-md-1</div>
+            <div class="col-md-1">col-md-1</div>
+        </div>
+        <div class="row">
+            <div class="col-md-8">col-md-8</div>
+            <div class="col-md-4">col-md-4</div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">col-md-4</div>
+            <div class="col-md-4"> ABCDEFGHIJKLMNOPQRSTUVWXYZ ABCDEFGHIJKLMNOPQRSTUVWXYZ ABCDEFGHIJKLMNOPQRSTUVWXYZ
+                ABCDEFGHIJKLMNOPQRSTUVWXYZ ABCDEFGHIJKLMNOPQRSTUVWXYZ</div>
+            <div class="col-md-4">col-md-4</div>
+        </div>
+        <div class="row">
+            <div class="col-md-5 col-md-offset-1">col-md-5 col-md-offset-1</div>
+        </div>
+        <div class="row">
+            <div class="col-md-5">col-md-5col-md-5col-md-5col-md-5</div>
+            <div class="col-md-7">
+                one<br>
+                one<br>
+                one<br>
+                <div class="row">
+                    <div class="col-lg-8 col-md-push-4">
+                        8
+                    </div>
+                    <div class="col-lg-4 col-md-pull-8">
+                        4
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            代码样式:<code>&lt;section&gt;</code><br>
+            输入<kbd>cmd</kbd>的样式.<br>
+            <pre>
+                    Sample text here...;
+                </pre>
+            <var>x</var>=<var>y</var>+<var>z</var><br>
+            <samp>Hello World!</samp><br>
+        </div>
+        <div class="row">
+            <!--  table-striped隔行换色 table-condensed:紧凑 -->
+            <table class="table table-responsive table-striped table-bordered table-hover table-condensed">
+                <thead>
+                    <tr class="active">
+                        <th>Title</th>
+                        <th>Title</th>
+                        <th>Title</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="success">
+                        <td>CellCellCellCellCellCellCellCellCellCellCell</td>
+                        <td>CellCellCellCellCellCellCellCellCellCellCell</td>
+                        <td>CellCellCellCellCellCellCellCellCellCellCell</td>
+                    </tr>
+                    <tr class="info">
+                        <td>CellCellCellCellCellCellCellCellCellCellCell</td>
+                        <td>CellCellCellCellCellCellCellCellCellCellCell</td>
+                        <td>CellCellCellCellCellCellCellCellCellCellCell</td>
+                    </tr>
+                    <tr class="warning">
+                        <td>CellCellCellCellCellCellCellCellCellCellCell</td>
+                        <td>CellCellCellCellCellCellCellCellCellCellCell</td>
+                        <td>CellCellCellCellCellCellCellCellCellCellCell</td>
+                    </tr>
+                    <tr class="danger">
+                        <td>CellCellCellCellCellCellCellCellCellCellCell</td>
+                        <td>CellCellCellCellCellCellCellCellCellCellCell</td>
+                        <td>CellCellCellCellCellCellCellCellCellCellCell</td>
+                    </tr>
+                    <tr>
+                        <td>CellCellCellCellCellCellCellCellCellCellCell</td>
+                        <td>CellCellCellCellCellCellCellCellCellCellCell</td>
+                        <td>CellCellCellCellCellCellCellCellCellCellCell</td>
+                    </tr>
+                    <tr>
+                        <td>CellCellCellCellCellCellCellCellCellCellCell</td>
+                        <td>CellCellCellCellCellCellCellCellCellCellCell</td>
+                        <td>CellCellCellCellCellCellCellCellCellCellCell</td>
+                    </tr>
+                    <tr>
+                        <td>CellCellCellCellCellCellCellCellCellCellCell</td>
+                        <td>CellCellCellCellCellCellCellCellCellCellCell</td>
+                        <td>CellCellCellCellCellCellCellCellCellCellCell</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="3.3.7/js/jquery.js"></script>
+    <script src="3.3.7/js/bootstrap.js"></script>
+
+</body>
+
+</html>
