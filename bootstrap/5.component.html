@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>bootstrap组件</title>
+    <link rel="stylesheet" href="3.3.7/css/bootstrap.css">
+    <script src="3.3.7/js/jquery.js"></script>
+    <script src="3.3.7/js/bootstrap.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="input-group">
+            <span class="input-group-addon">@</span>
+            <input type="text" class="form-control" placeholder="UserName">
+        </div>
+        <div class="input-group">
+            <input type="text" class="form-control">
+            <span class="input-group-addon">.00</span>
+        </div>
+        <div class="input-group">
+            <span class="input-group-addon">$</span>
+            <input type="text" class="form-control">
+            <span class="input-group-addon">.00</span>
+        </div>
+        <div class="input-group input-group-lg">
+            <span class="input-group-addon">$</span>
+            <input type="text" class="form-control">
+            <span class="input-group-addon">.00</span>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <input type="checkbox">
+                    </span>
+                    <input type="text" class="form-control">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default">Go</button>
+                    </span>
+                    <input type="text" class="form-control">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="input-group">
+                    <input type="text" class="form-control">
+                    <div class="input-group-btn">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            Choose
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu pull-right">
+                            <li><a href="#">Apple</a></li>
+                            <li><a href="#">Boy</a></li>
+                            <li><a href="#">Cat</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <ul id="mytab" class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active"><a href="">Apple</a></li>
+            <li role="presentation"><a href="">Bog</a></li>
+            <li role="presentation"><a href="">Cat</a></li>
+        </ul>
+
+        <ul id="mytab2" class="nav nav-pills nav-justified" role="tablist">
+            <li role="presentation" class="active"><a href="">Apple</a></li>
+            <li role="presentation"><a href="">Bog</a></li>
+            <li role="presentation" class="dropdown">
+                <a href="" class="dropdown-toggle" data-toggle="dropdown">
+                    Cat
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" role="menu">
+                    <li role="presentation"><a role="menuitem" href="">Bog</a></li>
+                    <li role="presentation"><a role="menuitem" href="">Cat</a></li>
+                </ul>
+            </li>
+            <li role="presentation" class="disabled"><a href="">Dog</a></li>
+            <li role="presentation"><a href="">Egg</a></li>
+        </ul>
+
+        <hr>
+
+        <nav class="navbar navbar-inverse" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="">Word26</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav" id="mytab3">
+                        <li class="active"><a href="">Apple</a></li>
+                        <li><a href="">Boy</a></li>
+                        <li><a href="">Cat</a></li>
+                    </ul>
+                    <form class="navbar-form navbar-left" role="search">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search">
+                        </div>
+                        <button type="submit" class="btn btn-default">Search</button>
+                    </form>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="">Link</a></li>
+                        <li class="dropdown">
+                            <a href="" class="dropdown-toggle" data-toggle="dropdown">
+                                ClickMe
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="">Dog</a></li>
+                                <li><a href="">Egg</a></li>
+                                <li><a href="">Fish</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+            <ol class="breadcrumb">
+                <li><a href="">Apple</a></li>
+                <li><a href="">Boy</a></li>
+                <li><a href="">Cat</a></li>
+            </ol>
+        </nav>
+
+
+    </div>
+
+    <script>
+        $("#mytab a").click(function (e) {
+            e.preventDefault();
+            $(this).tab("show");
+        })
+        $("#mytab2 a").click(function (e) {
+            e.preventDefault();
+            $(this).tab("show");
+        })
+        $("#mytab3 a").click(function (e) {
+            e.preventDefault();
+            $(this).tab("show");
+        })
+    </script>
+
+</body>
+
+</html>
