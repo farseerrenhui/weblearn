@@ -10,11 +10,16 @@
     <script src="learn-window.js"></script>
     <script src="learn-jquery.js"></script>
     <link rel="stylesheet" type="text/css" href="default.css" />
+    <style>
+        body{
+            margin-left: 18px;
+        }
+    </style>
 </head>
 
 <body onload="FileTest()">
     <div class="left">
-        <ul id="learn-basic">
+        <ul id="learn-basic" style="list-style-image:url(img/js.png);">
             <li style="cursor:pointer" onclick="AlartTest()">AlartTest</li>
             <li style="cursor:pointer" onclick="ChineseTest()">ChineseTest</li>
             <li style="cursor:pointer" onclick="ArrayTest()">ArrayTest</li>
@@ -43,7 +48,7 @@
         </ul>
     </div>
     <div class="middle">
-        <ul id="learn-window">
+        <ul id="learn-window" style="list-style-image:url(img/dom.png);">
             <li id="window-interval-test">WindowIntervalTest</li>
             <li style="cursor:pointer" onclick="WindowSizeTest()">WindowSizeTest</li>
             <li style="cursor:pointer" onclick="NavigatorTest()">NavigatorTest</li>
@@ -118,15 +123,15 @@
             <div style="border: 1px solid #000000;margin: 1px">
                 <form id="test-form-2" name="f2" action="submit.html" method="GET">
                     <label>test-form-2</label>
-                    <input style="width:60px" id="f2-name" name="name" type="text" value="123"/>
-                    <input style="width:60px" id="f2-password" name="password" type="password" value="qwe"/>
+                    <input style="width:60px" id="f2-name" name="name" type="text" value="123" />
+                    <input style="width:60px" id="f2-password" name="password" type="password" value="qwe" />
                     <input type="button" value="JS提交" onclick="JSSubmitForm()" />
                 </form>
             </div>
         </ul>
     </div>
     <div class="right">
-        <ul id="learn-jquery" name="jquery">
+        <ul id="learn-jquery" name="jquery" style="list-style-image:url(img/jquery.png);">
             <li style="cursor:pointer" onclick="SelectorTest()">SelectorTest</li>
             <li style="cursor:pointer" onclick="MultiSelectorTest()">MultiSelectorTest</li>
             <li name="DescendantSelectorTest" style="cursor:pointer" onclick="DescendantSelectorTest()">DescendantSelectorTest</li>
@@ -136,18 +141,18 @@
                     <p style="margin: 0px">测试表单选择器</p>
                     <input type="text" value="Tom" />
                     <input type="password" value="123" />
-                    <br/>
+                    <br />
                     <label><input type="checkbox" checked="checked" />checkbox1</label>
-                    <br/>
+                    <br />
                     <input type="checkbox" id="check1" value="123" name="name" class="check">
                     <label for="check1">checkbox2</label>
-                    <br/>
+                    <br />
                     <label><input type="radio" name="r1" value="1" />1</label>
                     <label><input type="radio" name="r1" value="2" />2</label>
-                    <br/>
+                    <br />
                     <input type="text" value="123" hidden="hidden" />
                     <textarea>TEXTAREA</textarea>
-                    <br/>
+                    <br />
                     <input type="button" value="按钮内容" />
                     <button>按钮内容2</button>
                 </form>
@@ -157,7 +162,7 @@
             <li class="c2" style="cursor:pointer" onclick="FilterSelecterTest()">FilterSelecterTest</li>
             <div style="border: #AAFFAA 5px solid; padding: 5px">
                 <p style="margin: 0px">测试DOM</p>
-                <ul id="test-dom">
+                <ul id="test-dom" style="list-style-image:none;">
                     <li class="lang sw">Swift</li>
                     <li class="lang dynamic py">Python</li>
                     <li class="lang dynamic js" style="color: #00FF00">JavaScript</li>
@@ -182,20 +187,20 @@
                 <form id="val-test">
                     <p style="margin: 0px">JQuery的val()测试</p>
                     <input id="test-input" name="email" value="">
-                    <br/>
+                    <br />
                     <select id="test-select" name="city">
                         <option value="BJ" selected>Beijing</option>
                         <option value="SH">Shanghai</option>
                         <option value="SZ">Shenzhen</option>
                     </select>
-                    <br/>
+                    <br />
                     <textarea id="test-textarea">Hello</textarea>
                 </form>
             </div>
             <li style="cursor:pointer" onclick="GetValTest()">GetValTest</li>
             <li style="cursor:pointer" onclick="SetValTest()">SetValTest</li>
             <div id="test-dom2" style="border: #AF00AF 5px solid; padding: 5px">
-                <ul>
+                <ul style="list-style-image:none;">
                     <li id="li-js">
                         <span>JavaScript</span>
                     </li>
@@ -208,14 +213,16 @@
                 </ul>
             </div>
             <li style="cursor:pointer" onclick="AddDOMTest()">AddDOMTest</li>
-            <input id="event-button" type="button" value="ClickEventButton" onclick="ClickEventButton()" />
-            <input id="event-button" type="button" value="MouseEnterEventButton" onclick="MouseEnterEventButton()" />
-            <input id="event-button" type="button" value="OtherEventInfoButton" onclick="OtherEventInfoButton()" />
+            <li>
+                <input id="event-button" type="button" value="ClickEventButton" onclick="ClickEventButton()" />
+                <input type="button" value="MouseEnterEventButton" onclick="MouseEnterEventButton()" />
+                <input type="button" value="OtherEventInfoButton" onclick="OtherEventInfoButton()" />
+            </li>
             <li id="li-event" style="cursor:pointer" title="配合上面三个按钮进行测试">EventTest</li>
             <input type="button" value="OtherEventInfoButton" onclick="OtherEventInfoButton()" />
-            <br/>
+            <br />
             <span id="testMouseMoveSpan" style="background: #AAFFFF">pageX = 0, pageY = 0</span>
-            <br/>
+            <br />
             <span id="testMouseMoveSpan2" style="background: #AAACCC">pageX = 0, pageY = 0</span>
             <div id="testMouseMoveDiv" style="display: block; width: 300px; height: 120px; border: 1px solid #ccc;">
                 在此区域移动鼠标前先添加事件
@@ -223,7 +230,7 @@
             <button onclick="AddMouseMove()">AddMouseMove</button>
             <button onclick="DelMouseMove()">DelMouseMove</button>
             <button onclick="DelMouseMoveALL()">DelMouseMoveALL</button>
-            <br/>文本改变事件,失去焦点触发:
+            <br />文本改变事件,失去焦点触发:
             <input id="sample-text" type="text" onchange="SampleTextChange()" />
             <li style="cursor:pointer;color: red" onclick="EventConditionTest()">EventConditionTest</li>
             <li style="cursor:pointer" onclick="PopupTest()">PopupTest</li>
