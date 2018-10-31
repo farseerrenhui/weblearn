@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>overflow:hidden的三项作用</title>
+    <style>
+        body {
+            margin: 0;
+        }
+
+        li {
+            height: 240px;
+        }
+
+        .container {
+            background-color: black;
+        }
+
+        .div1 {
+            background-color: aqua;
+            width: 100px;
+            height: 100px;
+        }
+
+        .div2 {
+            background-color: red;
+            width: 100px;
+            height: 100px;
+        }
+
+        p b {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <ul>
+        <p><b>1.使用overflow：hidden隐藏溢出</b></p>
+        <li>
+            父div的高度被子div自动撑起
+            <div class="container">
+                <div class="div1"></div>
+                <div class="div2"></div>
+            </div>
+        </li>
+        <li>
+            父div高度固定时,子div溢出
+            <div class="container" style="height: 120px;">
+                <div class="div1"></div>
+                <div class="div2"></div>
+            </div>
+        </li>
+        <li>
+            父div高度固定时,子div溢出时,使用overflow: hidden清除溢出
+            <div class="container" style="height: 120px; overflow: hidden;">
+                <div class="div1"></div>
+                <div class="div2"></div>
+            </div>
+        </li>
+    </ul>
+    <ul>
+        <p><b>2.使用overflow：hidden清除浮动</b></p>
+        <li>
+            浮动的元素脱离文档元素， 不占据空间。 不浮动的元素会直接无视掉这个元素：父div无视了自己的两个孩子，其高度为0（因为我们没有设置父div的高度），所以父div没有显现。
+            <div class="container">
+                <div class="div1" style="float: left;"></div>
+                <div class="div2" style="float: left;"></div>
+            </div>
+        </li>
+        <li>
+            第一种方式，将父div添加float:right,会发现两个颜色块出现在了屏幕的右边，依然没有父div的身影，但使用浏览器开发工具(看container的尺寸)可以看出父div已经包含了子div
+            <div class="container" style="float: right;">
+                <div class="div1" style="float: left;"></div>
+                <div class="div2" style="float: left;"></div>
+            </div>
+        </li>
+        <li>
+            因为此时父div也已经浮动,失去了其“独霸一行”的能力。为父div设置宽度后才可以看到。
+            <div class="container" style="float: right;width: 400px">
+                <div class="div1" style="float: left;"></div>
+                <div class="div2" style="float: left;"></div>
+            </div>
+        </li>
+        <li>
+            第二种方式,为父亲添加<b>overflow:hidden属性用以清除浮动</b>
+            <div class="container" style="overflow: hidden;">
+                <div class="div1" style="float: left;"></div>
+                <div class="div2" style="float: left;"></div>
+            </div>
+        </li>
+    </ul>
+    <ul>
+        <p><b>3.使用overflow：hidden解除坍塌(针对第二种情况)</b></p>
+        <b>什么叫margin坍塌?</b>
+        <li style="height: 360px">
+            第一种margin坍塌:对于上下两个并列的div块而言，上面div的margin-bottom和下面div的margin-top会塌陷，也就是会取上下两者margin里最大值作为显示值。<br>
+            所以从这个意义上说：CSS及浏览器的设计者们希望我们在布局时，如果遇到上下两个并排内容块的安排，最好只设置其中每个块上或下margin的一处即可。<br>
+            可以看到,div和div之间距离只有50px,而不是想象中的100px;
+            <div class="container">
+                <div class="div1" style="margin-bottom: 50px"></div>
+                <div class="div2" style="margin-top: 50px"></div>
+            </div>
+        </li>
+        <li style="height: 360px">
+            第二种margin坍塌:对于有块级子元素的元素（父元素）计算高度的方式，如果元素没有上下边框和填充，那其高度就是第一个子元素顶部和底部边框边缘之间的距离。<br>
+            可以看到,父div由于高度从div1的上边缘开始计算高度是200px,所以预期的上部50px的黑色没有显示。
+            <div class="container">
+                <div class="div1" style="margin-top: 50px"></div>
+                <div class="div2"></div>
+            </div>
+        </li>
+        <li style="height: 360px">
+            对于第二种margin坍塌，可在父容器中添加overflow: hidden来解决。<br>
+            还有两种解决方式略(1.为父div设置边框，当然可以设置边框为透明;2.为父DIV添加padding，或者至少添加padding-top;)
+            <div class="container" style="overflow: hidden;">
+                <div class="div1" style="margin-top: 50px"></div>
+                <div class="div2"></div>
+            </div>
+        </li>
+        <b>浮动时并不会出现margin坍塌!</b>
+        <li>
+            div1同时设置了margin-top: 50px与float: left <br>
+            <div class="container" style="float: left;width:100%;height: 200px;">
+                <div class="div1" style="margin-top: 50px;float: left;"></div>
+                <div class="div2" style="float: left;"></div>
+            </div>
+        </li>
+    </ul>
+</body>
+
+</html>

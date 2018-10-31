@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>相对定位和绝对定位</title>
+</head>
+
+<body>
+    <p><b>box4的left和right属性是相对于它的最近一层的"有效"父容器的(父容器设置position为relative或absolute为"有效")</b></p>
+    div设置了position: relative,所以box4的位置相对于div1的left: 10px;top: 10px;<br>
+    如果div1属于"无效"父容器,则box4的位置会相对于html的body显示.
+    <div id="div1" style="width:600px;height: 400px;background-color: rebeccapurple;position: relative;overflow: hidden">
+        <div id="div2" style="width: 560px;height: 360px;background-color: plum;">
+            <div id="div3" style="width: 520px;height: 320px;background-color:slategray;margin: 40px;">
+                <div style="width: 100px;height: 100px;background-color:powderblue; position: relative;left: 20px;top: 20px;float: left;"></div>
+                <div style="width: 100px;height: 100px;background-color:papayawhip; position: relative;left: 40px;top: 20px;float: left;"></div>
+                <div style="width: 100px;height: 100px;background-color:palegreen; position: relative;left: 60px;top: 20px;float: left;"></div>
+                <div id="box4" style="width: 100px;height: 100px;background-color:mediumseagreen; position: absolute;left: 10px;top: 10px;float: left;">
+                    box4</div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
