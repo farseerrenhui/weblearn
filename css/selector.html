@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CSS中的通配符</title>
+    <style>
+        /* [class*= xxx]代表包含xxx的类名 */
+        /* [class^= xxx]代表以xxx开头的类名 */
+        /* [class$= xxx]代表以xxx结尾的类名 */
+
+        [class*="-"] {
+            background-color: aliceblue;
+        }
+
+        [class*="q-"] {
+            font-size: 30px;
+        }
+
+        [id$="-e"] {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="background-color: white">
+        <p class="q-1-w" id="q-1-w">1</p>
+        <p class="q-2-w" id="q-2-w">2</p>
+        <p class="q-3-w" id="q-3-w">3</p>
+        <p class="q-4-e" id="q-4-e">4</p>
+        <p class="q-5-e" id="q-5-e">5</p>
+        <p class="a-6-e" id="a-6-e">6</p>
+        <p class="a-7-e" id="a-7-e">7</p>
+    </div>
+
+</body>
+
+</html>
