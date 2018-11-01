@@ -3,12 +3,13 @@
 
 <head>
   <meta charset="utf-8">
-  <title>9.原创力设计工作室</title>
+  <title>10.原创力设计工作室</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="w.ico" rel="shortcut icon" type="image/x-icon" />
   <link href="bootstrap.min.css" rel="stylesheet">
   <script src="jquery.js"></script>
   <script src="bootstrap.min.js"></script>
+  <script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
   <style>
     body {
       padding-top: 50px;
@@ -31,17 +32,17 @@
     //   var appid = '';
       
       function shareFriend() {
-      WeixinJSBridge.invoke('sendAppMessage',{
-      "appid": appid,
-      "img_url": imgUrl,
-      "img_width": "640",
-      "img_height": "640",
-      "link": lineLink,
-      "desc": descContent,
-      "title": shareTitle
-      }, function(res) {
-      _report('send_msg', res.err_msg);
-      })
+        WeixinJSBridge.invoke('sendAppMessage',{
+          "appid": appid,
+          "img_url": imgUrl,
+          "img_width": "640",
+          "img_height": "640",
+          "link": lineLink,
+          "desc": descContent,
+          "title": shareTitle
+        }, function(res) {
+        //_report('send_msg', res.err_msg);
+        })
       }
       function shareTimeline() {
       WeixinJSBridge.invoke('shareTimeline',{
@@ -52,7 +53,7 @@
       "desc": descContent,
       "title": shareTitle
       }, function(res) {
-      _report('timeline', res.err_msg);
+      //_report('timeline', res.err_msg);
       });
       }
       function shareWeibo() {
@@ -60,7 +61,7 @@
       "content": descContent,
       "url": lineLink,
       }, function(res) {
-      _report('weibo', res.err_msg);
+      //_report('weibo', res.err_msg);
       });
       }
       // 当微信内置浏览器完成内部初始化后会触发WeixinJSBridgeReady事件。
