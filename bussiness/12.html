@@ -9,181 +9,75 @@
     <link href="bootstrap.min.css" rel="stylesheet">
     <script src="jquery.js"></script>
     <script src="bootstrap.min.js"></script>
-    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+    <script src="https//res.wx.qq.com/open/js/jweixin-1.2.0.js" type="text/javascript"></script>
     <style>
         body {
-      padding-top: 50px;
-    }
-    .starter-template {
-      padding: 40px 15px;
-      text-align: center;
-    }      
-  </style>
+            padding-top: 50px;
+        }
+        .starter-template {
+            padding: 40px 15px;
+            text-align: center;
+        }      
+    </style>
 
     <script>
-        var shareData = {};
-    shareData.imgUrl = "https://raw.githubusercontent.com/farseerrenhui/weblearn/master/bussiness/0.jpg";
-    shareData.link = window.location.href;
-    shareData.content = "成功成功成功成功成功";
-    shareData.title = "成功";
-    Share(shareData);
-    function Share(shareData) {
-    
-    var data = {};
-    var wxdata = {};
-    data.method = "GetConfig";
-    data.url = window.location.href.split('#')[0];
-    //这里是ajax向后台请求签名，appid等的方法
-    ajaxProcess("/h5/share.aspx?", data, function callSuccess(oRet) {
-        //var data = oRet;
-        var result = oRet;
-        if (result != null) {
-            wx.config({
-                debug: false,
-                appId: result.AppId,
-                timestamp: result.Timestamp,
-                nonceStr: result.NonceStr,
-                signature: result.Signature,
-                jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ', 'onMenuShareWeibo', 'onMenuShareQZone']
-            });
-        }
-    }, function callError(e) {
-        alert(e);
-    });
+        wx.config({
+            debug: false, // 是否开启调试模式
+            appId: "wx5a5588d6fa43d254", //appid
+            timestamp: timestamp, // 时间戳
+            nonceStr: noncestr, // 随机字符串
+            signature: signature, // 签名
+            jsApiList: [
+                'onMenuShareTimeline',
+                'onMenuShareAppMessage',
+                'onMenuShareQQ',
+                'onMenuShareWeibo',
+                'onMenuShareQZone'
+            ] // 需要使用的JS接口列表
+        })
 
-    wxdata.imgUrl = shareData.imgUrl;
-    wxdata.link = shareData.link;
-    var content = shareData.content;
-    content = delHtmlTag(content);
-    if (content.length > 100) {
-        wxdata.desc = content.substring(0, 100);
-    } else {
-        wxdata.desc = content;
-    }
-    wxdata.title = shareData.title;
+        var title="A";
+        var desc="B";
+        var link="";
+        var imgUrl="https://raw.githubusercontent.com/farseerrenhui/weblearn/master/bussiness/0.jpg";
 
-
-    var friendcallback = function(res) {
-        //alert("分享成功");
-    };
-
-
-    wx.ready(function() {
-        wx.onMenuShareTimeline({
-            title: wxdata.title,
-            desc: wxdata.desc,
-            link: wxdata.link,
-            imgUrl: wxdata.imgUrl,
-            img_width: 200,
-            img_height: 200,
-            trigger: function(res) {
-            },
-            success: function(res) {
-                friendcallback(res);
-            },
-            cancel: function(res) {
-            },
-            fail: function(res) {
-                alert(JSON.stringify(res));
-            }
-        });
-    });
-
-
-    wx.ready(function() {
+        wx.ready(function(){
+        // 分享给好友
         wx.onMenuShareAppMessage({
-            title: wxdata.title,
-            desc: wxdata.desc,
-            link: wxdata.link,
-            imgUrl: wxdata.imgUrl,
-            img_width: 200,
-            img_height: 200,
-            trigger: function(res) {
+            title: title, // 分享标题
+            desc: desc, // 分享描述
+            link: link, // 分享链接
+            imgUrl: imgUrl, // 分享图标
+            success: function () {
+            doShareDone()
             },
-            success: function(res) {
-                friendcallback(res);
-            },
-            cancel: function(res) {
-            },
-            fail: function(res) {
-                alert(JSON.stringify(res));
+            cancel: function () {
+            doShareCancel()
             }
-        });
-    });
-
-
-    wx.ready(function() {
-        wx.onMenuShareQQ({
-            title: wxdata.title,
-            desc: wxdata.desc,
-            link: wxdata.link,
-            imgUrl: wxdata.imgUrl,
-            img_width: 200,
-            img_height: 200,
-            trigger: function(res) {
+        })
+        
+        // 分享到朋友圈
+        wx.onMenuShareTimeline({
+            title: title, // 分享标题
+            link: link, // 分享链接
+            imgUrl: imgUrl, // 分享图标
+            success: function () {
+            doShareDone()
             },
-            success: function(res) {
-                friendcallback(res);
-            },
-            cancel: function(res) {
-            },
-            fail: function(res) {
-                alert(JSON.stringify(res));
+            cancel: function () {
+            doShareCancel()
             }
-        });
-    });
-
-
-    wx.ready(function() {
-        wx.onMenuShareWeibo({
-            title: wxdata.title,
-            desc: wxdata.desc,
-            link: wxdata.link,
-            imgUrl: wxdata.imgUrl,
-            img_width: 200,
-            img_height: 200,
-            trigger: function(res) {
-            },
-            success: function(res) {
-                friendcallback(res);
-            },
-            cancel: function(res) {
-            },
-            fail: function(res) {
-                alert(JSON.stringify(res));
-            }
-        });
-    });
-
-
-    wx.ready(function() {
-        wx.onMenuShareQZone({
-            title: wxdata.title,
-            desc: wxdata.desc,
-            link: wxdata.link,
-            imgUrl: wxdata.imgUrl,
-            img_width: 200,
-            img_height: 200,
-            trigger: function(res) {
-            },
-            success: function(res) {
-                friendcallback(res);
-            },
-            cancel: function(res) {
-            },
-            fail: function(res) {
-                alert(JSON.stringify(res));
-            }
-
-
-        });
-
-
-    });
-    }
-
-
-  </script>
+            })
+        })
+        // 分享成功回调
+        function doShareDone () {
+            console.log('分享成功')
+        }
+        // 取消分享回调
+        function doShareCancel () {
+            console.log('取消了分享')
+        }
+    </script>
 
 </head>
 
