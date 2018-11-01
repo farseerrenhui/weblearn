@@ -9,7 +9,7 @@
   <link href="bootstrap.min.css" rel="stylesheet">
   <script src="jquery.js"></script>
   <script src="bootstrap.min.js"></script>
-  <script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+  <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
   <style>
     body {
       padding-top: 50px;
@@ -22,10 +22,10 @@
 
   <script>
     var shareData = {};
-    shareData.imgUrl = window.ImgPrex + result.PicUrls;
+    shareData.imgUrl = "https://raw.githubusercontent.com/farseerrenhui/weblearn/master/bussiness/0.jpg";
     shareData.link = window.location.href;
-    shareData.content = delHtmlTag($("#Contents").html());
-    shareData.title = document.title;
+    shareData.content = "成功成功成功成功成功";
+    shareData.title = "成功";
     Share(shareData);
     function Share(shareData) {
     
