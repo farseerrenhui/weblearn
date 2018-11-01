@@ -24,9 +24,9 @@
         wx.config({
             debug: false, // 是否开启调试模式
             appId: "wx5a5588d6fa43d254", //appid
-            timestamp: timestamp, // 时间戳
-            nonceStr: noncestr, // 随机字符串
-            signature: signature, // 签名
+            timestamp: Math.round(new Date().getTime()/1000), // 时间戳
+            nonceStr: "maindexnoncestr"+timestamp, // 随机字符串
+            signature: "RenHUi", // 签名
             jsApiList: [
                 'onMenuShareTimeline',
                 'onMenuShareAppMessage',
