@@ -25,17 +25,17 @@
         var timestamp = Math.round(new Date().getTime()/1000);
 
         wx.config({
-            debug: false, // 是否开启调试模式
+            debug: true, // 是否开启调试模式
             appId: "wx5a5588d6fa43d254", //appid
             timestamp: timestamp, // 时间戳
-            nonceStr: "maindexnoncestr" + timestamp, // 随机字符串
-            signature: "RenHUi", // 签名
+            //nonceStr: "maindexnoncestr" + timestamp, // 随机字符串
+            //signature: "RenHUi", // 签名
             jsApiList: [
                 'onMenuShareTimeline',
                 'onMenuShareAppMessage',
-                'onMenuShareQQ',
-                'onMenuShareWeibo',
-                'onMenuShareQZone'
+                //'onMenuShareQQ',
+                //'onMenuShareWeibo',
+                //'onMenuShareQZone'
             ] // 需要使用的JS接口列表
         })
 
