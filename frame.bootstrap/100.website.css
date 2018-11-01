@@ -1,4 +1,8 @@
-h1, h3, p, a, button {
+h1,
+h3,
+p,
+a,
+button {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
@@ -48,6 +52,8 @@ h1, h3, p, a, button {
 .twopage {
     padding: 2px 0 0 2px;
     background-image: url("img/2.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
     position: relative;
     height: 1000px;
 }
@@ -148,6 +154,8 @@ h1, h3, p, a, button {
 
 #threepagebg {
     background-image: url("img/3.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
     height: 1000px;
 }
 
@@ -176,6 +184,8 @@ h1, h3, p, a, button {
 
 .fourpage {
     background-image: url("img/4.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
     height: 1000px;
     margin-top: 1000px;
 }
@@ -193,16 +203,36 @@ h1, h3, p, a, button {
 }
 
 .fourpage .container .carousel {
-    margin-top: 240px;
+    margin-top: 180px;
 }
 
-.carousel-control.left, .carousel-control.right {
-    background-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 100%);
-    background-image: -o-linear-gradient(left, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 100%);
-    background-image: -webkit-gradient(linear, left top, right top, from(rgba(0, 0, 0, 0)), to(rgba(0, 0, 0, 0)));
+/*为了让翻页箭头垂直居中,向上调一些*/
+.carousel-control {
+    margin-top: -100px;
+}
+
+.carousel-control.left,
+.carousel-control.right {
     background-image: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 100%);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#80000000', endColorstr='#00000000', GradientType=1);
     background-repeat: repeat-x;
+}
+
+
+.carousel-inner div {
+    text-align: center;
+    width: 1140px;
+    height: 256px;
+}
+
+/* 调试无效? */
+/* .carousel-inner div img{
+    display: inline;
+} */
+
+/* 有效 */
+.carousel-inner .item img {
+    display: inline;
 }
 
 .fivepagebg {
@@ -215,6 +245,8 @@ h1, h3, p, a, button {
 
 #fivepage {
     background-image: url("img/5.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
     height: 1000px;
 }
 
@@ -227,20 +259,32 @@ h1, h3, p, a, button {
 }
 
 .footerbtncenter {
-    margin-top: 200px;
+    margin-top: 210px;
     text-align: center;
 }
 
 .queryicon {
     width: 200px;
+    vertical-align: -webkit-baseline-middle;
 }
 
 .queryicon:hover {
-    border: 2px solid aliceblue;
+    border: 2px solid;
+    border-color: greenyellow;
+    transition: border-color 0.5s;
+    /* opacity: .25;
+    transition: opacity 0.5s; */
 }
 
 .footertextbtn {
     margin-top: 150px;
     width: 100%;
     text-align: center;
+}
+
+h1:hover,
+a:hover,
+p:hover {
+    opacity: .5;
+    transition: opacity 0.5s;
 }
