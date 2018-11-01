@@ -203,7 +203,7 @@
             <p><b>在组件上使用v-model</b></p>
             &lt;input v-model="searchText"&gt;等价于
             &lt;input v-bind:value="searchText" v-on:input="searchText = $event.target.value"&gt;<br>
-            <custom-input v-model="searchText"></custom-input> --> <span style="color:yellow">componentVModel._data.searchText</span>
+            <custom-input v-model="searchText"></custom-input> ---- <span style="color:yellow">componentVModel._data.searchText</span>
         </li>
         <script>
             Vue.component('custom-input', {
