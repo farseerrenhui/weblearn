@@ -6,68 +6,9 @@
   <title>原创力设计工作室</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="w.ico" rel="shortcut icon" type="image/x-icon" />
-  <link href="../_package/bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet">
+  <link href="../_package/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
   <script src="../_package/bootstrap/3.3.7/js/jquery.js"></script>
-  <script src="../_package/bootstrap/3.3.7/js/bootstrap.js"></script>
-  <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
-  <script type="text/javascript">
-    var imgUrl = 'https://raw.githubusercontent.com/farseerrenhui/weblearn/master/bussiness/bg.jpg'; // 分享后展示的一张图片                 
-    var lineLink = 'http://www.baidu.com'; // 点击分享后跳转的页面地址
-    var descContent = "简介-原创力设计工作室"; // 分享后的描述信息
-    var shareTitle = '标题-原创力设计工作室'; // 分享后的标题
-    var appid = ''; // 应用id,如果有可以填，没有就留空
-    function shareFriend() {
-      WeixinJSBridge.invoke('sendAppMessage', {
-        "appid": appid,
-        "img_url": imgUrl,
-        "img_width": "200",
-        "img_height": "200",
-        "link": lineLink,
-        "desc": descContent,
-        "title": shareTitle
-      }, function (res) {
-        //_report('send_msg', res.err_msg);  // 这是回调函数，必须注释掉
-      })
-    }
-
-    function shareTimeline() {
-      WeixinJSBridge.invoke('shareTimeline', {
-        "img_url": imgUrl,
-        "img_width": "200",
-        "img_height": "200",
-        "link": lineLink,
-        "desc": descContent,
-        "title": shareTitle
-      }, function (res) {
-        //_report('timeline', res.err_msg); // 这是回调函数，必须注释掉
-      });
-    }
-
-    function shareWeibo() {
-      WeixinJSBridge.invoke('shareWeibo', {
-        "content": descContent,
-        "url": lineLink,
-      }, function (res) {
-        //_report('weibo', res.err_msg);
-      });
-    };
-
-    // 当微信内置浏览器完成内部初始化后会触发WeixinJSBridgeReady事件。
-    document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
-      // 发送给好友
-      WeixinJSBridge.on('menu:share:appmessage', function (argv) {
-        shareFriend();
-      });
-      // 分享到朋友圈
-      WeixinJSBridge.on('menu:share:timeline', function (argv) {
-        shareTimeline();
-      });
-      // 分享到微博
-      WeixinJSBridge.on('menu:share:weibo', function (argv) {
-        shareWeibo();
-      });
-    }, false);
-  </script>
+  <script src="../_package/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <style>
     body {
       padding-top: 50px;
