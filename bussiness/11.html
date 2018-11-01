@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>10.原创力设计工作室</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="w.ico" rel="shortcut icon" type="image/x-icon" />
+  <link href="bootstrap.min.css" rel="stylesheet">
+  <script src="jquery.js"></script>
+  <script src="bootstrap.min.js"></script>
+  <script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+  <style>
+    body {
+      padding-top: 50px;
+    }
+    .starter-template {
+      padding: 40px 15px;
+      text-align: center;
+    }      
+  </style>
+  <script>
+    wx.config({
+                debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                appId: 'wxff4f410721541a1967', // 必填，公众号的唯一标识
+                timestamp: "<?php echo $ws['timestamp']; ?>", // 必填，生成签名的时间戳
+                nonceStr: '<?php echo $ws["nonceStr"]; ?>', // 必填，生成签名的随机串
+                signature: '<?php echo $ws["signature"]; ?>',// 必填，签名，见附录1
+                jsApiList: [
+                        'checkJsApi',
+                        'onMenuShareTimeline',
+                        'onMenuShareAppMessage',
+                        'onMenuShareQQ',
+                        'onMenuShareWeibo'
+                ] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+        });
+    var wstitle = "微信分享接口示例预览"; //此处填写分享标题
+    var wsdesc = "这是一个微信分享接口示例预览页面，可以发送到微信端预览并转发给朋友或者分享朋友圈看看效果如何！"; //此处填写分享简介
+    var wslink = "<?php echo $surl; ?>"; //此处获取分享链接
+    var wsimg = "https://raw.githubusercontent.com/farseerrenhui/weblearn/master/bussiness/0.jpg"; //此处获取分享缩略图
+
+        wx.ready(function () {
+        // 分享到朋友圈
+        wx.onMenuShareTimeline({
+                title: wstitle,
+                link: wslink,
+                imgUrl: wsimg,
+                success: function () {
+                        alert('分享成功');
+                },
+                cancel: function () {
+                }
+        });
+
+        // 分享给朋友
+        wx.onMenuShareAppMessage({
+                title: wstitle,
+                desc: wsdesc,
+                link: wslink,
+                imgUrl: wsimg,
+                success: function () {
+                    alert('分享成功');
+                },
+                cancel: function () {
+                }
+        });
+
+        // 分享到QQ
+        wx.onMenuShareQQ({
+                title: wstitle,
+                desc: wsdesc,
+                link: wslink,
+                imgUrl: wsimg,
+                success: function () {
+                        alert('分享成功');
+                },
+                cancel: function () {
+                }
+        });
+
+        // 微信到腾讯微博
+        wx.onMenuShareWeibo({
+                title: wstitle,
+                desc: wsdesc,
+                link: wslink,
+                imgUrl: wsimg,
+                success: function () {
+                        alert('分享成功');
+                },
+                cancel: function () {
+                }
+        });
+
+        // 分享到QQ空间
+        wx.onMenuShareQZone({
+                title: wstitle,
+                desc: wsdesc,
+                link: wslink,
+                imgUrl: wsimg,
+                success: function () {
+                        alert('分享成功');
+                },
+                cancel: function () {
+                }
+        });
+
+});
+
+  </script>
+</head>
+
+<body id="container" data-init="index" sharetitle="【原创力设计工作室】" sharepic="https://raw.githubusercontent.com/farseerrenhui/weblearn/master/bussiness/0.jpg"
+  sharelink="" sharedesc="原创力设计工作室，原创力设计工作室~">
+
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+          aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">首页</a>
+      </div>
+      <div id="navbar" class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="#">软件开发</a></li>
+          <li><a href="#about">平面设计</a></li>
+          <li><a href="#contact">包装设计</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+
+    <div class="starter-template">
+      <h1>原创力设计工作室</h1>
+      <p class="lead">原创力设计工作室测试页面</p>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-6">
+        <img src="img/三折页.jpg" style="width: 100%" alt="">
+      </div>
+      <div class="col-xs-6">
+        <img src="img/企业宣传册.jpg" style="width: 100%" alt="">
+      </div>
+      <div class="col-xs-6">
+        <img src="img/台历.jpg" style="width: 100%" alt="">
+      </div>
+      <div class="col-xs-6">
+        <img src="img/员工手册.jpg" style="width: 100%" alt="">
+      </div>
+      <div class="col-xs-6">
+        <img src="img/店标商标.jpg" style="width: 100%" alt="">
+      </div>
+      <div class="col-xs-6">
+        <img src="img/手提袋.jpg" style="width: 100%" alt="">
+      </div>
+      <div class="col-xs-6">
+        <img src="img/档案袋.jpg" style="width: 100%" alt="">
+      </div>
+      <div class="col-xs-6">
+        <img src="img/海报.jpg" style="width: 100%" alt="">
+      </div>
+      <div class="col-xs-6">
+        <img src="img/网站建设.jpg" style="width: 100%" alt="">
+      </div>
+      <div class="col-xs-6">
+        <img src="img/荣誉证书.jpg" style="width: 100%" alt="">
+      </div>
+      <div class="col-xs-6">
+        <img src="img/软件开发.jpg" style="width: 100%" alt="">
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
