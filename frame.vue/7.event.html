@@ -4,8 +4,8 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>事件</title>
-    <script src="vue.js"></script>
-    <script src="../jquery/jquery-3.3.1.js"></script>
+    <script src="../_package/vue/vue.js"></script>
+    <script src="../_package/jquery/jquery-3.3.1.js"></script>
 </head>
 
 <style>
@@ -37,7 +37,7 @@
             var example2 = new Vue({
                 el: '#example-2',
                 data: {
-                    name: 'Vue.js'
+                    name: '../_package/vue/vue.js'
                 },
                 // 在 `methods` 对象中定义方法
                 methods: {
@@ -55,7 +55,7 @@
 
             function ex2() {
                 // 也可以用 JavaScript 直接调用方法
-                example2.greet() // => 'Hello Vue.js!'
+                example2.greet() // => 'Hello ../_package/vue/vue.js!'
             }
         </script>
         <li>

@@ -4,8 +4,8 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>表单输入绑定</title>
-    <script src="vue.js"></script>
-    <script src="../jquery/jquery-3.3.1.js"></script>
+    <script src="../_package/vue/vue.js"></script>
+    <script src="../_package/jquery/jquery-3.3.1.js"></script>
 </head>
 
 <body style="background-color:darkseagreen;color: whitesmoke">
@@ -203,7 +203,7 @@
             <p><b>在组件上使用v-model</b></p>
             &lt;input v-model="searchText"&gt;等价于
             &lt;input v-bind:value="searchText" v-on:input="searchText = $event.target.value"&gt;<br>
-            <custom-input v-model="searchText"></custom-input>
+            <custom-input v-model="searchText"></custom-input> --> <span style="color:yellow">componentVModel._data.searchText</span>
         </li>
         <script>
             Vue.component('custom-input', {
