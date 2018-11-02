@@ -225,13 +225,8 @@ button {
     height: 256px;
 }
 
-/* 调试无效? */
-/* .carousel-inner div img{
-    display: inline;
-} */
-
-/* 有效 */
 .carousel-inner .item img {
+    /* 图片不在是块级元素后,父div的text-align: center生效 */
     display: inline;
 }
 
