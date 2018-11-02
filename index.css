@@ -23,7 +23,7 @@ button {
 }
 
 #onepagebg {
-    background-image: url("img/1.jpg");
+    background-image: url("frame.bootstrap/img/1.jpg");
     height: 1000px;
 }
 
@@ -51,7 +51,7 @@ button {
 
 .twopage {
     padding: 2px 0 0 2px;
-    background-image: url("img/2.jpg");
+    background-image: url("frame.bootstrap/img/2.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     position: relative;
@@ -69,7 +69,7 @@ button {
     margin-top: 80px;
 }
 
-.twopage-text-h1 img {
+.twopage-text-h1 frame.bootstrap/img {
     width: 120px;
 }
 
@@ -153,7 +153,7 @@ button {
 }
 
 #threepagebg {
-    background-image: url("img/3.jpg");
+    background-image: url("frame.bootstrap/img/3.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     height: 1000px;
@@ -183,7 +183,7 @@ button {
 }
 
 .fourpage {
-    background-image: url("img/4.jpg");
+    background-image: url("frame.bootstrap/img/4.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     height: 1000px;
@@ -225,7 +225,7 @@ button {
     height: 256px;
 }
 
-.carousel-inner .item img {
+.carousel-inner .item frame.bootstrap/img {
     /* 图片不在是块级元素后,父div的text-align: center生效 */
     display: inline;
 }
@@ -239,7 +239,7 @@ button {
 }
 
 #fivepage {
-    background-image: url("img/5.jpg");
+    background-image: url("frame.bootstrap/img/5.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     height: 1000px;

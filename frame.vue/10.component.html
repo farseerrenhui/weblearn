@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>组件深入</title>
+    <script src="../_package/vue/vue.js"></script>
+    <script src="../_package/jquery/jquery-3.3.1.js"></script>
+</head>
+
+<body style="background-color:darkseagreen;color: whitesmoke">
+    <ul style="list-style-image:url(img/vue.png);">
+
+        <li id="li-my-component">
+            <!-- <button style="color:red">123123</button> -->
+            <my-component id="c1" prop-c="color:green;" prop-f="success"></my-component>
+            <button @click="changeColor">ChangeColor</button>
+        </li>
+
+        <script>
+            Vue.component('my-component', {
+                props: {
+                    // 基础的类型检查 (`null` 匹配任何类型)
+                    propA: Number,
+                    // 多个可能的类型
+                    propB: [String, Number],
+                    // 必填的字符串
+                    propC: {
+                        type: String,
+                        required: true
+                    },
+                    // 带有默认值的数字
+                    propD: {
+                        type: Number,
+                        default: 100
+                    },
+                    // 带有默认值的对象
+                    propE: {
+                        type: Object,
+                        // 对象或数组默认值必须从一个工厂函数获取
+                        default: function () {
+                            return {
+                                message: 'hello'
+                            }
+                        }
+                    },
+                    // 自定义验证函数
+                    propF: {
+                        validator: function (value) {
+                            // 这个值必须匹配下列字符串中的一个
+                            return ['success', 'warning', 'danger'].indexOf(value) !== -1
+                        }
+                    }
+                },
+                methods: {
+                    changeColor: function () {
+                        console.log("--call changeColor--");
+                        this.propA = "AAAA"
+                        this.propC = "color:red;"
+                    },
+                },
+                template: '<button :style="propC">{{propA}}+{{propB}}+{{propC}}+{{propD}}+{{propE}}+{{propF}}</button>'
+            })
+        </script>
+        <script>
+            //必须用一个Vue对象接管组件所在的区域,否则组件无法加载
+            new Vue({
+                el: "#c1",
+                methods: {
+                    changeColor: function () {
+                        console.log("--call changeColor--");
+                        this.propA = "AAAA"
+                        this.propC = "color:red;"
+                        $("#c1").propA = 100;
+                        $("#c1").propB = true;
+                    },
+                }
+            })
+
+            $("#c1").propA = 100;
+            $("#c1").propB = true;
+        </script>
+
+        <li>
+            
+        </li>
+    </ul>
+</body>
+
+</html>
