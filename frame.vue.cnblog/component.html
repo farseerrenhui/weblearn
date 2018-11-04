@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>组件</title>
+    <!-- <script src="../_package/vue/1.0.25/vue.js"></script> -->
+    <script src="../_package/vue/vue.js"></script>
+    <script src="../_package/jquery/jquery-3.3.1.js"></script>
+    <script src="../_package/bootstrap/3.3.7/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="../_package/bootstrap/3.3.7/css/bootstrap.css">
+    <style>
+        table,
+        td,
+        th {
+            border-collapse: collapse;
+            border-spacing: 0
+        }
+
+        table {
+            width: 60%;
+            margin: 20px;
+        }
+
+        td,
+        th {
+            border: 1px solid #bcbcbc;
+            padding: 5px 10px
+        }
+
+        th {
+            background: #42b983;
+            font-size: 1.2rem;
+            font-weight: 400;
+            color: #fff;
+            cursor: pointer
+        }
+
+        tr:nth-of-type(odd) {
+            background: #fff
+        }
+
+        tr:nth-of-type(even) {
+            background: #eee
+        }
+
+        td {
+            color: black;
+        }
+    </style>
+</head>
+
+<body style="background-color:darkseagreen;color: whitesmoke">
+    <div class="container">
+        <ul style="list-style-image:url(img/vue.png);">
+            <li>
+                <p><b>使用script或template标签分离组件</b></p>
+                <p><b>在定义组件的选项时,data和el选项必须使用函数</b></p>
+                <div id="app">
+                    <div>
+                        <my-component name="WPF" value="81" />
+                    </div>
+                    <div>
+                        <my-component name="Java" value="60" />
+                    </div>
+                </div>
+                <!--使用<template>承载组件-->
+                <!--也可以使用<script type="text/x-template" id="myComponent"></script>-->
+                <!--还有.vue格式的组件-->
+                <template id="myComponent">
+                    <div class="progress_bar_point">
+                        <div class="pro-bar">
+                            <small class="progress_bar_point_title">
+                                {{name}} [{{type}}]
+                                <span class="progress_number">{{value}}%</span>
+                            </small>
+                            <!--还不到如何控制style中的值-->
+                            <span class="progress_bar_inner" style="width: 90%; background-color: rgb(26, 188, 156);"></span>
+                        </div>
+                    </div>
+                </template>
+                <!--组件中使用到的样式可以被引用到,如果写在<template>之中,则引用不到-->
+                <style type="text/css">
+                    .progress_bar_point .pro-bar {
+                        background: hsl(0, 0%, 97%);
+                        box-shadow: 0 1px 2px hsla(0, 0%, 0%, 0.1) inset;
+                        height: 4px;
+                        margin-bottom: 12px;
+                        margin-top: 50px;
+                        position: relative;
+                    }
+
+                    .progress_bar_point .progress_bar_point_title {
+                        /*color: hsl(218, 4%, 50%);*/
+                        color: darkmagenta;
+                        font-size: 15px;
+                        font-weight: 300;
+                        position: relative;
+                        top: -28px;
+                        z-index: 1;
+                    }
+
+                    .progress_bar_point .progress_number {
+                        float: right;
+                        margin-top: -24px;
+                    }
+
+                    .progress_bar_point .progress_bar_inner {
+                        background-color: hsl(0, 0%, 88%);
+                        display: block;
+                        width: 0;
+                        height: 100%;
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        transition: width 1s linear 0s;
+                        animation: animate-positive 2s;
+                    }
+
+                    .progress_bar_point .progress_bar_inner:before {
+                        content: "";
+                        background-color: hsl(0, 0%, 100%);
+                        border-radius: 50%;
+                        width: 4px;
+                        height: 4px;
+                        position: absolute;
+                        right: 1px;
+                        top: 0;
+                        z-index: 1;
+                    }
+
+                    .progress_bar_point .progress_bar_inner:after {
+                        content: "";
+                        width: 14px;
+                        height: 14px;
+                        background-color: inherit;
+                        border-radius: 50%;
+                        position: absolute;
+                        right: -4px;
+                        top: -5px;
+                    }
+
+                    @-webkit-keyframes animate-positive {
+                        0% {
+                            width: 0%;
+                        }
+                    }
+
+                    @keyframes animate-positive {
+                        0% {
+                            width: 0%;
+                        }
+                    }
+                </style>
+                <script>
+                    // 全局注册Parent组件
+                        Vue.component('my-component', {
+                            props: ['name', 'value'],
+                            data: function () {
+                                return {
+                                    type: 'Develop',
+                                }
+                            },
+                            template: '#myComponent'
+                        })
+    
+                        new Vue({
+                            el: '#app'
+                        })
+                    </script>
+            </li>
+            <li>
+                <p><b>可以使用props把父组件的数据传递给子组件</b></p>
+                <div id="app2">
+                    <my-component2 v-bind:my-name="parent_name" v-bind:my-age="parent_age" />
+                </div>
+                <!--template标签写在与调用者同级处,避免出错-->
+                <template id="myComponent2">
+                    <table>
+                        <tr>
+                            <th colspan="2">
+                                子组件数据
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>my name</td>
+                            <td>{{myName}}</td>
+                        </tr>
+                        <tr>
+                            <td>my age</td>
+                            <td>{{myAge}}</td>
+                        </tr>
+                    </table>
+                </template>
+                <script>
+                    //可以将app2这个Vue实例看作my-component的父组件
+                        var app2 = new Vue({
+                            el: '#app2',
+                            data: {
+                                parent_name: 'Apple',
+                                parent_age: 6
+                            },
+                            components: {
+                                'my-component2': {
+                                    template: '#myComponent2',
+                                    props: ['myName', 'myAge']
+                                }
+                            }
+                        })
+                    </script>
+            </li>
+            <li>
+                <p><b>prop的绑定类型 👉 1.单向绑定</b></p>
+                <div id="app3">
+                    <table>
+                        <tr>
+                            <th colspan="3">父组件数据</td>
+                        </tr>
+                        <tr>
+                            <td>parent_name</td>
+                            <td>{{ parent_name }}</td>
+                            <td><input type="text" v-model="parent_name" /></td>
+                        </tr>
+                    </table>
+                    <p>修改父组件数据,子组件数据同时改变</p>
+
+                    <!--son-name即sonName-->
+                    <my-component3 v-bind:son-name="parent_name"></my-component3>
+                    <p>修改子组件数据,父组件数据不会改变</p>
+                </div>
+                <template id="myComponent3">
+                    <table>
+                        <tr>
+                            <th style="background-color: chocolate" colspan="3">子组件数据</td>
+                        </tr>
+                        <tr>
+                            <td>son_name</td>
+                            <td>{{ sonName }}</td>
+                            <td><input type="text" v-model="sonName" /></td>
+                        </tr>
+                    </table>
+                </template>
+                <script>
+                    new Vue({
+                        el: '#app3',
+                        data: {
+                            parent_name: 'Apple',
+                            age: 6
+                        },
+                        components: {
+                            'my-component3': {
+                                template: '#myComponent3',
+                                props: ['sonName']
+                            }
+                        }
+                    })
+                </script>
+            </li>
+            <li>
+                <p><b>prop的绑定类型 👉 2.双向绑定(Vue2.0不支持了,寻找新的方式)</b></p>
+                <div id="app4">
+                    <table>
+                        <tr>
+                            <th colspan="3">父组件数据</td>
+                        </tr>
+                        <tr>
+                            <td>parent_name</td>
+                            <td>{{ parent_name }}</td>
+                            <td><input type="text" v-model="parent_name" /></td>
+                        </tr>
+                    </table>
+                    <p>修改父组件数据,子组件数据同时改变</p>
+
+                    <!--son-name即sonName-->
+                    <my-component4 v-bind:son-name.sync="parent_name"></my-component4>
+                    <p>修改子组件数据,父组件数据不会改变</p>
+                </div>
+                <template id="myComponent4">
+                    <table>
+                        <tr>
+                            <th style="background-color: chocolate" colspan="3">子组件数据</td>
+                        </tr>
+                        <tr>
+                            <td>son_name</td>
+                            <td>{{ sonName }}</td>
+                            <td><input type="text" v-model="sonName" /></td>
+                        </tr>
+                    </table>
+                </template>
+                <script>
+                    new Vue({
+                        el: '#app4',
+                        data: {
+                            parent_name: 'Apple',
+                            age: 6
+                        },
+                        components: {
+                            'my-component4': {
+                                template: '#myComponent4',
+                                props: ['sonName']
+                            }
+                        }
+                    })
+                </script>
+            </li>
+            <li>
+                <p><b>prop的绑定类型 👉 3.单次绑定(Vue2.0不支持了,寻找新的方式)</b></p>
+                <div id="app5">
+                    <table>
+                        <tr>
+                            <th colspan="3">父组件数据</td>
+                        </tr>
+                        <tr>
+                            <td>parent_name</td>
+                            <td>{{ parent_name }}</td>
+                            <td><input type="text" v-model="parent_name" /></td>
+                        </tr>
+                    </table>
+                    <p>修改父组件数据,子组件数据同时改变</p>
+
+                    <!--son-name即sonName-->
+                    <my-component5 v-bind:son-name.once="parent_name"></my-component5>
+                    <p>修改子组件数据,父组件数据不会改变</p>
+                </div>
+                <template id="myComponent5">
+                    <table>
+                        <tr>
+                            <th style="background-color: chocolate" colspan="3">子组件数据</td>
+                        </tr>
+                        <tr>
+                            <td>son_name</td>
+                            <td>{{ sonName }}</td>
+                            <td><input type="text" v-model="sonName" /></td>
+                        </tr>
+                    </table>
+                </template>
+                <script>
+                    new Vue({
+                        el: '#app5',
+                        data: {
+                            parent_name: 'Apple',
+                            age: 6
+                        },
+                        components: {
+                            'my-component5': {
+                                template: '#myComponent5',
+                                props: ['sonName']
+                            }
+                        }
+                    })
+                </script>
+            </li>
+        </ul>
+    </div>
+</body>
+
+</html>
