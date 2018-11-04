@@ -29,7 +29,7 @@
         }
 
         th {
-            background: #42b983;
+            background: mediumseagreen;
             font-size: 1.2rem;
             font-weight: 400;
             color: #fff;
@@ -58,10 +58,10 @@
                 <p><b>在定义组件的选项时,data和el选项必须使用函数</b></p>
                 <div id="app">
                     <div>
-                        <my-component name="WPF" value="81" />
+                        <my-component name="WPF" value="81" widthcolor="width: 81%;background-color: mediumseagreen;" />
                     </div>
                     <div>
-                        <my-component name="Java" value="60" />
+                        <my-component name="Java" value="60" widthcolor="width: 60%;background-color: chocolate;" />
                     </div>
                 </div>
                 <!--使用<template>承载组件-->
@@ -75,7 +75,7 @@
                                 <span class="progress_number">{{value}}%</span>
                             </small>
                             <!--还不到如何控制style中的值-->
-                            <span class="progress_bar_inner" style="width: 90%; background-color: rgb(26, 188, 156);"></span>
+                            <span class="progress_bar_inner" v-bind:style="widthcolor"></span>
                         </div>
                     </div>
                 </template>
@@ -114,7 +114,7 @@
                         top: 0;
                         left: 0;
                         transition: width 1s linear 0s;
-                        animation: animate-positive 2s;
+                        animation: animate-positive 1s;
                     }
 
                     .progress_bar_point .progress_bar_inner:before {
@@ -154,20 +154,20 @@
                 </style>
                 <script>
                     // 全局注册Parent组件
-                        Vue.component('my-component', {
-                            props: ['name', 'value'],
-                            data: function () {
-                                return {
-                                    type: 'Develop',
-                                }
-                            },
-                            template: '#myComponent'
-                        })
-    
-                        new Vue({
-                            el: '#app'
-                        })
-                    </script>
+                    Vue.component('my-component', {
+                        props: ['name', 'value','widthcolor'],
+                        data: function () {
+                            return {
+                                type: 'Develop',
+                            }
+                        },
+                        template: '#myComponent'
+                    })
+
+                    new Vue({
+                        el: '#app'
+                    })
+                </script>
             </li>
             <li>
                 <p><b>可以使用props把父组件的数据传递给子组件</b></p>

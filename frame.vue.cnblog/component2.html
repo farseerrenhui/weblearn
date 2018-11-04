@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>组件2</title>
+    <!-- <script src="../_package/vue/1.0.25/vue.js"></script> -->
+    <script src="../_package/vue/vue.js"></script>
+    <script src="../_package/jquery/jquery-3.3.1.js"></script>
+    <script src="../_package/bootstrap/3.3.7/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="../_package/bootstrap/3.3.7/css/bootstrap.css">
+    <style>
+        b {
+            font-size: 18px;
+        }
+
+        table,
+        td,
+        th {
+            border-collapse: collapse;
+            border-spacing: 0
+        }
+
+        table {
+            width: 60%;
+            margin: 20px;
+        }
+
+        td,
+        th {
+            border: 1px solid #bcbcbc;
+            padding: 5px 10px
+        }
+
+        th {
+            background: #42b983;
+            font-size: 1.2rem;
+            font-weight: 400;
+            color: #fff;
+            cursor: pointer
+        }
+
+        tr:nth-of-type(odd) {
+            background: #fff
+        }
+
+        tr:nth-of-type(even) {
+            background: #eee
+        }
+
+        td {
+            color: black;
+        }
+    </style>
+</head>
+
+<body style="background-color:darkseagreen;color: whitesmoke">
+    <div class="container">
+        <ul style="list-style-image:url(img/vue.png);">
+            <li>
+                <p><b>在子组件中定义的数据，只能用在子组件的模板。在父组件中定义的数据，只能用在父组件的模板。</b></p>
+                <div id="app">
+                    <my-component v-show="display">
+                    </my-component>
+                </div>
+                <template id="myComponent">
+                    <a class="btn btn-success" @click="showMsg">myComponent</a>
+                </template>
+                <script>
+                    new Vue({
+                        el: '#app',
+                        data: {
+                            //父组件的display属性
+                            display: true
+                        },
+                        components: {
+                            'my-component': {
+                                //父组件的template组件
+                                template: '#myComponent',
+                                data: function () {
+                                    return {
+                                        msg: 'This is a component!',
+                                        //子组件的display属性
+                                        display: false
+                                    }
+                                },
+                                methods: {
+                                    showMsg: function () {
+                                        alert(this.msg)
+                                        alert(this.display)
+                                    }
+                                }
+                            }
+                        }
+                    })
+                </script>
+            </li>
+            <li>
+                <p><b>插槽</b></p>
+                <p>匿名的插槽只能使用一个</p>
+                <div id="app2">
+                    <my-component2>
+                        <h1>Hello Vue.js!</h1>
+                    </my-component2>
+                    <hr>
+                    <my-component2>
+                    </my-component2>
+                </div>
+                <template id="myComponent2">
+                    <div class="content">
+                        <h2>This is a component with anonymous slot!</h2>
+                        <slot>
+                            <p><i><u>如果没有分发内容，则显示slot中的内容</u></i></p>
+                        </slot>
+                        <p>Say something...</p>
+                    </div>
+                </template>
+                <script>
+                    Vue.component('my-component2', {
+                        template: '#myComponent2'
+                    })
+
+                    new Vue({
+                        el: '#app2'
+                    })
+                </script>
+            </li>
+            <li>
+                <p><b>插槽</b></p>
+                <p>多个插槽需要指定slot的name,使用时指定slot="name"</p>
+                <div id="app3">
+                    <modal-dialog v-bind:show.sync="show">
+                        <p slot="header" class="dialog-title">
+                            <b style="background-color: #cb4a70;color:black;font-size: 24px;">标题</b>
+                        </p>
+                        <div slot="body">
+                            <img src="img/vue.png" style="width:200ox;height: 200px;" alt="">
+                        </div>
+                        <p slot="footer">
+                            <button class="mybtn" @click="closeDialog">关闭</button>
+                        </p>
+                    </modal-dialog>
+                    <button class="mybtn" @click="openDialog">打开对话框</button>
+                </div>
+                <template id="dialog-template">
+                    <div class="dialogs">
+                        <div class="dialog" v-bind:class="{ 'dialog-active': show }">
+                            <div class="dialog-content">
+                                <div class="close rotate">
+                                    <span class="iconfont icon-close" @click="close">✖</span>
+                                </div>
+                                <slot name="header"></slot>
+                                <slot name="body"></slot>
+                                <slot name="footer"></slot>
+                            </div>
+                        </div>
+                        <div class="dialog-overlay"></div>
+                    </div>
+                </template>
+                <style>
+                    * {
+                        font-family: simhei, Helvetica, Arial, sans-serif;
+                    }
+
+                    #dialog-template {
+                        display: none;
+                    }
+
+                    .mybtn {
+                        display: inline-block;
+                        border: 0;
+                        box-sizing: border-box;
+                        background: #cb4a70;
+                        color: #fff;
+                        transition: .4s ease-out;
+                        border: 1px solid #cb4a70;
+                        outline: 0;
+                        text-decoration: none;
+                    }
+
+                    .mybtn:hover,
+                    .mybtn:focus {
+                        background: #fff;
+                        color: #cb4a70;
+                        cursor: pointer;
+                        transition: .15s ease-in;
+                    }
+
+                    .dialog {
+                        width: 480px;
+                        position: fixed;
+                        left: 50%;
+                        top: 2em;
+                        transform: translateX(-50%);
+                        z-index: 2000;
+                        visibility: hidden;
+                        backface-visibility: hidden;
+                        perspective: 1300px;
+                    }
+
+                    .dialog-active {
+                        visibility: visible;
+                    }
+
+                    .dialog-active .dialog-content {
+                        position: relative;
+                        opacity: 1;
+                        transform: rotateY(0);
+                    }
+
+                    .dialog-active~.dialog-overlay {
+                        opacity: 1;
+                        visibility: visible;
+                    }
+
+                    .dialog-content {
+                        border-radius: 3px;
+                        background: #fff;
+                        overflow: hidden;
+                        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+                        transition: .5s ease-in-out;
+                        opacity: 0;
+                        transform-style: preserve-3d;
+                        transform: rotateY(-70deg);
+                    }
+
+                    .dialog-header {
+                        background: #cb4a70;
+                        color: #fff;
+                    }
+
+                    .dialog-title {
+                        margin: 0;
+                        font-size: 2em;
+                        text-align: center;
+                        font-weight: 200;
+                        line-height: 2em;
+                    }
+
+                    .dialog-body {
+                        padding: 2em;
+                    }
+
+                    .dialog-footer {
+                        margin: 0 2em;
+                        padding: 2em 0;
+                        text-align: right;
+                        border-top: 1px solid rgba(0, 0, 0, 0.1);
+                    }
+
+                    .dialog-overlay {
+                        content: "";
+                        position: fixed;
+                        visibility: hidden;
+                        top: 0;
+                        left: 0;
+                        right: 0;
+                        bottom: 0;
+                        z-index: 1000;
+                        opacity: 0;
+                        background: rgba(0, 0, 0, 0.5);
+                        transition: all .6s;
+                    }
+
+                    .close {
+                        display: inline-block;
+                        width: 2rem;
+                        height: 2rem;
+                        position: absolute;
+                        top: .5rem;
+                        right: .5rem;
+                        transition: .8s ease all;
+                        -moz-transition: .8s ease all;
+                        -webkit-transition: .8s ease all;
+                        border: none;
+                        border-radius: 3px;
+                        color: #333;
+                        text-decoration: none;
+                        box-sizing: border-box;
+                        -webkit-box-sizing: border-box;
+                    }
+
+                    .close:hover {
+                        transition: .8s ease all;
+                        -moz-transition: .8s ease all;
+                        -webkit-transition: .8s ease all;
+                    }
+
+                    .close .iconfont {
+                        font-size: 2rem;
+                        color: black;
+                        background-color: blueviolet;
+                        width: 48px;
+                        height: 48px;
+                    }
+
+                    .rotate {
+                        cursor: pointer;
+                    }
+
+                    .rotate:hover {
+                        transform: rotate(360deg);
+                        -moz-transform: rotate(360deg);
+                        -webkit-transform: rotate(360deg);
+                        transition: transform 1.0s ease all;
+                        -moz-transition: -moz-transform 1.0s ease all;
+                        -webkit-transition: -webkit-transform 1.0s ease all;
+                    }
+                </style>
+                <script>
+                    Vue.component('modal-dialog', {
+                        template: '#dialog-template',
+                        props: ['show'],
+                        methods: {
+                            close: function () {
+                                this.show = false
+                            }
+                        }
+                    })
+
+                    new Vue({
+                        el: '#app3',
+                        data: {
+                            show: false
+                        },
+                        methods: {
+                            openDialog: function () {
+                                this.show = true
+                            },
+                            closeDialog: function () {
+                                this.show = false
+                            }
+                        }
+                    })
+                </script>
+            </li>
+            <li>
+                <p><b>父子组件之间的访问👉$children示例</b></p>
+                <p>this.$children是一个数组，它包含所有子组件的实例。</p>
+                <div id="app4">
+                    <parent-component></parent-component>
+                </div>
+
+                <template id="parent-component">
+                    <div>
+                        <child-component1></child-component1>
+                        <child-component2></child-component2>
+                        <button type="button" class="btn btn-danger" v-on:click="showChildComponentData">显示子组件的数据</button>
+                    </div>
+                </template>
+
+                <template id="child-component1">
+                    <h2>This is child component 1</h2>
+                </template>
+
+                <template id="child-component2">
+                    <h2>This is child component 2</h2>
+                </template>
+
+                <script>
+                    Vue.component('parent-component', {
+                        template: '#parent-component',
+                        components: {
+                            'child-component1': {
+                                template: '#child-component1',
+                                data: function () {
+                                    return {
+                                        msg: 'child component 111111'
+                                    }
+                                }
+                            },
+                            'child-component2': {
+                                template: '#child-component2',
+                                data: function () {
+                                    return {
+                                        msg: 'child component 222222'
+                                    }
+                                }
+                            }
+                        },
+                        methods: {
+                            showChildComponentData: function () {
+                                for (var i = 0; i < this.$children.length; i++) {
+                                    alert(this.$children[i].msg)
+                                }
+                            }
+                        }
+                    })
+
+                    new Vue({
+                        el: '#app4'
+                    })
+                </script>
+            </li>
+            <li>
+                <p><b>父子组件之间的访问👉$refs示例</b></p>
+                <p>在子组件上使用v-ref指令，可以给子组件指定一个索引ID</p>
+                <div id="app5">
+                    <parent-component-app5></parent-component-app5>
+                </div>
+
+                <template id="parent-component-app5">
+                    <div>
+                        <!--vue1的时候,使用v-ref:child1-->
+                        <!--vue2的时候,使用ref="child1"-->
+                        <child-component1-app5 ref="child1"></child-component1-app5>
+                        <child-component2-app5 ref="child2"></child-component2-app5>
+                        <button type="button" class="btn btn-danger" v-on:click="showChildComponentData">显示子组件的数据</button>
+                    </div>
+                </template>
+
+                <template id="child-component1-app5">
+                    <h2>This is child component 1-app5</h2>
+                </template>
+
+                <template id="child-component2-app5">
+                    <h2>This is child component 2-app5</h2>
+                </template>
+
+                <script>
+                    Vue.component('parent-component-app5', {
+                        template: '#parent-component-app5',
+                        components: {
+                            'child-component1-app5': {
+                                template: '#child-component1-app5',
+                                data: function () {
+                                    return {
+                                        msg: 'child component 111111-app5'
+                                    }
+                                }
+                            },
+                            'child-component2-app5': {
+                                template: '#child-component2-app5',
+                                data: function () {
+                                    return {
+                                        msg: 'child component 222222-app5'
+                                    }
+                                }
+                            }
+                        },
+                        methods: {
+                            showChildComponentData: function () {
+                                alert(this.$refs.child1.msg);
+                                alert(this.$refs.child2.msg);
+                            }
+                        }
+                    })
+
+                    new Vue({
+                        el: '#app5'
+                    })
+                </script>
+            </li>
+            <li>
+                <p><b>父子组件之间的访问👉$parent示例</b></p>
+                <p>在子组件中，通过this.$parent可以访问到父组件的实例。</p>
+                <div id="app6">
+                    <parent-component-app6></parent-component-app6>
+                </div>
+                <template id="parent-component-app6">
+                    <child-component-app6></child-component-app6>
+                </template>
+                <template id="child-component-app6">
+                    <div>
+                        <h2>This is a child component</h2>
+                        <button class="btn btn-info" v-on:click="showParentComponentData">显示父组件的数据</button>
+                    </div>
+                </template>
+                <script>
+                    Vue.component('parent-component-app6', {
+                        template: '#parent-component-app6',
+                        components: {
+                            'child-component-app6': {
+                                template: '#child-component-app6',
+                                methods: {
+                                    showParentComponentData: function () {
+                                        alert(this.$parent.msg)
+                                    }
+                                }
+                            }
+                        },
+                        data: function () {
+                            return {
+                                msg: 'parent component message'
+                            }
+                        }
+                    })
+                    new Vue({
+                        el: '#app6'
+                    })
+                </script>
+            </li>
+            <li>
+                <p><b>自定义事件</b></p>
+            </li>
+        </ul>
+    </div>
+</body>
+
+</html>
