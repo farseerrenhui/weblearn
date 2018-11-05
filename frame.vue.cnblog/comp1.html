@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../_package/vue/vue.js"></script>
+</head>
+
+<body>
+    <!-- 定义一个vue的管理区块，（MVVM中的View） -->
+    <template id="reg">
+        <div>
+            <input type="text" v-model="name">
+            <input type="text" v-model="age">
+            <button @click="getValue">注册</button>
+        </div>
+    </template>
+    <div id="app">
+        <register></register>
+    </div>
+
+</body>
+
+<script>
+    //定义和注册
+    Vue.component("register", {
+        template: "#reg",
+        data: function () {
+            return {
+                name: "我是组件中的name属性",
+                age: 18
+            }
+        },
+        methods: {
+            getValue: function () {
+                alert("我被点击了");
+            }
+        }
+    });
+
+    // 实例化vue对象（MVVM中的View Model）
+    new Vue({
+        // vm控制的区块为id为app的div，此div中的所有vue指令均可以被vm解析
+        el: '#app',
+        data: {
+            // 数据 （MVVM中的Model）   
+        },
+        methods: {
+
+        }
+    })
+</script>
+
+</html>

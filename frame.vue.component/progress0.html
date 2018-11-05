@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>组件</title>
+    <script src="../_package/vue/vue.js"></script>
+    <script src="../_package/jquery/jquery-3.3.1.js"></script>
+    <script src="../_package/bootstrap/3.3.7/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="../_package/bootstrap/3.3.7/css/bootstrap.css">
+    <link rel="stylesheet" href="progress.css">
+</head>
+
+<body style="background-color:darkseagreen;color: whitesmoke">
+    <div id="app">
+        <div>
+            <my-component id="pro1" name="WPF" value="81" color="mediumseagreen" />
+        </div>
+        <div>
+            <my-component id="pro2" name="Java" value="10" color="darkmagenta" />
+        </div>
+        <div>
+            <my-component id="pro3" name="Java" value="10" :vl="value" color="darkmagenta" />
+        </div>
+        <button class="btn btn-success" @click="setVal(100)">changePro</button>
+    </div>
+    <template id="progress">
+        <div class="progress_bar_point">
+            <div class="pro-bar">
+                <small class="progress_bar_point_title">
+                    {{name}} [{{type}}] 
+                    <span class="progress_number">{{value}}%</span>
+                </small>
+                <span class="progress_bar_inner" v-bind:style="widthandcolor()"></span>
+            </div>
+        </div>
+    </template>
+    <script>
+        // 全局注册Parent组件
+        Vue.component('my-component', {
+            template: '#progress',
+            props: ['name', 'value', 'color'],
+            // props: {
+            //     name: String,
+            //     value: Number,
+            //     color: String
+            // },
+            data: function () {
+                return {
+                    type: 'Develop',
+                    vl:{
+                        value:this.value,
+                    }
+                }
+            },
+            methods: {
+                widthandcolor: function () {
+                    return "width: " + this.value + "%;background-color: " + this.color + ";";
+                },
+                setVal: function (val) {
+                    alert(val);
+                },
+            },
+            mounted:{
+                value:function(value){
+                    this.vl = value;
+                }
+            }
+        })
+
+        new Vue({
+            el: '#app',
+            methods: {
+                setVal: function (val) {
+                    var pro2 = $("#pro2");
+                    console.log(pro2.value);
+                }
+            }
+        })
+    </script>
+
+    
+</body>
+
+</html>

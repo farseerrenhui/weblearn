@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Title</title>
+</head>
+
+<body>
+    <div id="app">
+        <input v-model="msg">
+        <div>
+            <my-component></my-component>
+        </div>
+    </div>
+
+    <template id="t1">
+        <div @click='show'>131</div>
+    </template>
+
+    <script src="js/vue.js"></script>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                msg: "Hello World"
+            },
+            components: {
+                'my-component': "#t1"
+            },
+            methods: {
+
+            }
+        });
+    </script>
+</body>
+
+</html>
