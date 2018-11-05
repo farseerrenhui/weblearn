@@ -58,10 +58,10 @@
                 <p><b>在定义组件的选项时,data和el选项必须使用函数</b></p>
                 <div id="app">
                     <div>
-                        <my-component name="WPF" value="81" widthcolor="width: 81%;background-color: mediumseagreen;" />
+                        <my-component name="WPF" value="81" color="mediumseagreen" />
                     </div>
                     <div>
-                        <my-component name="Java" value="60" widthcolor="width: 60%;background-color: chocolate;" />
+                        <my-component name="Java" value="10" color="darkmagenta" />
                     </div>
                 </div>
                 <!--使用<template>承载组件-->
@@ -74,8 +74,7 @@
                                 {{name}} [{{type}}]
                                 <span class="progress_number">{{value}}%</span>
                             </small>
-                            <!--还不到如何控制style中的值-->
-                            <span class="progress_bar_inner" v-bind:style="widthcolor"></span>
+                            <span class="progress_bar_inner" v-bind:style="widthandcolor()"></span>
                         </div>
                     </div>
                 </template>
@@ -155,11 +154,16 @@
                 <script>
                     // 全局注册Parent组件
                     Vue.component('my-component', {
-                        props: ['name', 'value','widthcolor'],
+                        props: ['name', 'value','color'],
                         data: function () {
                             return {
                                 type: 'Develop',
                             }
+                        },
+                        methods:{
+                            widthandcolor : function () {
+                                return "width: "+this.value+"%;background-color: "+this.color+";";
+                            },
                         },
                         template: '#myComponent'
                     })
@@ -308,7 +312,7 @@
                 <div id="app5">
                     <table>
                         <tr>
-                            <th colspan="3">父组件数据</td>
+                            <th colspan="3">父组件数据</th>
                         </tr>
                         <tr>
                             <td>parent_name</td>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>组件</title>
+    <script src="../_package/vue/vue.js"></script>
+    <script src="../_package/jquery/jquery-3.3.1.js"></script>
+    <script src="../_package/bootstrap/3.3.7/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="../_package/bootstrap/3.3.7/css/bootstrap.css">
+    <script src="progress.js"></script>
+    <link rel="stylesheet" href="progress.css">
+</head>
+
+<body style="background-color:darkseagreen;color: whitesmoke">
+    <div id="app">
+        <div>
+            <my-component name="WPF" value="81" color="mediumseagreen" />
+        </div>
+        <div>
+            <my-component name="Java" value="10" color="darkmagenta" />
+        </div>
+    </div>
+    <script>
+        Vue.component("my-component",progress);
+        new Vue({
+            el: '#app',
+        })
+    </script>
+</body>
+
+</html>
