@@ -6,17 +6,18 @@ var progress = {
             {{name}} [{{type}}]
             <span class="progress_number">{{value}}%</span>
         </small>
-            <span class="progress_bar_inner" v-bind:style="widthandcolor()"></span>
+            <span class="progress_bar_inner" v-bind:style="widthandcolor"></span>
         </div>
     </div>`,
 	data: function () {
 		return {
 			type: 'Develop',
+			widthandcolor: "width: " + this.value + "%;background-color: " + this.color + ";",
 		}
 	},
 	methods: {
-		widthandcolor: function () {
-			return "width: " + this.value + "%;background-color: " + this.color + ";";
-		},
+		setVal: function (val) {
+			this.value = val;
+		}
 	}
 }

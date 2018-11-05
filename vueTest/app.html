@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <input v-model="msg">
+    <div>
+        <my-component></my-component>
+    </div>
+
+</div>
+<script src="js/vue.js"></script>
+<script src="js/com.js"></script>
+<script>
+    new Vue({
+		el: '#app',
+		data:{
+			msg:"Hello World"
+		},
+		components: {
+			'my-component': test
+		},
+		methods: {
+			
+		}
+	});
+</script>
+</body>
+</html>

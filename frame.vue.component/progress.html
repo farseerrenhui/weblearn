@@ -15,16 +15,22 @@
 <body style="background-color:darkseagreen;color: whitesmoke">
     <div id="app">
         <div>
-            <my-component name="WPF" value="81" color="mediumseagreen" />
+            <my-component id="pro1" name="WPF" value="81" color="mediumseagreen" />
         </div>
         <div>
-            <my-component name="Java" value="10" color="darkmagenta" />
+            <my-component id="pro2" name="Java" value="10" color="darkmagenta" />
         </div>
+        <button @click="_setVal(100)">changePro</button>
     </div>
     <script>
-        Vue.component("my-component",progress);
+        Vue.component("my-component", progress);
         new Vue({
             el: '#app',
+            methods: {
+                _setVal: function (val) {
+                    //pro2.setVal(val);
+                }
+            }
         })
     </script>
 </body>
