@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link href="../_package/bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet">
+    <script src="../_package/bootstrap/3.3.7/js/jquery.js"></script>
+    <script src="../_package/bootstrap/3.3.7/js/bootstrap.js"></script>
+    <style>
+        div[class="row"] div {
+            border: 1px solid red;
+            height: 200px;
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+                <button class="form-control btn btn-success">Just A Button</button>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+                <button class="form-control btn btn-success">Just A Button</button>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+                <button class="form-control btn btn-success">Just A Button</button>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+                <button class="form-control btn btn-success">Just A Button</button>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+                <button class="form-control btn btn-success">Just A Button</button>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+                <button class="form-control btn btn-success">Just A Button</button>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+                <button class="form-control btn btn-success">Just A Button</button>
+            </div>
+        </div>
+        <input type="text" id="test"><button id="add">添加</button>
+    </div>
+    <script type="text/javascript">
+        var add = document.getElementById('add');
+        var container = document.getElementById('container');
+        var node = container.nextSibling;
+        add.onclick = function () {
+            oDiv = document.createElement('div');
+            oDiv.innerHTML =
+                "<div id='container1'><input type='text' id='test'><input type='button' onclick='test(this)' value='减少'/></div>";
+            container.parentNode.insertBefore(oDiv, node)
+            node = oDiv.nextSibling;
+
+        }
+
+        function test(test) {
+            test.parentNode.parentNode.removeChild(test.parentNode);
+        }
+    </script>
+</body>
+
+</html>
