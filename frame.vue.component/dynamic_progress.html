@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>动态进度条(可改变值)</title>
+    <script src="../_package/vue/vue.js"></script>
+    <script src="../_package/jquery/jquery-3.3.1.js"></script>
+    <script src="../_package/bootstrap/3.3.7/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="../_package/bootstrap/3.3.7/css/bootstrap.css">
+    <script src="dynamic_progress.js"></script>
+    <link rel="stylesheet" href="progress.css">
+</head>
+
+<body style="background-color:darkseagreen;color: whitesmoke">
+    <div class="container">
+        <div id="app1">
+            <p><b>动态</b></p>
+            <my-component id="pro1" name="WPF" :progress="progress" :color="color" />
+        </div>
+
+        <div class="row">
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                <input id="app1_value" class="form-control" type="text" placeholder="进度值0~100">
+            </div>
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                <button class="form-control" onclick="change_app1_value()">change_value</button>
+            </div>
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                <input id="app1_color" class="form-control" type="text" placeholder="颜色">
+            </div>
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                <button class="form-control" onclick="change_app1_color()">change_color</button>
+            </div>
+        </div>
+
+        <div id="app2">
+            <p><b>静态</b></p>
+            <my-component id="pro2" name="Java" progress="10" color="darkmagenta" />
+        </div>
+    </div>
+    <script>
+        Vue.component("my-component", dynamic_progress);
+
+        var app1 = new Vue({
+            el: "#app1",
+            data: {
+                progress: 60,
+                color: "mediumseagreen",
+            },
+            methods: {
+                change(val) {
+                    this.progress = val;
+                },
+                onProgressChange(val) {
+                    this.progress = val;
+                },
+            }
+        });
+
+        function change_app1_value() {
+            app1._data.progress = $("#app1_value").val() <= 100 ? $("#app1_value").val() : 100;
+            $("#app1_value").val(0);
+        }
+
+        function change_app1_color() {
+
+
+        }
+
+
+        var app2 = new Vue({
+            el: "#app2",
+        });
+    </script>
+</body>
+
+</html>
