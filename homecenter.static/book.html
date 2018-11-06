@@ -20,19 +20,8 @@
 
 <body>
     <div class="container">
-        <div class="row">
-            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
-                <button class="form-control btn btn-success">Just A Button</button>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
-                <button class="form-control btn btn-success">Just A Button</button>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
-                <button class="form-control btn btn-success">Just A Button</button>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
-                <button class="form-control btn btn-success">Just A Button</button>
-            </div>
+        <div id="row" class="row">
+            <div id="row-first-child" style="display: none"></div>
             <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
                 <button class="form-control btn btn-success">Just A Button</button>
             </div>
@@ -43,23 +32,17 @@
                 <button class="form-control btn btn-success">Just A Button</button>
             </div>
         </div>
-        <input type="text" id="test"><button id="add">添加</button>
+        <button class="btn btn-success" onclick="AddChild()">添加一个子元素</button>
     </div>
-    <script type="text/javascript">
-        var add = document.getElementById('add');
-        var container = document.getElementById('container');
-        var node = container.nextSibling;
-        add.onclick = function () {
-            oDiv = document.createElement('div');
-            oDiv.innerHTML =
-                "<div id='container1'><input type='text' id='test'><input type='button' onclick='test(this)' value='减少'/></div>";
-            container.parentNode.insertBefore(oDiv, node)
-            node = oDiv.nextSibling;
-
-        }
-
-        function test(test) {
-            test.parentNode.parentNode.removeChild(test.parentNode);
+    <script>
+        //TODO 需要改造成动态添加组件
+        function AddChild() {
+            var div =
+                `<div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+                <button class="form-control btn btn-success">Just A Button</button>
+            </div>`;
+            var last = $("#row").children().last();
+            $(div).insertAfter(last);
         }
     </script>
 </body>

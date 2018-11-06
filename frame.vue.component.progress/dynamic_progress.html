@@ -35,19 +35,26 @@
                 <button class="form-control" onclick="change_app1_color()">change_color</button>
             </div>
         </div>
-        <br>
-        <br>
         <div id="app2">
             <h1><b>静态</b></h1>
-            <my-component id="pro2" name="Bootstrap" type="Develop" progress="10" />
+            <!-- progress="10" 显示正常但报错怎么破-->
+            <my-component id="pro2" name="Bootstrap" type="Develop" progress="10"/>
         </div>
+        <div id="app3">
+            <h1><b>动态添加</b></h1>
+            <div></div>
+        </div>
+        <button class="btn btn-success" onclick="AddProgressByJS()">AddProgressByJS</button>
+        <button class="btn btn-success" onclick="AddProgressByJSBat()">AddProgressByJSBat</button>
     </div>
     <script>
         $(function () {
             $('#app1_color').colorpicker();
         });
 
-        Vue.component("my-component", dynamic_progress);
+        var DynamicProgress = Vue.extend(dynamic_progress);
+
+        Vue.component("my-component", DynamicProgress);
 
         var app1 = new Vue({
             el: "#app1",
@@ -77,6 +84,35 @@
         var app2 = new Vue({
             el: "#app2",
         });
+
+        //动态创建一个组件并赋初始值
+        function AddProgressByJS() {
+            var div = '<div id="target"></div>';
+            var last = $("#app3").children().last();
+            $(div).insertAfter(last);
+
+            var dynamicProgress = new DynamicProgress();
+            dynamicProgress.name = "New";
+            dynamicProgress.type = "Dynamic";
+            dynamicProgress.textcolor = "darkgreen";
+            dynamicProgress.progress = 20;
+            dynamicProgress.background = "darkblue";
+
+            dynamicProgress.$mount("#target");
+            scrollToEnd();
+        }
+
+        //批量创建组件
+        function AddProgressByJSBat() {
+            for (var i = 0; i < 10; i++) {
+                AddProgressByJS();
+            }
+        }
+
+        function scrollToEnd() {
+            var h = $(document).height() - $(window).height();
+            $(document).scrollTop(h);
+        }
     </script>
 </body>
 

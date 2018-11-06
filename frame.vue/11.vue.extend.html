@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../_package/vue/vue.js"></script>
+    <script src="../_package/jquery/jquery-3.3.1.js"></script>
+</head>
+
+<body>
+    <div id="mount-point"></div>
+    <script>
+        // 创建构造器
+        var Profile = Vue.extend({
+            template: '<p>{{firstName}} {{lastName}} aka {{alias}}</p>',
+            data: function () {
+                return {
+                    firstName: 'Walter',
+                    lastName: 'White',
+                    alias: 'Heisenberg'
+                }
+            }
+        })
+        // 创建 Profile 实例，并挂载到一个元素上。
+        new Profile().$mount('#mount-point')
+    </script>
+</body>
+
+</html>

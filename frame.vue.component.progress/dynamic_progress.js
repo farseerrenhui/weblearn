@@ -1,5 +1,27 @@
 var dynamic_progress = {
-    props: ['name', 'type', 'textcolor', 'progress', 'background'],
+    // props: ['name', 'type', 'textcolor', 'progress', 'background'],
+    props: {
+        name: {
+            type: String,
+            default: "java"
+        },
+        type: {
+            type: String,
+            default: "java"
+        },
+        textcolor: {
+            type: String,
+            default: "java"
+        },
+        progress: {
+            type: Number,
+            default: 100
+        },
+        background: {
+            type: String,
+            default: "red"
+        },
+    },
     template: `<div class="progress_bar_point">
                     <div class="pro-bar">
                         <small class="progress_bar_point_title">
