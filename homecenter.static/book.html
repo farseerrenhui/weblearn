@@ -9,11 +9,44 @@
     <link href="../_package/bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet">
     <script src="../_package/bootstrap/3.3.7/js/jquery.js"></script>
     <script src="../_package/bootstrap/3.3.7/js/bootstrap.js"></script>
+    <script src="../_package/vue/vue.js"></script>
     <style>
-        div[class="row"] div {
-            border: 1px solid red;
-            height: 200px;
+        div[class="row"]>div {
+            /* border: 1px solid red; */
+            height: 240px;
             padding: 10px;
+        }
+
+        .book-picture {
+            position: absolute;
+            width: 150px;
+            height: 210px;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            padding: 0;
+            opacity: 0;
+            color: white;
+            width: auto;
+            margin: auto;
+            position: absolute;
+            display: flex;
+            align-items: center;
+        }
+
+        .book-picture:hover {
+            background-color: darkslategray;
+            opacity: 0.8;
+            transition: opacity 0.5s;
+            -webkit-transition: opacity 0.5s;
+        }
+
+        .book-picture-detail {
+            width: 100%;
+            list-style-type: none;
+            padding: 8px;
+            margin: 8px;
         }
     </style>
 </head>
@@ -22,27 +55,177 @@
     <div class="container">
         <div id="row" class="row">
             <div id="row-first-child" style="display: none"></div>
-            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
-                <button class="form-control btn btn-success">Just A Button</button>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
-                <button class="form-control btn btn-success">Just A Button</button>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
-                <button class="form-control btn btn-success">Just A Button</button>
+        </div>
+        <button class="btn btn-success" onclick="AddChild('New','New')">添加一个子元素</button>
+    </div>
+    <template id="book-card">
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 book-card-border" style="margin:-5px;">
+            <div class="thumbnail" style="width: 100%;height: 220px; position:relative;">
+                <!--缩略图-->
+                <div style="width: 150px;height: 210px; margin: auto; position: absolute; left: 5px; top: 0; bottom: 0;padding: 0;">
+                    <img :src="image" class="thumbnail" style="width: 100%;height: 100%;margin: 0;">
+                    <div class="" style="position: absolute; bottom: 0; width: 100%; height: 32px;background-color: rebeccapurple;opacity: 0.5;">
+                        <p style="text-align: center;color: white">{{category}}类</p>
+                    </div>
+                    <a :href="link" target="_blank">
+                        <div class="thumbnail book-picture">
+                            <ul class="book-picture-detail">
+                                <li>{{publisher}}</li>
+                                <li>作者：{{author}}</li>
+                                <li>译者：{{translator}}</li>
+                                <li>出版：{{publishtime}}</li>
+                                <li>阅读：{{finishtime}}</li>
+                            </ul>
+                        </div>
+                    </a>
+                </div>
+                <!--介绍-->
+                <div class="thumbnail" style="width: auto;height: 210px; margin: auto; position: absolute; left: 160px; right:5px; top: 0; bottom: 0; padding: 0;">
+                    <div style="position: absolute; width: 100%; top:0px; height: 45px; padding: 0; margin: 0;">
+                        <!--标题-->
+                        <h5 style="text-align: center;font-weight: bold;color: indigo">《{{name}}》</h5>
+                    </div>
+                    <div style="position: absolute; width: 100%; top:45px; height: 141px; padding: 0;margin: 0;overflow: auto;">
+                        <p style="padding: 3px">{{note}}</p>
+                    </div>
+                    <!--星级评分-->
+                    <div style="position: absolute; width: 100%; top:186px; height: 24px; padding: 0;margin: 0;">
+                        <img :src="star" title="评分">
+                    </div>
+                </div>
             </div>
         </div>
-        <button class="btn btn-success" onclick="AddChild()">添加一个子元素</button>
-    </div>
+    </template>
     <script>
-        //TODO 需要改造成动态添加组件
-        function AddChild() {
-            var div =
-                `<div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
-                <button class="form-control btn btn-success">Just A Button</button>
-            </div>`;
+        // 创建构造器
+        var BookCard = Vue.extend({
+            template: '#book-card',
+            props: {
+                id: {
+                    type: String,
+                    default: ""
+                },
+                isbn: {
+                    type: String,
+                    default: ""
+                },
+                name: {
+                    type: String,
+                    default: ""
+                },
+                author: {
+                    type: String,
+                    default: ""
+                },
+                translator: {
+                    type: String,
+                    default: ""
+                },
+                publisher: {
+                    type: String,
+                    default: ""
+                },
+                category: {
+                    type: String,
+                    default: ""
+                },
+                star: {
+                    type: Number,
+                    default: 0
+                },
+                image: {
+                    type: String,
+                    default: ""
+                },
+                note: {
+                    type: String,
+                    default: ""
+                },
+                publishtime: {
+                    type: String,
+                    default: ""
+                },
+                finishtime: {
+                    type: String,
+                    default: ""
+                },
+                link: {
+                    type: String,
+                    default: ""
+                }
+            },
+        })
+
+        books = [{
+            "id": "1",
+            "isbn": "9787550244658",
+            "name": "无言的宇宙：隐藏在24个数学公式背后的故事",
+            "author": "[美] 达纳·麦肯齐11111111111111111111111111111111111",
+            "translator": "李永学",
+            "publisher": "北京联合出版公司",
+            "category": "科普",
+            "star": "10",
+            "image": "无言的宇宙.jpg",
+            "note": "北国风光，千里冰封，万里雪飘。望长城内外，惟余莽莽；大河上下，顿失滔滔。山舞银蛇，原驰蜡象，欲与天公试比高。须晴日，看红装素裹，分外妖娆。江山如此多娇，引无数英雄竞折腰。惜秦皇汉武，略输文采；唐宗宋祖，稍逊风骚。一代天骄，成吉思汗，只识弯弓射大雕。俱往矣，数风流人物，还看今朝。",
+            "publishtime": "2018-06-13",
+            "finishtime": "2016-06-30",
+            "link": "https://baike.baidu.com/item/无言的宇宙",
+        }, {
+            "id": "2",
+            "isbn": "9787550244658",
+            "name": "认知与设计：理解UI设计准则",
+            "author": "[美] 达纳·麦肯齐",
+            "translator": "李永学",
+            "publisher": "北京联合出版公司",
+            "category": "科普",
+            "star": "8",
+            "image": "认知与设计：理解UI设计准则.jpg",
+            "note": "favourite",
+            "publishtime": "2018-06-13",
+            "finishtime": "2016-06-30",
+            "link": "https://baike.baidu.com/item/认知与设计：理解UI设计准则",
+        }, {
+            "id": "3",
+            "isbn": "9787550244658",
+            "name": "无言的宇宙：隐藏在24个数学公式背后的故事",
+            "author": "[美] 达纳·麦肯齐",
+            "translator": "李永学",
+            "publisher": "北京联合出版公司",
+            "category": "科普",
+            "star": "5",
+            "image": "无言的宇宙.jpg",
+            "note": "favourite",
+            "publishtime": "2018-06-13",
+            "finishtime": "2016-06-30",
+            "link": "https://baike.baidu.com/item/无言的宇宙",
+        }, ];
+
+        function AddChild(book) {
+            var imgFolder = "img/books/";
+            var bookCard = new BookCard();
+            bookCard.id = book.id;
+            bookCard.isbn = book.isbn;
+            bookCard.name = book.name;
+            bookCard.author = book.author;
+            bookCard.translator = book.translator;
+            bookCard.publisher = book.publisher;
+            bookCard.category = book.category;
+            bookCard.star = imgFolder + "star" + book.star + ".png";
+            bookCard.image = imgFolder + book.image;
+            bookCard.note = book.note;
+            bookCard.publishtime = book.publishtime;
+            bookCard.finishtime = book.finishtime;
+            bookCard.link = book.link;
+
+            var div = '<div id="target"></div>';
             var last = $("#row").children().last();
             $(div).insertAfter(last);
+
+            bookCard.$mount("#target");
+        }
+
+        for (var p in books) {
+            AddChild(books[p]);
         }
     </script>
 </body>
